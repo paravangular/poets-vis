@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Objects, shared objects
+*.o
+*.so
+
+# Emacs
+*~
+
+demos
+bin
+providers
+.vagrant
+
+# OS X profiling
+instruments*.trace
+
+# temporaries in root directory
+/*.xml
+/*.snap
+/*.gz

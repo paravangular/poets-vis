@@ -1,0 +1,34 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+libraries:
+- name: lxml
+  version: latest
+
+handlers:
+- url: /
+  script: app.application
+
+- url: /graph
+  script: app.application
+
+- url: /device_details
+  script: app.application
+
+- url: /subgraph
+  script: app.application
+
+- url: /data
+  static_dir: data
+
+- url: /static/js
+  static_dir: static/js
+
+- url: /static/js/lib
+  static_dir: static/js/lib
+
+- url: /static/css
+  static_dir: static/css
+
+- url: /.*
+  script: app.application

@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='ASCII'?>
+<Graphs xmlns="http://TODO.org/POETS/virtual-graph-schema-v1">
+	<GraphType id="token_ring">
+		<Documentation><![CDATA[
+		- Each device can have 0 or 1 tokens
+		- Each device instance is connected to one destination device instance
+		- A device is ready to send if it has a token
+		- A send consists of transferring the token to the destination
+		- A receive marks the device as now having a token.
+		]]>
+		</Documentation>
+		<Properties>
+    	</Properties>
+		<MessageTypes>
+      		<MessageType id="__init__"> </MessageType>
+	     	<MessageType id="update"> 
+	     		<Message>
+	     			<Scalar type="uint32_t" name="t" />
+	     		</Message>
+	     	</MessageType>
+	    </MessageTypes>
+
+	    <DeviceTypes>
+	      	<DeviceType id="device">
+				<Properties>
+					<Scalar type="uint32_t" name="hasInitToken" />					
+				</Properties>
+				<State>
+					<Scalar type="uint32_t" name="t" />
+				</State>
+
+				<ReadyToSend>
+					<![CDATA[
+						*readyToSend = 0;
+						if (deviceState->token == 1) {
+							*readyToSend = RTS_FLAG_out;
+						}
+					]]>
+				</ReadyToSend>
+
+				<InputPort name="__init__" messageTypeId="__init__">
+			  		<OnReceive>
+			  			<![CDATA[
+							deviceState->t = deviceProperties->hasInitToken;
+						]]>
+					</OnReceive>
+				</InputPort>
+
+				<InputPort name="in" messageTypeId="update">
+					<OnReceive>
+						<![CDATA[
+			  				if(deviceState->t == 0 && message->t == 1){
+								deviceState->t = message->t;
+			  				} 
+			 			 ]]>
+					</OnReceive>
+				</InputPort>
+
+				<OutputPort name="out" messageTypeId="update">
+					<OnSend>
+						<![CDATA[
+					  	if (deviceState->t == 0){
+							*doSend=false;
+					  	} else {
+					  		token = deviceState->t;
+					  		deviceState->t = 0;
+
+					  		message->t = token;
+						}
+					  ]]>
+					</OnSend>
+				</OutputPort>
+			</DeviceType>
+    	</DeviceTypes>
+  	</GraphType>
+  	<GraphInstance id="token_ring_2_2" graphTypeId="token_ring">
+	    <Properties></Properties>
+	    <DeviceInstances>
+		    <DevI id="n_1" type="device">	      
+		    	<P>"hasInitToken": 1</P>
+		    </DevI>
+		    <DevI id="n_2" type="device">
+		    	<P>"hasInitToken": 0</P>
+		    </DevI>
+	  	</DeviceInstances>
+	  	<EdgeInstances>
+	      	<EdgeI path="n_1:in-n_2:out" />
+	      	<EdgeI path="n_2:in-n_1:out" />
+	    </EdgeInstances>
+	</GraphInstance>
+</Graphs>

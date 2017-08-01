@@ -1,0 +1,2739 @@
+Loading provider '/vagrant/providers/gals_izhikevich.graph.so'
+  registerGraphType(gals_izhikevich)
+Loading provider '/vagrant/providers/clock_tree.graph.so'
+  registerGraphType(clock_tree)
+Loading provider '/vagrant/providers/clocked_izhikevich.graph.so'
+  registerGraphType(clocked_izhikevich)
+Loading provider '/vagrant/providers/ising_spin.graph.so'
+  registerGraphType(ising_spin)
+Loading provider '/vagrant/providers/gals_heat.graph.so'
+  registerGraphType(gals_heat)
+Reading from 'apps/ising_spin/ising_spin_16x16.xml'
+Parsing XML
+Parsed XML
+Loading properties
+Loaded
+  init device 0 = n_1_0
+Recv: n_1_0:__init__ : next_t = 0.91126, next_spin = 1
+Recv: n_1_0:__init__ :    times[42538720] = 0.973556
+
+Recv: n_1_0:__init__ :    times[42538720] = 1.25318
+
+Recv: n_1_0:__init__ :    times[42538720] = 1.52722
+
+Recv: n_1_0:__init__ :    times[42538720] = 1.2781
+
+  init device 1 = n_11_10
+Recv: n_11_10:__init__ : next_t = 0.880313, next_spin = 1
+Recv: n_11_10:__init__ :    times[42538720] = 0.265279
+
+Recv: n_11_10:__init__ :    times[42538720] = 0.140808
+
+Recv: n_11_10:__init__ :    times[42538720] = 2.45935
+
+Recv: n_11_10:__init__ :    times[42538720] = 0.839262
+
+  init device 2 = n_5_8
+Recv: n_5_8:__init__ : next_t = 0.137052, next_spin = 1
+Recv: n_5_8:__init__ :    times[42538720] = 0.988281
+
+Recv: n_5_8:__init__ :    times[42538720] = 0.565645
+
+Recv: n_5_8:__init__ :    times[42538720] = 1.37301
+
+Recv: n_5_8:__init__ :    times[42538720] = 0.662919
+
+  init device 3 = n_6_3
+Recv: n_6_3:__init__ : next_t = 0.602701, next_spin = -1
+Recv: n_6_3:__init__ :    times[42538720] = 0.434636
+
+Recv: n_6_3:__init__ :    times[42538720] = 0.653618
+
+Recv: n_6_3:__init__ :    times[42538720] = 0.270671
+
+Recv: n_6_3:__init__ :    times[42538720] = 0.691183
+
+  init device 4 = n_9_8
+Recv: n_9_8:__init__ : next_t = 0.691185, next_spin = -1
+Recv: n_9_8:__init__ :    times[42538720] = 2.03962
+
+Recv: n_9_8:__init__ :    times[42538720] = 1.05782
+
+Recv: n_9_8:__init__ :    times[42538720] = 0.298987
+
+Recv: n_9_8:__init__ :    times[42538720] = 0.18945
+
+  init device 5 = n_15_8
+Recv: n_15_8:__init__ : next_t = 0.0238769, next_spin = 1
+Recv: n_15_8:__init__ :    times[42538720] = 0.659376
+
+Recv: n_15_8:__init__ :    times[42538720] = 0.272286
+
+Recv: n_15_8:__init__ :    times[42538720] = 1.22222
+
+Recv: n_15_8:__init__ :    times[42538720] = 0.16284
+
+  init device 6 = n_14_11
+Recv: n_14_11:__init__ : next_t = 4.11357, next_spin = 1
+Recv: n_14_11:__init__ :    times[42538720] = 0.65272
+
+Recv: n_14_11:__init__ :    times[42538720] = 1.90366
+
+Recv: n_14_11:__init__ :    times[42538720] = 0.292212
+
+Recv: n_14_11:__init__ :    times[42538720] = 1.30978
+
+  init device 7 = n_15_5
+Recv: n_15_5:__init__ : next_t = 0.642356, next_spin = -1
+Recv: n_15_5:__init__ :    times[42538720] = 0.185638
+
+Recv: n_15_5:__init__ :    times[42538720] = 1.08052
+
+Recv: n_15_5:__init__ :    times[42538720] = 0.448466
+
+Recv: n_15_5:__init__ :    times[42538720] = 0.0986879
+
+  init device 8 = n_9_0
+Recv: n_9_0:__init__ : next_t = 0.300056, next_spin = -1
+Recv: n_9_0:__init__ :    times[42538720] = 0.628775
+
+Recv: n_9_0:__init__ :    times[42538720] = 0.100017
+
+Recv: n_9_0:__init__ :    times[42538720] = 0.432856
+
+Recv: n_9_0:__init__ :    times[42538720] = 1.81114
+
+  init device 9 = n_5_5
+Recv: n_5_5:__init__ : next_t = 2.83911, next_spin = 1
+Recv: n_5_5:__init__ :    times[42538720] = 2.91204
+
+Recv: n_5_5:__init__ :    times[42538720] = 4.20325
+
+Recv: n_5_5:__init__ :    times[42538720] = 0.399676
+
+Recv: n_5_5:__init__ :    times[42538720] = 1.82163
+
+  init device 10 = n_7_11
+Recv: n_7_11:__init__ : next_t = 2.12436, next_spin = -1
+Recv: n_7_11:__init__ :    times[42538720] = 1.66868
+
+Recv: n_7_11:__init__ :    times[42538720] = 1.23435
+
+Recv: n_7_11:__init__ :    times[42538720] = 1.03813
+
+Recv: n_7_11:__init__ :    times[42538720] = 0.214493
+
+  init device 11 = n_12_8
+Recv: n_12_8:__init__ : next_t = 0.868576, next_spin = -1
+Recv: n_12_8:__init__ :    times[42538720] = 1.63885
+
+Recv: n_12_8:__init__ :    times[42538720] = 0.67688
+
+Recv: n_12_8:__init__ :    times[42538720] = 2.07927
+
+Recv: n_12_8:__init__ :    times[42538720] = 0.124071
+
+  init device 12 = n_2_15
+Recv: n_2_15:__init__ : next_t = 1.27057, next_spin = 1
+Recv: n_2_15:__init__ :    times[42538720] = 2.92308
+
+Recv: n_2_15:__init__ :    times[42538720] = 1.30138
+
+Recv: n_2_15:__init__ :    times[42538720] = 1.25318
+
+Recv: n_2_15:__init__ :    times[42538720] = 0.973556
+
+  init device 13 = n_10_6
+Recv: n_10_6:__init__ : next_t = 2.25096, next_spin = -1
+Recv: n_10_6:__init__ :    times[42538720] = 0.0155259
+
+Recv: n_10_6:__init__ :    times[42538720] = 1.27945
+
+Recv: n_10_6:__init__ :    times[42538720] = 0.0681696
+
+Recv: n_10_6:__init__ :    times[42538720] = 4.72294
+
+  init device 14 = n_13_5
+Recv: n_13_5:__init__ : next_t = 1.03914, next_spin = 1
+Recv: n_13_5:__init__ :    times[42538720] = 0.444392
+
+Recv: n_13_5:__init__ :    times[42538720] = 0.0986879
+
+Recv: n_13_5:__init__ :    times[42538720] = 0.601181
+
+Recv: n_13_5:__init__ :    times[42538720] = 0.843107
+
+  init device 15 = n_4_11
+Recv: n_4_11:__init__ : next_t = 2.63215, next_spin = 1
+Recv: n_4_11:__init__ :    times[42538720] = 0.1415
+
+Recv: n_4_11:__init__ :    times[42538720] = 0.0256311
+
+Recv: n_4_11:__init__ :    times[42538720] = 2.84589
+
+Recv: n_4_11:__init__ :    times[42538720] = 5.0733
+
+  init device 16 = n_7_0
+Recv: n_7_0:__init__ : next_t = 0.435321, next_spin = 1
+Recv: n_7_0:__init__ :    times[42538720] = 0.0247234
+
+Recv: n_7_0:__init__ :    times[42538720] = 1.81114
+
+Recv: n_7_0:__init__ :    times[42538720] = 0.322359
+
+Recv: n_7_0:__init__ :    times[42538720] = 1.42217
+
+  init device 17 = n_7_6
+Recv: n_7_6:__init__ : next_t = 0.702579, next_spin = 1
+Recv: n_7_6:__init__ :    times[42538720] = 0.365051
+
+Recv: n_7_6:__init__ :    times[42538720] = 0.510501
+
+Recv: n_7_6:__init__ :    times[42538720] = 0.343659
+
+Recv: n_7_6:__init__ :    times[42538720] = 0.228375
+
+  init device 18 = n_7_12
+Recv: n_7_12:__init__ : next_t = 1.03813, next_spin = -1
+Recv: n_7_12:__init__ :    times[42538720] = 2.12436
+
+Recv: n_7_12:__init__ :    times[42538720] = 3.23888
+
+Recv: n_7_12:__init__ :    times[42538720] = 0.336384
+
+Recv: n_7_12:__init__ :    times[42538720] = 1.66142
+
+  init device 19 = n_11_8
+Recv: n_11_8:__init__ : next_t = 0.124071, next_spin = 1
+Recv: n_11_8:__init__ :    times[42538720] = 1.60279
+
+Recv: n_11_8:__init__ :    times[42538720] = 0.868576
+
+Recv: n_11_8:__init__ :    times[42538720] = 0.265279
+
+Recv: n_11_8:__init__ :    times[42538720] = 1.05782
+
+  init device 20 = n_1_15
+Recv: n_1_15:__init__ : next_t = 0.973556, next_spin = -1
+Recv: n_1_15:__init__ :    times[42538720] = 2.26939
+
+Recv: n_1_15:__init__ :    times[42538720] = 1.27057
+
+Recv: n_1_15:__init__ :    times[42538720] = 0.91126
+
+Recv: n_1_15:__init__ :    times[42538720] = 0.666961
+
+  init device 21 = n_8_12
+Recv: n_8_12:__init__ : next_t = 3.23888, next_spin = 1
+Recv: n_8_12:__init__ :    times[42538720] = 1.23435
+
+Recv: n_8_12:__init__ :    times[42538720] = 1.36807
+
+Recv: n_8_12:__init__ :    times[42538720] = 0.180547
+
+Recv: n_8_12:__init__ :    times[42538720] = 1.03813
+
+  init device 22 = n_14_0
+Recv: n_14_0:__init__ : next_t = 0.0201067, next_spin = 1
+Recv: n_14_0:__init__ :    times[42538720] = 1.47316
+
+Recv: n_14_0:__init__ :    times[42538720] = 1.11849
+
+Recv: n_14_0:__init__ :    times[42538720] = 3.0035
+
+Recv: n_14_0:__init__ :    times[42538720] = 1.34615
+
+  init device 23 = n_0_1
+Recv: n_0_1:__init__ : next_t = 0.000652466, next_spin = -1
+Recv: n_0_1:__init__ :    times[42538720] = 1.2781
+
+Recv: n_0_1:__init__ :    times[42538720] = 1.52722
+
+Recv: n_0_1:__init__ :    times[42538720] = 0.0470394
+
+Recv: n_0_1:__init__ :    times[42538720] = 1.73188
+
+  init device 24 = n_8_5
+Recv: n_8_5:__init__ : next_t = 0.55957, next_spin = -1
+Recv: n_8_5:__init__ :    times[42538720] = 0.129253
+
+Recv: n_8_5:__init__ :    times[42538720] = 0.862486
+
+Recv: n_8_5:__init__ :    times[42538720] = 0.510501
+
+Recv: n_8_5:__init__ :    times[42538720] = 0.365051
+
+  init device 25 = n_12_14
+Recv: n_12_14:__init__ : next_t = 1.26759, next_spin = 1
+Recv: n_12_14:__init__ :    times[42538720] = 1.02519
+
+Recv: n_12_14:__init__ :    times[42538720] = 0.797783
+
+Recv: n_12_14:__init__ :    times[42538720] = 1.18816
+
+Recv: n_12_14:__init__ :    times[42538720] = 3.72617
+
+  init device 26 = n_6_5
+Recv: n_6_5:__init__ : next_t = 4.20325, next_spin = 1
+Recv: n_6_5:__init__ :    times[42538720] = 0.270671
+
+Recv: n_6_5:__init__ :    times[42538720] = 0.365051
+
+Recv: n_6_5:__init__ :    times[42538720] = 0.228375
+
+Recv: n_6_5:__init__ :    times[42538720] = 2.83911
+
+  init device 27 = n_11_13
+Recv: n_11_13:__init__ : next_t = 0.472979, next_spin = -1
+Recv: n_11_13:__init__ :    times[42538720] = 0.266308
+
+Recv: n_11_13:__init__ :    times[42538720] = 1.02519
+
+Recv: n_11_13:__init__ :    times[42538720] = 3.72617
+
+Recv: n_11_13:__init__ :    times[42538720] = 0.32407
+
+  init device 28 = n_13_12
+Recv: n_13_12:__init__ : next_t = 0.138071, next_spin = 1
+Recv: n_13_12:__init__ :    times[42538720] = 1.30978
+
+Recv: n_13_12:__init__ :    times[42538720] = 0.292212
+
+Recv: n_13_12:__init__ :    times[42538720] = 0.209222
+
+Recv: n_13_12:__init__ :    times[42538720] = 0.656731
+
+  init device 29 = n_9_12
+Recv: n_9_12:__init__ : next_t = 1.36807, next_spin = 1
+Recv: n_9_12:__init__ :    times[42538720] = 1.02693
+
+Recv: n_9_12:__init__ :    times[42538720] = 2.07434
+
+Recv: n_9_12:__init__ :    times[42538720] = 1.93417
+
+Recv: n_9_12:__init__ :    times[42538720] = 3.23888
+
+  init device 30 = n_8_4
+Recv: n_8_4:__init__ : next_t = 0.129253, next_spin = -1
+Recv: n_8_4:__init__ :    times[42538720] = 0.44181
+
+Recv: n_8_4:__init__ :    times[42538720] = 0.528694
+
+Recv: n_8_4:__init__ :    times[42538720] = 0.55957
+
+Recv: n_8_4:__init__ :    times[42538720] = 0.34656
+
+  init device 31 = n_13_15
+Recv: n_13_15:__init__ : next_t = 0.366813, next_spin = 1
+Recv: n_13_15:__init__ :    times[42538720] = 0.797783
+
+Recv: n_13_15:__init__ :    times[42538720] = 1.47316
+
+Recv: n_13_15:__init__ :    times[42538720] = 1.34615
+
+Recv: n_13_15:__init__ :    times[42538720] = 1.18816
+
+  init device 32 = n_14_9
+Recv: n_14_9:__init__ : next_t = 0.837172, next_spin = 1
+Recv: n_14_9:__init__ :    times[42538720] = 0.16284
+
+Recv: n_14_9:__init__ :    times[42538720] = 1.22222
+
+Recv: n_14_9:__init__ :    times[42538720] = 0.65272
+
+Recv: n_14_9:__init__ :    times[42538720] = 2.17439
+
+  init device 33 = n_4_14
+Recv: n_4_14:__init__ : next_t = 5.13255, next_spin = 1
+Recv: n_4_14:__init__ :    times[42538720] = 2.0757
+
+Recv: n_4_14:__init__ :    times[42538720] = 0.607271
+
+Recv: n_4_14:__init__ :    times[42538720] = 1.20362
+
+Recv: n_4_14:__init__ :    times[42538720] = 1.96903
+
+  init device 34 = n_4_4
+Recv: n_4_4:__init__ : next_t = 2.8533, next_spin = 1
+Recv: n_4_4:__init__ :    times[42538720] = 0.0721432
+
+Recv: n_4_4:__init__ :    times[42538720] = 2.91204
+
+Recv: n_4_4:__init__ :    times[42538720] = 1.82163
+
+Recv: n_4_4:__init__ :    times[42538720] = 1.7472
+
+  init device 35 = n_14_4
+Recv: n_14_4:__init__ : next_t = 0.84423, next_spin = -1
+Recv: n_14_4:__init__ :    times[42538720] = 1.29622
+
+Recv: n_14_4:__init__ :    times[42538720] = 0.185638
+
+Recv: n_14_4:__init__ :    times[42538720] = 0.0986879
+
+Recv: n_14_4:__init__ :    times[42538720] = 0.444392
+
+  init device 36 = n_8_11
+Recv: n_8_11:__init__ : next_t = 1.23435, next_spin = 1
+Recv: n_8_11:__init__ :    times[42538720] = 1.73214
+
+Recv: n_8_11:__init__ :    times[42538720] = 1.02693
+
+Recv: n_8_11:__init__ :    times[42538720] = 3.23888
+
+Recv: n_8_11:__init__ :    times[42538720] = 2.12436
+
+  init device 37 = n_12_15
+Recv: n_12_15:__init__ : next_t = 1.18816, next_spin = 1
+Recv: n_12_15:__init__ :    times[42538720] = 1.26759
+
+Recv: n_12_15:__init__ :    times[42538720] = 0.366813
+
+Recv: n_12_15:__init__ :    times[42538720] = 2.75667
+
+Recv: n_12_15:__init__ :    times[42538720] = 2.99309
+
+  init device 38 = n_3_9
+Recv: n_3_9:__init__ : next_t = 0.0750937, next_spin = 1
+Recv: n_3_9:__init__ :    times[42538720] = 0.531032
+
+Recv: n_3_9:__init__ :    times[42538720] = 0.668679
+
+Recv: n_3_9:__init__ :    times[42538720] = 0.807902
+
+Recv: n_3_9:__init__ :    times[42538720] = 0.412985
+
+  init device 39 = n_10_11
+Recv: n_10_11:__init__ : next_t = 1.4151, next_spin = -1
+Recv: n_10_11:__init__ :    times[42538720] = 0.839262
+
+Recv: n_10_11:__init__ :    times[42538720] = 2.45935
+
+Recv: n_10_11:__init__ :    times[42538720] = 2.07434
+
+Recv: n_10_11:__init__ :    times[42538720] = 1.02693
+
+  init device 40 = n_11_11
+Recv: n_11_11:__init__ : next_t = 2.45935, next_spin = 1
+Recv: n_11_11:__init__ :    times[42538720] = 0.880313
+
+Recv: n_11_11:__init__ :    times[42538720] = 0.304859
+
+Recv: n_11_11:__init__ :    times[42538720] = 0.266308
+
+Recv: n_11_11:__init__ :    times[42538720] = 1.4151
+
+  init device 41 = n_4_3
+Recv: n_4_3:__init__ : next_t = 0.0721432, next_spin = -1
+Recv: n_4_3:__init__ :    times[42538720] = 0.296708
+
+Recv: n_4_3:__init__ :    times[42538720] = 0.691183
+
+Recv: n_4_3:__init__ :    times[42538720] = 2.8533
+
+Recv: n_4_3:__init__ :    times[42538720] = 0.505912
+
+  init device 42 = n_6_6
+Recv: n_6_6:__init__ : next_t = 0.228375, next_spin = 1
+Recv: n_6_6:__init__ :    times[42538720] = 4.20325
+
+Recv: n_6_6:__init__ :    times[42538720] = 0.702579
+
+Recv: n_6_6:__init__ :    times[42538720] = 0.931229
+
+Recv: n_6_6:__init__ :    times[42538720] = 0.399676
+
+  init device 43 = n_14_15
+Recv: n_14_15:__init__ : next_t = 1.47316, next_spin = -1
+Recv: n_14_15:__init__ :    times[42538720] = 1.5006
+
+Recv: n_14_15:__init__ :    times[42538720] = 2.20646
+
+Recv: n_14_15:__init__ :    times[42538720] = 0.0201067
+
+Recv: n_14_15:__init__ :    times[42538720] = 0.366813
+
+  init device 44 = n_0_13
+Recv: n_0_13:__init__ : next_t = 0.641938, next_spin = -1
+Recv: n_0_13:__init__ :    times[42538720] = 0.194286
+
+Recv: n_0_13:__init__ :    times[42538720] = 0.247031
+
+Recv: n_0_13:__init__ :    times[42538720] = 0.020688
+
+Recv: n_0_13:__init__ :    times[42538720] = 0.148708
+
+  init device 45 = n_6_15
+Recv: n_6_15:__init__ : next_t = 0.918344, next_spin = -1
+Recv: n_6_15:__init__ :    times[42538720] = 2.10339
+
+Recv: n_6_15:__init__ :    times[42538720] = 0.0247234
+
+Recv: n_6_15:__init__ :    times[42538720] = 1.42217
+
+Recv: n_6_15:__init__ :    times[42538720] = 0.555115
+
+  init device 46 = n_11_4
+Recv: n_11_4:__init__ : next_t = 0.0974943, next_spin = -1
+Recv: n_11_4:__init__ :    times[42538720] = 0.0922196
+
+Recv: n_11_4:__init__ :    times[42538720] = 2.28077
+
+Recv: n_11_4:__init__ :    times[42538720] = 0.837001
+
+Recv: n_11_4:__init__ :    times[42538720] = 0.835426
+
+  init device 47 = n_0_2
+Recv: n_0_2:__init__ : next_t = 0.0470394, next_spin = -1
+Recv: n_0_2:__init__ :    times[42538720] = 0.000652466
+
+Recv: n_0_2:__init__ :    times[42538720] = 0.740431
+
+Recv: n_0_2:__init__ :    times[42538720] = 0.110215
+
+Recv: n_0_2:__init__ :    times[42538720] = 0.424253
+
+  init device 48 = n_14_3
+Recv: n_14_3:__init__ : next_t = 1.29622, next_spin = 1
+Recv: n_14_3:__init__ :    times[42538720] = 1.83076
+
+Recv: n_14_3:__init__ :    times[42538720] = 0.404163
+
+Recv: n_14_3:__init__ :    times[42538720] = 0.84423
+
+Recv: n_14_3:__init__ :    times[42538720] = 0.409571
+
+  init device 49 = n_4_13
+Recv: n_4_13:__init__ : next_t = 2.0757, next_spin = -1
+Recv: n_4_13:__init__ :    times[42538720] = 2.84589
+
+Recv: n_4_13:__init__ :    times[42538720] = 0.167372
+
+Recv: n_4_13:__init__ :    times[42538720] = 5.13255
+
+Recv: n_4_13:__init__ :    times[42538720] = 0.218392
+
+  init device 50 = n_15_2
+Recv: n_15_2:__init__ : next_t = 0.424253, next_spin = -1
+Recv: n_15_2:__init__ :    times[42538720] = 1.73188
+
+Recv: n_15_2:__init__ :    times[42538720] = 0.0470394
+
+Recv: n_15_2:__init__ :    times[42538720] = 0.404163
+
+Recv: n_15_2:__init__ :    times[42538720] = 1.83076
+
+  init device 51 = n_0_0
+Recv: n_0_0:__init__ : next_t = 1.2781, next_spin = -1
+Recv: n_0_0:__init__ :    times[42538720] = 0.666961
+
+Recv: n_0_0:__init__ :    times[42538720] = 0.91126
+
+Recv: n_0_0:__init__ :    times[42538720] = 0.000652466
+
+Recv: n_0_0:__init__ :    times[42538720] = 1.11849
+
+  init device 52 = n_3_7
+Recv: n_3_7:__init__ : next_t = 0.449407, next_spin = -1
+Recv: n_3_7:__init__ :    times[42538720] = 2.82
+
+Recv: n_3_7:__init__ :    times[42538720] = 0.290857
+
+Recv: n_3_7:__init__ :    times[42538720] = 0.531032
+
+Recv: n_3_7:__init__ :    times[42538720] = 0.35172
+
+  init device 53 = n_2_6
+Recv: n_2_6:__init__ : next_t = 0.0150718, next_spin = 1
+Recv: n_2_6:__init__ :    times[42538720] = 0.305191
+
+Recv: n_2_6:__init__ :    times[42538720] = 2.82
+
+Recv: n_2_6:__init__ :    times[42538720] = 0.35172
+
+Recv: n_2_6:__init__ :    times[42538720] = 0.120377
+
+  init device 54 = n_14_7
+Recv: n_14_7:__init__ : next_t = 1.21552, next_spin = 1
+Recv: n_14_7:__init__ :    times[42538720] = 0.657811
+
+Recv: n_14_7:__init__ :    times[42538720] = 0.659376
+
+Recv: n_14_7:__init__ :    times[42538720] = 0.16284
+
+Recv: n_14_7:__init__ :    times[42538720] = 0.089328
+
+  init device 55 = n_0_4
+Recv: n_0_4:__init__ : next_t = 1.65688, next_spin = 1
+Recv: n_0_4:__init__ :    times[42538720] = 0.110215
+
+Recv: n_0_4:__init__ :    times[42538720] = 0.382913
+
+Recv: n_0_4:__init__ :    times[42538720] = 1.08052
+
+Recv: n_0_4:__init__ :    times[42538720] = 0.185638
+
+  init device 56 = n_7_10
+Recv: n_7_10:__init__ : next_t = 1.66868, next_spin = 1
+Recv: n_7_10:__init__ :    times[42538720] = 0.0295813
+
+Recv: n_7_10:__init__ :    times[42538720] = 1.73214
+
+Recv: n_7_10:__init__ :    times[42538720] = 2.12436
+
+Recv: n_7_10:__init__ :    times[42538720] = 0.024363
+
+  init device 57 = n_10_2
+Recv: n_10_2:__init__ : next_t = 0.626987, next_spin = -1
+Recv: n_10_2:__init__ :    times[42538720] = 0.72474
+
+Recv: n_10_2:__init__ :    times[42538720] = 0.638503
+
+Recv: n_10_2:__init__ :    times[42538720] = 4.39314
+
+Recv: n_10_2:__init__ :    times[42538720] = 0.288724
+
+  init device 58 = n_4_2
+Recv: n_4_2:__init__ : next_t = 0.296708, next_spin = 1
+Recv: n_4_2:__init__ :    times[42538720] = 0.547223
+
+Recv: n_4_2:__init__ :    times[42538720] = 2.35909
+
+Recv: n_4_2:__init__ :    times[42538720] = 0.0721432
+
+Recv: n_4_2:__init__ :    times[42538720] = 0.129834
+
+  init device 59 = n_5_10
+Recv: n_5_10:__init__ : next_t = 0.681632, next_spin = -1
+Recv: n_5_10:__init__ :    times[42538720] = 1.37301
+
+Recv: n_5_10:__init__ :    times[42538720] = 0.024363
+
+Recv: n_5_10:__init__ :    times[42538720] = 0.0256311
+
+Recv: n_5_10:__init__ :    times[42538720] = 0.1415
+
+  init device 60 = n_12_5
+Recv: n_12_5:__init__ : next_t = 0.843107, next_spin = 1
+Recv: n_12_5:__init__ :    times[42538720] = 2.28077
+
+Recv: n_12_5:__init__ :    times[42538720] = 1.03914
+
+Recv: n_12_5:__init__ :    times[42538720] = 2.37669
+
+Recv: n_12_5:__init__ :    times[42538720] = 0.837001
+
+  init device 61 = n_4_0
+Recv: n_4_0:__init__ : next_t = 1.47701, next_spin = 1
+Recv: n_4_0:__init__ :    times[42538720] = 1.20362
+
+Recv: n_4_0:__init__ :    times[42538720] = 0.920343
+
+Recv: n_4_0:__init__ :    times[42538720] = 0.547223
+
+Recv: n_4_0:__init__ :    times[42538720] = 0.296079
+
+  init device 62 = n_13_4
+Recv: n_13_4:__init__ : next_t = 0.444392, next_spin = 1
+Recv: n_13_4:__init__ :    times[42538720] = 0.409571
+
+Recv: n_13_4:__init__ :    times[42538720] = 0.84423
+
+Recv: n_13_4:__init__ :    times[42538720] = 1.03914
+
+Recv: n_13_4:__init__ :    times[42538720] = 2.28077
+
+  init device 63 = n_2_7
+Recv: n_2_7:__init__ : next_t = 0.35172, next_spin = -1
+Recv: n_2_7:__init__ :    times[42538720] = 0.0150718
+
+Recv: n_2_7:__init__ :    times[42538720] = 0.449407
+
+Recv: n_2_7:__init__ :    times[42538720] = 1.21399
+
+Recv: n_2_7:__init__ :    times[42538720] = 0.410932
+
+  init device 64 = n_2_0
+Recv: n_2_0:__init__ : next_t = 1.25318, next_spin = -1
+Recv: n_2_0:__init__ :    times[42538720] = 1.27057
+
+Recv: n_2_0:__init__ :    times[42538720] = 0.296079
+
+Recv: n_2_0:__init__ :    times[42538720] = 0.619727
+
+Recv: n_2_0:__init__ :    times[42538720] = 0.91126
+
+  init device 65 = n_7_15
+Recv: n_7_15:__init__ : next_t = 0.0247234, next_spin = 1
+Recv: n_7_15:__init__ :    times[42538720] = 0.225097
+
+Recv: n_7_15:__init__ :    times[42538720] = 2.06096
+
+Recv: n_7_15:__init__ :    times[42538720] = 0.435321
+
+Recv: n_7_15:__init__ :    times[42538720] = 0.918344
+
+  init device 66 = n_0_3
+Recv: n_0_3:__init__ : next_t = 0.110215, next_spin = 1
+Recv: n_0_3:__init__ :    times[42538720] = 0.0470394
+
+Recv: n_0_3:__init__ :    times[42538720] = 0.932686
+
+Recv: n_0_3:__init__ :    times[42538720] = 1.65688
+
+Recv: n_0_3:__init__ :    times[42538720] = 0.404163
+
+  init device 67 = n_1_5
+Recv: n_1_5:__init__ : next_t = 0.306229, next_spin = -1
+Recv: n_1_5:__init__ :    times[42538720] = 0.382913
+
+Recv: n_1_5:__init__ :    times[42538720] = 0.305191
+
+Recv: n_1_5:__init__ :    times[42538720] = 0.120377
+
+Recv: n_1_5:__init__ :    times[42538720] = 1.08052
+
+  init device 68 = n_12_2
+Recv: n_12_2:__init__ : next_t = 2.50841, next_spin = 1
+Recv: n_12_2:__init__ :    times[42538720] = 0.39912
+
+Recv: n_12_2:__init__ :    times[42538720] = 0.637919
+
+Recv: n_12_2:__init__ :    times[42538720] = 0.72986
+
+Recv: n_12_2:__init__ :    times[42538720] = 0.638503
+
+  init device 69 = n_8_9
+Recv: n_8_9:__init__ : next_t = 1.81805, next_spin = -1
+Recv: n_8_9:__init__ :    times[42538720] = 0.18945
+
+Recv: n_8_9:__init__ :    times[42538720] = 0.298987
+
+Recv: n_8_9:__init__ :    times[42538720] = 1.73214
+
+Recv: n_8_9:__init__ :    times[42538720] = 0.0295813
+
+  init device 70 = n_11_6
+Recv: n_11_6:__init__ : next_t = 1.27945, next_spin = -1
+Recv: n_11_6:__init__ :    times[42538720] = 0.837001
+
+Recv: n_11_6:__init__ :    times[42538720] = 2.37669
+
+Recv: n_11_6:__init__ :    times[42538720] = 1.60279
+
+Recv: n_11_6:__init__ :    times[42538720] = 2.25096
+
+  init device 71 = n_13_2
+Recv: n_13_2:__init__ : next_t = 0.637919, next_spin = 1
+Recv: n_13_2:__init__ :    times[42538720] = 0.727184
+
+Recv: n_13_2:__init__ :    times[42538720] = 1.83076
+
+Recv: n_13_2:__init__ :    times[42538720] = 0.409571
+
+Recv: n_13_2:__init__ :    times[42538720] = 2.50841
+
+  init device 72 = n_2_9
+Recv: n_2_9:__init__ : next_t = 0.412985, next_spin = 1
+Recv: n_2_9:__init__ :    times[42538720] = 1.21399
+
+Recv: n_2_9:__init__ :    times[42538720] = 0.0750937
+
+Recv: n_2_9:__init__ :    times[42538720] = 2.40271
+
+Recv: n_2_9:__init__ :    times[42538720] = 2.5654
+
+  init device 73 = n_15_13
+Recv: n_15_13:__init__ : next_t = 0.148708, next_spin = -1
+Recv: n_15_13:__init__ :    times[42538720] = 1.40888
+
+Recv: n_15_13:__init__ :    times[42538720] = 0.641938
+
+Recv: n_15_13:__init__ :    times[42538720] = 0.329191
+
+Recv: n_15_13:__init__ :    times[42538720] = 2.31285
+
+  init device 74 = n_3_11
+Recv: n_3_11:__init__ : next_t = 5.0733, next_spin = -1
+Recv: n_3_11:__init__ :    times[42538720] = 0.807902
+
+Recv: n_3_11:__init__ :    times[42538720] = 2.63215
+
+Recv: n_3_11:__init__ :    times[42538720] = 1.29462
+
+Recv: n_3_11:__init__ :    times[42538720] = 0.585907
+
+  init device 75 = n_15_3
+Recv: n_15_3:__init__ : next_t = 0.404163, next_spin = 1
+Recv: n_15_3:__init__ :    times[42538720] = 0.424253
+
+Recv: n_15_3:__init__ :    times[42538720] = 0.110215
+
+Recv: n_15_3:__init__ :    times[42538720] = 0.185638
+
+Recv: n_15_3:__init__ :    times[42538720] = 1.29622
+
+  init device 76 = n_8_13
+Recv: n_8_13:__init__ : next_t = 0.180547, next_spin = -1
+Recv: n_8_13:__init__ :    times[42538720] = 3.23888
+
+Recv: n_8_13:__init__ :    times[42538720] = 1.93417
+
+Recv: n_8_13:__init__ :    times[42538720] = 0.0677639
+
+Recv: n_8_13:__init__ :    times[42538720] = 0.336384
+
+  init device 77 = n_9_10
+Recv: n_9_10:__init__ : next_t = 1.51876, next_spin = -1
+Recv: n_9_10:__init__ :    times[42538720] = 0.298987
+
+Recv: n_9_10:__init__ :    times[42538720] = 0.839262
+
+Recv: n_9_10:__init__ :    times[42538720] = 1.02693
+
+Recv: n_9_10:__init__ :    times[42538720] = 1.73214
+
+  init device 78 = n_8_15
+Recv: n_8_15:__init__ : next_t = 2.06096, next_spin = 1
+Recv: n_8_15:__init__ :    times[42538720] = 0.0677639
+
+Recv: n_8_15:__init__ :    times[42538720] = 0.628775
+
+Recv: n_8_15:__init__ :    times[42538720] = 1.81114
+
+Recv: n_8_15:__init__ :    times[42538720] = 0.0247234
+
+  init device 79 = n_2_1
+Recv: n_2_1:__init__ : next_t = 0.619727, next_spin = -1
+Recv: n_2_1:__init__ :    times[42538720] = 1.25318
+
+Recv: n_2_1:__init__ :    times[42538720] = 1.36412
+
+Recv: n_2_1:__init__ :    times[42538720] = 1.52758
+
+Recv: n_2_1:__init__ :    times[42538720] = 1.52722
+
+  init device 80 = n_7_8
+Recv: n_7_8:__init__ : next_t = 0.131546, next_spin = 1
+Recv: n_7_8:__init__ :    times[42538720] = 0.343659
+
+Recv: n_7_8:__init__ :    times[42538720] = 0.18945
+
+Recv: n_7_8:__init__ :    times[42538720] = 0.0295813
+
+Recv: n_7_8:__init__ :    times[42538720] = 0.565645
+
+  init device 81 = n_4_8
+Recv: n_4_8:__init__ : next_t = 0.662919, next_spin = -1
+Recv: n_4_8:__init__ :    times[42538720] = 0.290857
+
+Recv: n_4_8:__init__ :    times[42538720] = 0.137052
+
+Recv: n_4_8:__init__ :    times[42538720] = 0.668679
+
+Recv: n_4_8:__init__ :    times[42538720] = 0.531032
+
+  init device 82 = n_9_7
+Recv: n_9_7:__init__ : next_t = 2.03962, next_spin = 1
+Recv: n_9_7:__init__ :    times[42538720] = 4.72294
+
+Recv: n_9_7:__init__ :    times[42538720] = 0.0681696
+
+Recv: n_9_7:__init__ :    times[42538720] = 0.691185
+
+Recv: n_9_7:__init__ :    times[42538720] = 0.772179
+
+  init device 83 = n_4_10
+Recv: n_4_10:__init__ : next_t = 0.1415, next_spin = -1
+Recv: n_4_10:__init__ :    times[42538720] = 0.668679
+
+Recv: n_4_10:__init__ :    times[42538720] = 0.681632
+
+Recv: n_4_10:__init__ :    times[42538720] = 2.63215
+
+Recv: n_4_10:__init__ :    times[42538720] = 0.807902
+
+  init device 84 = n_10_10
+Recv: n_10_10:__init__ : next_t = 0.839262, next_spin = -1
+Recv: n_10_10:__init__ :    times[42538720] = 0.712809
+
+Recv: n_10_10:__init__ :    times[42538720] = 0.880313
+
+Recv: n_10_10:__init__ :    times[42538720] = 1.4151
+
+Recv: n_10_10:__init__ :    times[42538720] = 1.51876
+
+  init device 85 = n_1_8
+Recv: n_1_8:__init__ : next_t = 0.966749, next_spin = 1
+Recv: n_1_8:__init__ :    times[42538720] = 0.410932
+
+Recv: n_1_8:__init__ :    times[42538720] = 1.21399
+
+Recv: n_1_8:__init__ :    times[42538720] = 2.5654
+
+Recv: n_1_8:__init__ :    times[42538720] = 0.272286
+
+  init device 86 = n_2_3
+Recv: n_2_3:__init__ : next_t = 0.220972, next_spin = 1
+Recv: n_2_3:__init__ :    times[42538720] = 1.52758
+
+Recv: n_2_3:__init__ :    times[42538720] = 0.505912
+
+Recv: n_2_3:__init__ :    times[42538720] = 0.314581
+
+Recv: n_2_3:__init__ :    times[42538720] = 0.932686
+
+  init device 87 = n_3_8
+Recv: n_3_8:__init__ : next_t = 0.531032, next_spin = -1
+Recv: n_3_8:__init__ :    times[42538720] = 0.449407
+
+Recv: n_3_8:__init__ :    times[42538720] = 0.662919
+
+Recv: n_3_8:__init__ :    times[42538720] = 0.0750937
+
+Recv: n_3_8:__init__ :    times[42538720] = 1.21399
+
+  init device 88 = n_12_9
+Recv: n_12_9:__init__ : next_t = 2.07927, next_spin = -1
+Recv: n_12_9:__init__ :    times[42538720] = 0.868576
+
+Recv: n_12_9:__init__ :    times[42538720] = 2.17439
+
+Recv: n_12_9:__init__ :    times[42538720] = 0.140808
+
+Recv: n_12_9:__init__ :    times[42538720] = 0.265279
+
+  init device 89 = n_5_14
+Recv: n_5_14:__init__ : next_t = 0.607271, next_spin = -1
+Recv: n_5_14:__init__ :    times[42538720] = 0.167372
+
+Recv: n_5_14:__init__ :    times[42538720] = 2.10339
+
+Recv: n_5_14:__init__ :    times[42538720] = 0.555115
+
+Recv: n_5_14:__init__ :    times[42538720] = 5.13255
+
+  init device 90 = n_3_3
+Recv: n_3_3:__init__ : next_t = 0.505912, next_spin = -1
+Recv: n_3_3:__init__ :    times[42538720] = 0.129834
+
+Recv: n_3_3:__init__ :    times[42538720] = 0.0721432
+
+Recv: n_3_3:__init__ :    times[42538720] = 1.7472
+
+Recv: n_3_3:__init__ :    times[42538720] = 0.220972
+
+  init device 91 = n_7_4
+Recv: n_7_4:__init__ : next_t = 0.34656, next_spin = 1
+Recv: n_7_4:__init__ :    times[42538720] = 0.653618
+
+Recv: n_7_4:__init__ :    times[42538720] = 0.129253
+
+Recv: n_7_4:__init__ :    times[42538720] = 0.365051
+
+Recv: n_7_4:__init__ :    times[42538720] = 0.270671
+
+  init device 92 = n_6_14
+Recv: n_6_14:__init__ : next_t = 2.10339, next_spin = -1
+Recv: n_6_14:__init__ :    times[42538720] = 0.262092
+
+Recv: n_6_14:__init__ :    times[42538720] = 0.225097
+
+Recv: n_6_14:__init__ :    times[42538720] = 0.918344
+
+Recv: n_6_14:__init__ :    times[42538720] = 0.607271
+
+  init device 93 = n_15_14
+Recv: n_15_14:__init__ : next_t = 0.329191, next_spin = -1
+Recv: n_15_14:__init__ :    times[42538720] = 0.148708
+
+Recv: n_15_14:__init__ :    times[42538720] = 0.020688
+
+Recv: n_15_14:__init__ :    times[42538720] = 2.20646
+
+Recv: n_15_14:__init__ :    times[42538720] = 1.5006
+
+  init device 94 = n_1_9
+Recv: n_1_9:__init__ : next_t = 2.5654, next_spin = -1
+Recv: n_1_9:__init__ :    times[42538720] = 0.966749
+
+Recv: n_1_9:__init__ :    times[42538720] = 0.412985
+
+Recv: n_1_9:__init__ :    times[42538720] = 1.87183
+
+Recv: n_1_9:__init__ :    times[42538720] = 1.14516
+
+  init device 95 = n_14_1
+Recv: n_14_1:__init__ : next_t = 3.0035, next_spin = 1
+Recv: n_14_1:__init__ :    times[42538720] = 0.0201067
+
+Recv: n_14_1:__init__ :    times[42538720] = 1.73188
+
+Recv: n_14_1:__init__ :    times[42538720] = 1.83076
+
+Recv: n_14_1:__init__ :    times[42538720] = 0.727184
+
+  init device 96 = n_13_10
+Recv: n_13_10:__init__ : next_t = 0.47699, next_spin = -1
+Recv: n_13_10:__init__ :    times[42538720] = 2.17439
+
+Recv: n_13_10:__init__ :    times[42538720] = 0.65272
+
+Recv: n_13_10:__init__ :    times[42538720] = 1.30978
+
+Recv: n_13_10:__init__ :    times[42538720] = 0.140808
+
+  init device 97 = n_15_7
+Recv: n_15_7:__init__ : next_t = 0.659376, next_spin = -1
+Recv: n_15_7:__init__ :    times[42538720] = 0.448466
+
+Recv: n_15_7:__init__ :    times[42538720] = 0.883045
+
+Recv: n_15_7:__init__ :    times[42538720] = 0.0238769
+
+Recv: n_15_7:__init__ :    times[42538720] = 1.21552
+
+  init device 98 = n_0_10
+Recv: n_0_10:__init__ : next_t = 0.425861, next_spin = -1
+Recv: n_0_10:__init__ :    times[42538720] = 1.14516
+
+Recv: n_0_10:__init__ :    times[42538720] = 1.87183
+
+Recv: n_0_10:__init__ :    times[42538720] = 0.861376
+
+Recv: n_0_10:__init__ :    times[42538720] = 3.27864
+
+  init device 99 = n_15_1
+Recv: n_15_1:__init__ : next_t = 1.73188, next_spin = -1
+Recv: n_15_1:__init__ :    times[42538720] = 1.11849
+
+Recv: n_15_1:__init__ :    times[42538720] = 0.000652466
+
+Recv: n_15_1:__init__ :    times[42538720] = 0.424253
+
+Recv: n_15_1:__init__ :    times[42538720] = 3.0035
+
+  init device 100 = n_14_5
+Recv: n_14_5:__init__ : next_t = 0.0986879, next_spin = -1
+Recv: n_14_5:__init__ :    times[42538720] = 0.84423
+
+Recv: n_14_5:__init__ :    times[42538720] = 0.642356
+
+Recv: n_14_5:__init__ :    times[42538720] = 0.657811
+
+Recv: n_14_5:__init__ :    times[42538720] = 1.03914
+
+  init device 101 = n_10_3
+Recv: n_10_3:__init__ : next_t = 4.39314, next_spin = -1
+Recv: n_10_3:__init__ :    times[42538720] = 0.626987
+
+Recv: n_10_3:__init__ :    times[42538720] = 0.0922196
+
+Recv: n_10_3:__init__ :    times[42538720] = 0.835426
+
+Recv: n_10_3:__init__ :    times[42538720] = 1.12419
+
+  init device 102 = n_6_10
+Recv: n_6_10:__init__ : next_t = 0.024363, next_spin = 1
+Recv: n_6_10:__init__ :    times[42538720] = 0.814713
+
+Recv: n_6_10:__init__ :    times[42538720] = 1.66868
+
+Recv: n_6_10:__init__ :    times[42538720] = 0.214493
+
+Recv: n_6_10:__init__ :    times[42538720] = 0.681632
+
+  init device 103 = n_2_5
+Recv: n_2_5:__init__ : next_t = 0.305191, next_spin = 1
+Recv: n_2_5:__init__ :    times[42538720] = 0.314581
+
+Recv: n_2_5:__init__ :    times[42538720] = 0.0814609
+
+Recv: n_2_5:__init__ :    times[42538720] = 0.0150718
+
+Recv: n_2_5:__init__ :    times[42538720] = 0.306229
+
+  init device 104 = n_11_1
+Recv: n_11_1:__init__ : next_t = 1.4644, next_spin = -1
+Recv: n_11_1:__init__ :    times[42538720] = 0.467474
+
+Recv: n_11_1:__init__ :    times[42538720] = 0.39912
+
+Recv: n_11_1:__init__ :    times[42538720] = 0.638503
+
+Recv: n_11_1:__init__ :    times[42538720] = 0.72474
+
+  init device 105 = n_3_12
+Recv: n_3_12:__init__ : next_t = 1.29462, next_spin = 1
+Recv: n_3_12:__init__ :    times[42538720] = 5.0733
+
+Recv: n_3_12:__init__ :    times[42538720] = 2.84589
+
+Recv: n_3_12:__init__ :    times[42538720] = 0.218392
+
+Recv: n_3_12:__init__ :    times[42538720] = 0.439776
+
+  init device 106 = n_14_14
+Recv: n_14_14:__init__ : next_t = 1.5006, next_spin = -1
+Recv: n_14_14:__init__ :    times[42538720] = 2.31285
+
+Recv: n_14_14:__init__ :    times[42538720] = 0.329191
+
+Recv: n_14_14:__init__ :    times[42538720] = 1.47316
+
+Recv: n_14_14:__init__ :    times[42538720] = 0.797783
+
+  init device 107 = n_8_7
+Recv: n_8_7:__init__ : next_t = 0.772179, next_spin = 1
+Recv: n_8_7:__init__ :    times[42538720] = 0.510501
+
+Recv: n_8_7:__init__ :    times[42538720] = 2.03962
+
+Recv: n_8_7:__init__ :    times[42538720] = 0.18945
+
+Recv: n_8_7:__init__ :    times[42538720] = 0.343659
+
+  init device 108 = n_1_6
+Recv: n_1_6:__init__ : next_t = 0.120377, next_spin = 1
+Recv: n_1_6:__init__ :    times[42538720] = 0.306229
+
+Recv: n_1_6:__init__ :    times[42538720] = 0.0150718
+
+Recv: n_1_6:__init__ :    times[42538720] = 0.410932
+
+Recv: n_1_6:__init__ :    times[42538720] = 0.412369
+
+  init device 109 = n_0_9
+Recv: n_0_9:__init__ : next_t = 1.14516, next_spin = 1
+Recv: n_0_9:__init__ :    times[42538720] = 0.272286
+
+Recv: n_0_9:__init__ :    times[42538720] = 2.5654
+
+Recv: n_0_9:__init__ :    times[42538720] = 0.425861
+
+Recv: n_0_9:__init__ :    times[42538720] = 1.22222
+
+  init device 110 = n_13_11
+Recv: n_13_11:__init__ : next_t = 1.30978, next_spin = 1
+Recv: n_13_11:__init__ :    times[42538720] = 0.47699
+
+Recv: n_13_11:__init__ :    times[42538720] = 4.11357
+
+Recv: n_13_11:__init__ :    times[42538720] = 0.138071
+
+Recv: n_13_11:__init__ :    times[42538720] = 0.304859
+
+  init device 111 = n_0_7
+Recv: n_0_7:__init__ : next_t = 0.883045, next_spin = 1
+Recv: n_0_7:__init__ :    times[42538720] = 0.412369
+
+Recv: n_0_7:__init__ :    times[42538720] = 0.410932
+
+Recv: n_0_7:__init__ :    times[42538720] = 0.272286
+
+Recv: n_0_7:__init__ :    times[42538720] = 0.659376
+
+  init device 112 = n_9_13
+Recv: n_9_13:__init__ : next_t = 1.93417, next_spin = -1
+Recv: n_9_13:__init__ :    times[42538720] = 1.36807
+
+Recv: n_9_13:__init__ :    times[42538720] = 0.32407
+
+Recv: n_9_13:__init__ :    times[42538720] = 1.00677
+
+Recv: n_9_13:__init__ :    times[42538720] = 0.180547
+
+  init device 113 = n_6_8
+Recv: n_6_8:__init__ : next_t = 0.565645, next_spin = -1
+Recv: n_6_8:__init__ :    times[42538720] = 0.931229
+
+Recv: n_6_8:__init__ :    times[42538720] = 0.131546
+
+Recv: n_6_8:__init__ :    times[42538720] = 0.814713
+
+Recv: n_6_8:__init__ :    times[42538720] = 0.137052
+
+  init device 114 = n_13_9
+Recv: n_13_9:__init__ : next_t = 2.17439, next_spin = 1
+Recv: n_13_9:__init__ :    times[42538720] = 0.67688
+
+Recv: n_13_9:__init__ :    times[42538720] = 0.837172
+
+Recv: n_13_9:__init__ :    times[42538720] = 0.47699
+
+Recv: n_13_9:__init__ :    times[42538720] = 2.07927
+
+  init device 115 = n_8_3
+Recv: n_8_3:__init__ : next_t = 0.44181, next_spin = 1
+Recv: n_8_3:__init__ :    times[42538720] = 0.213444
+
+Recv: n_8_3:__init__ :    times[42538720] = 1.12419
+
+Recv: n_8_3:__init__ :    times[42538720] = 0.129253
+
+Recv: n_8_3:__init__ :    times[42538720] = 0.653618
+
+  init device 116 = n_10_9
+Recv: n_10_9:__init__ : next_t = 0.712809, next_spin = -1
+Recv: n_10_9:__init__ :    times[42538720] = 1.05782
+
+Recv: n_10_9:__init__ :    times[42538720] = 0.265279
+
+Recv: n_10_9:__init__ :    times[42538720] = 0.839262
+
+Recv: n_10_9:__init__ :    times[42538720] = 0.298987
+
+  init device 117 = n_3_13
+Recv: n_3_13:__init__ : next_t = 0.218392, next_spin = 1
+Recv: n_3_13:__init__ :    times[42538720] = 1.29462
+
+Recv: n_3_13:__init__ :    times[42538720] = 2.0757
+
+Recv: n_3_13:__init__ :    times[42538720] = 1.96903
+
+Recv: n_3_13:__init__ :    times[42538720] = 1.90391
+
+  init device 118 = n_15_0
+Recv: n_15_0:__init__ : next_t = 1.11849, next_spin = -1
+Recv: n_15_0:__init__ :    times[42538720] = 2.20646
+
+Recv: n_15_0:__init__ :    times[42538720] = 1.2781
+
+Recv: n_15_0:__init__ :    times[42538720] = 1.73188
+
+Recv: n_15_0:__init__ :    times[42538720] = 0.0201067
+
+  init device 119 = n_5_2
+Recv: n_5_2:__init__ : next_t = 2.35909, next_spin = 1
+Recv: n_5_2:__init__ :    times[42538720] = 0.164152
+
+Recv: n_5_2:__init__ :    times[42538720] = 0.434636
+
+Recv: n_5_2:__init__ :    times[42538720] = 0.691183
+
+Recv: n_5_2:__init__ :    times[42538720] = 0.296708
+
+  init device 120 = n_0_12
+Recv: n_0_12:__init__ : next_t = 0.194286, next_spin = 1
+Recv: n_0_12:__init__ :    times[42538720] = 0.861376
+
+Recv: n_0_12:__init__ :    times[42538720] = 1.52188
+
+Recv: n_0_12:__init__ :    times[42538720] = 0.641938
+
+Recv: n_0_12:__init__ :    times[42538720] = 1.40888
+
+  init device 121 = n_6_13
+Recv: n_6_13:__init__ : next_t = 0.262092, next_spin = -1
+Recv: n_6_13:__init__ :    times[42538720] = 1.66142
+
+Recv: n_6_13:__init__ :    times[42538720] = 0.336384
+
+Recv: n_6_13:__init__ :    times[42538720] = 2.10339
+
+Recv: n_6_13:__init__ :    times[42538720] = 0.167372
+
+  init device 122 = n_7_9
+Recv: n_7_9:__init__ : next_t = 0.0295813, next_spin = 1
+Recv: n_7_9:__init__ :    times[42538720] = 0.131546
+
+Recv: n_7_9:__init__ :    times[42538720] = 1.81805
+
+Recv: n_7_9:__init__ :    times[42538720] = 1.66868
+
+Recv: n_7_9:__init__ :    times[42538720] = 0.814713
+
+  init device 123 = n_0_8
+Recv: n_0_8:__init__ : next_t = 0.272286, next_spin = -1
+Recv: n_0_8:__init__ :    times[42538720] = 0.883045
+
+Recv: n_0_8:__init__ :    times[42538720] = 0.966749
+
+Recv: n_0_8:__init__ :    times[42538720] = 1.14516
+
+Recv: n_0_8:__init__ :    times[42538720] = 0.0238769
+
+  init device 124 = n_6_2
+Recv: n_6_2:__init__ : next_t = 0.434636, next_spin = -1
+Recv: n_6_2:__init__ :    times[42538720] = 2.92738
+
+Recv: n_6_2:__init__ :    times[42538720] = 1.44413
+
+Recv: n_6_2:__init__ :    times[42538720] = 0.602701
+
+Recv: n_6_2:__init__ :    times[42538720] = 2.35909
+
+  init device 125 = n_0_5
+Recv: n_0_5:__init__ : next_t = 1.08052, next_spin = -1
+Recv: n_0_5:__init__ :    times[42538720] = 1.65688
+
+Recv: n_0_5:__init__ :    times[42538720] = 0.306229
+
+Recv: n_0_5:__init__ :    times[42538720] = 0.412369
+
+Recv: n_0_5:__init__ :    times[42538720] = 0.642356
+
+  init device 126 = n_5_12
+Recv: n_5_12:__init__ : next_t = 1.81475, next_spin = 1
+Recv: n_5_12:__init__ :    times[42538720] = 0.0256311
+
+Recv: n_5_12:__init__ :    times[42538720] = 1.66142
+
+Recv: n_5_12:__init__ :    times[42538720] = 0.167372
+
+Recv: n_5_12:__init__ :    times[42538720] = 2.84589
+
+  init device 127 = n_10_1
+Recv: n_10_1:__init__ : next_t = 0.72474, next_spin = -1
+Recv: n_10_1:__init__ :    times[42538720] = 0.100017
+
+Recv: n_10_1:__init__ :    times[42538720] = 1.4644
+
+Recv: n_10_1:__init__ :    times[42538720] = 0.626987
+
+Recv: n_10_1:__init__ :    times[42538720] = 0.432856
+
+  init device 128 = n_0_15
+Recv: n_0_15:__init__ : next_t = 0.666961, next_spin = 1
+Recv: n_0_15:__init__ :    times[42538720] = 0.020688
+
+Recv: n_0_15:__init__ :    times[42538720] = 0.973556
+
+Recv: n_0_15:__init__ :    times[42538720] = 1.2781
+
+Recv: n_0_15:__init__ :    times[42538720] = 2.20646
+
+  init device 129 = n_11_2
+Recv: n_11_2:__init__ : next_t = 0.638503, next_spin = 1
+Recv: n_11_2:__init__ :    times[42538720] = 1.4644
+
+Recv: n_11_2:__init__ :    times[42538720] = 2.50841
+
+Recv: n_11_2:__init__ :    times[42538720] = 0.0922196
+
+Recv: n_11_2:__init__ :    times[42538720] = 0.626987
+
+  init device 130 = n_11_15
+Recv: n_11_15:__init__ : next_t = 2.99309, next_spin = -1
+Recv: n_11_15:__init__ :    times[42538720] = 3.72617
+
+Recv: n_11_15:__init__ :    times[42538720] = 1.18816
+
+Recv: n_11_15:__init__ :    times[42538720] = 0.467474
+
+Recv: n_11_15:__init__ :    times[42538720] = 0.840847
+
+  init device 131 = n_9_6
+Recv: n_9_6:__init__ : next_t = 4.72294, next_spin = 1
+Recv: n_9_6:__init__ :    times[42538720] = 0.862486
+
+Recv: n_9_6:__init__ :    times[42538720] = 2.25096
+
+Recv: n_9_6:__init__ :    times[42538720] = 2.03962
+
+Recv: n_9_6:__init__ :    times[42538720] = 0.510501
+
+  init device 132 = n_4_6
+Recv: n_4_6:__init__ : next_t = 0.19043, next_spin = -1
+Recv: n_4_6:__init__ :    times[42538720] = 1.82163
+
+Recv: n_4_6:__init__ :    times[42538720] = 0.399676
+
+Recv: n_4_6:__init__ :    times[42538720] = 0.290857
+
+Recv: n_4_6:__init__ :    times[42538720] = 2.82
+
+  init device 133 = n_11_9
+Recv: n_11_9:__init__ : next_t = 0.265279, next_spin = -1
+Recv: n_11_9:__init__ :    times[42538720] = 0.124071
+
+Recv: n_11_9:__init__ :    times[42538720] = 2.07927
+
+Recv: n_11_9:__init__ :    times[42538720] = 0.880313
+
+Recv: n_11_9:__init__ :    times[42538720] = 0.712809
+
+  init device 134 = n_4_12
+Recv: n_4_12:__init__ : next_t = 2.84589, next_spin = -1
+Recv: n_4_12:__init__ :    times[42538720] = 2.63215
+
+Recv: n_4_12:__init__ :    times[42538720] = 1.81475
+
+Recv: n_4_12:__init__ :    times[42538720] = 2.0757
+
+Recv: n_4_12:__init__ :    times[42538720] = 1.29462
+
+  init device 135 = n_7_1
+Recv: n_7_1:__init__ : next_t = 0.322359, next_spin = -1
+Recv: n_7_1:__init__ :    times[42538720] = 0.435321
+
+Recv: n_7_1:__init__ :    times[42538720] = 1.5541
+
+Recv: n_7_1:__init__ :    times[42538720] = 1.44413
+
+Recv: n_7_1:__init__ :    times[42538720] = 2.92738
+
+  init device 136 = n_5_7
+Recv: n_5_7:__init__ : next_t = 0.988281, next_spin = -1
+Recv: n_5_7:__init__ :    times[42538720] = 0.399676
+
+Recv: n_5_7:__init__ :    times[42538720] = 0.931229
+
+Recv: n_5_7:__init__ :    times[42538720] = 0.137052
+
+Recv: n_5_7:__init__ :    times[42538720] = 0.290857
+
+  init device 137 = n_7_3
+Recv: n_7_3:__init__ : next_t = 0.653618, next_spin = 1
+Recv: n_7_3:__init__ :    times[42538720] = 1.44413
+
+Recv: n_7_3:__init__ :    times[42538720] = 0.44181
+
+Recv: n_7_3:__init__ :    times[42538720] = 0.34656
+
+Recv: n_7_3:__init__ :    times[42538720] = 0.602701
+
+  init device 138 = n_1_12
+Recv: n_1_12:__init__ : next_t = 1.52188, next_spin = 1
+Recv: n_1_12:__init__ :    times[42538720] = 1.70049
+
+Recv: n_1_12:__init__ :    times[42538720] = 0.439776
+
+Recv: n_1_12:__init__ :    times[42538720] = 0.247031
+
+Recv: n_1_12:__init__ :    times[42538720] = 0.194286
+
+  init device 139 = n_9_5
+Recv: n_9_5:__init__ : next_t = 0.862486, next_spin = 1
+Recv: n_9_5:__init__ :    times[42538720] = 0.528694
+
+Recv: n_9_5:__init__ :    times[42538720] = 0.0155259
+
+Recv: n_9_5:__init__ :    times[42538720] = 4.72294
+
+Recv: n_9_5:__init__ :    times[42538720] = 0.55957
+
+  init device 140 = n_5_11
+Recv: n_5_11:__init__ : next_t = 0.0256311, next_spin = 1
+Recv: n_5_11:__init__ :    times[42538720] = 0.681632
+
+Recv: n_5_11:__init__ :    times[42538720] = 0.214493
+
+Recv: n_5_11:__init__ :    times[42538720] = 1.81475
+
+Recv: n_5_11:__init__ :    times[42538720] = 2.63215
+
+  init device 141 = n_7_5
+Recv: n_7_5:__init__ : next_t = 0.365051, next_spin = 1
+Recv: n_7_5:__init__ :    times[42538720] = 0.34656
+
+Recv: n_7_5:__init__ :    times[42538720] = 0.55957
+
+Recv: n_7_5:__init__ :    times[42538720] = 0.702579
+
+Recv: n_7_5:__init__ :    times[42538720] = 4.20325
+
+  init device 142 = n_11_7
+Recv: n_11_7:__init__ : next_t = 1.60279, next_spin = -1
+Recv: n_11_7:__init__ :    times[42538720] = 1.27945
+
+Recv: n_11_7:__init__ :    times[42538720] = 1.63885
+
+Recv: n_11_7:__init__ :    times[42538720] = 0.124071
+
+Recv: n_11_7:__init__ :    times[42538720] = 0.0681696
+
+  init device 143 = n_15_4
+Recv: n_15_4:__init__ : next_t = 0.185638, next_spin = -1
+Recv: n_15_4:__init__ :    times[42538720] = 0.404163
+
+Recv: n_15_4:__init__ :    times[42538720] = 1.65688
+
+Recv: n_15_4:__init__ :    times[42538720] = 0.642356
+
+Recv: n_15_4:__init__ :    times[42538720] = 0.84423
+
+  init device 144 = n_2_8
+Recv: n_2_8:__init__ : next_t = 1.21399, next_spin = -1
+Recv: n_2_8:__init__ :    times[42538720] = 0.35172
+
+Recv: n_2_8:__init__ :    times[42538720] = 0.531032
+
+Recv: n_2_8:__init__ :    times[42538720] = 0.412985
+
+Recv: n_2_8:__init__ :    times[42538720] = 0.966749
+
+  init device 145 = n_2_13
+Recv: n_2_13:__init__ : next_t = 1.90391, next_spin = 1
+Recv: n_2_13:__init__ :    times[42538720] = 0.439776
+
+Recv: n_2_13:__init__ :    times[42538720] = 0.218392
+
+Recv: n_2_13:__init__ :    times[42538720] = 2.92308
+
+Recv: n_2_13:__init__ :    times[42538720] = 0.247031
+
+  init device 146 = n_6_11
+Recv: n_6_11:__init__ : next_t = 0.214493, next_spin = -1
+Recv: n_6_11:__init__ :    times[42538720] = 0.024363
+
+Recv: n_6_11:__init__ :    times[42538720] = 2.12436
+
+Recv: n_6_11:__init__ :    times[42538720] = 1.66142
+
+Recv: n_6_11:__init__ :    times[42538720] = 0.0256311
+
+  init device 147 = n_9_11
+Recv: n_9_11:__init__ : next_t = 1.02693, next_spin = 1
+Recv: n_9_11:__init__ :    times[42538720] = 1.51876
+
+Recv: n_9_11:__init__ :    times[42538720] = 1.4151
+
+Recv: n_9_11:__init__ :    times[42538720] = 1.36807
+
+Recv: n_9_11:__init__ :    times[42538720] = 1.23435
+
+  init device 148 = n_6_9
+Recv: n_6_9:__init__ : next_t = 0.814713, next_spin = -1
+Recv: n_6_9:__init__ :    times[42538720] = 0.565645
+
+Recv: n_6_9:__init__ :    times[42538720] = 0.0295813
+
+Recv: n_6_9:__init__ :    times[42538720] = 0.024363
+
+Recv: n_6_9:__init__ :    times[42538720] = 1.37301
+
+  init device 149 = n_1_13
+Recv: n_1_13:__init__ : next_t = 0.247031, next_spin = 1
+Recv: n_1_13:__init__ :    times[42538720] = 1.52188
+
+Recv: n_1_13:__init__ :    times[42538720] = 1.90391
+
+Recv: n_1_13:__init__ :    times[42538720] = 2.26939
+
+Recv: n_1_13:__init__ :    times[42538720] = 0.641938
+
+  init device 150 = n_3_6
+Recv: n_3_6:__init__ : next_t = 2.82, next_spin = -1
+Recv: n_3_6:__init__ :    times[42538720] = 0.0814609
+
+Recv: n_3_6:__init__ :    times[42538720] = 0.19043
+
+Recv: n_3_6:__init__ :    times[42538720] = 0.449407
+
+Recv: n_3_6:__init__ :    times[42538720] = 0.0150718
+
+  init device 151 = n_1_2
+Recv: n_1_2:__init__ : next_t = 0.740431, next_spin = -1
+Recv: n_1_2:__init__ :    times[42538720] = 1.52722
+
+Recv: n_1_2:__init__ :    times[42538720] = 1.52758
+
+Recv: n_1_2:__init__ :    times[42538720] = 0.932686
+
+Recv: n_1_2:__init__ :    times[42538720] = 0.0470394
+
+  init device 152 = n_3_1
+Recv: n_3_1:__init__ : next_t = 1.36412, next_spin = 1
+Recv: n_3_1:__init__ :    times[42538720] = 0.296079
+
+Recv: n_3_1:__init__ :    times[42538720] = 0.547223
+
+Recv: n_3_1:__init__ :    times[42538720] = 0.129834
+
+Recv: n_3_1:__init__ :    times[42538720] = 0.619727
+
+  init device 153 = n_10_5
+Recv: n_10_5:__init__ : next_t = 0.0155259, next_spin = -1
+Recv: n_10_5:__init__ :    times[42538720] = 0.835426
+
+Recv: n_10_5:__init__ :    times[42538720] = 0.837001
+
+Recv: n_10_5:__init__ :    times[42538720] = 2.25096
+
+Recv: n_10_5:__init__ :    times[42538720] = 0.862486
+
+  init device 154 = n_13_13
+Recv: n_13_13:__init__ : next_t = 0.209222, next_spin = -1
+Recv: n_13_13:__init__ :    times[42538720] = 0.138071
+
+Recv: n_13_13:__init__ :    times[42538720] = 2.31285
+
+Recv: n_13_13:__init__ :    times[42538720] = 0.797783
+
+Recv: n_13_13:__init__ :    times[42538720] = 1.02519
+
+  init device 155 = n_1_14
+Recv: n_1_14:__init__ : next_t = 2.26939, next_spin = 1
+Recv: n_1_14:__init__ :    times[42538720] = 0.247031
+
+Recv: n_1_14:__init__ :    times[42538720] = 2.92308
+
+Recv: n_1_14:__init__ :    times[42538720] = 0.973556
+
+Recv: n_1_14:__init__ :    times[42538720] = 0.020688
+
+  init device 156 = n_8_2
+Recv: n_8_2:__init__ : next_t = 0.213444, next_spin = -1
+Recv: n_8_2:__init__ :    times[42538720] = 1.5541
+
+Recv: n_8_2:__init__ :    times[42538720] = 0.288724
+
+Recv: n_8_2:__init__ :    times[42538720] = 0.44181
+
+Recv: n_8_2:__init__ :    times[42538720] = 1.44413
+
+  init device 157 = n_5_0
+Recv: n_5_0:__init__ : next_t = 0.920343, next_spin = -1
+Recv: n_5_0:__init__ :    times[42538720] = 0.555115
+
+Recv: n_5_0:__init__ :    times[42538720] = 1.42217
+
+Recv: n_5_0:__init__ :    times[42538720] = 0.164152
+
+Recv: n_5_0:__init__ :    times[42538720] = 1.47701
+
+  init device 158 = n_7_2
+Recv: n_7_2:__init__ : next_t = 1.44413, next_spin = -1
+Recv: n_7_2:__init__ :    times[42538720] = 0.322359
+
+Recv: n_7_2:__init__ :    times[42538720] = 0.213444
+
+Recv: n_7_2:__init__ :    times[42538720] = 0.653618
+
+Recv: n_7_2:__init__ :    times[42538720] = 0.434636
+
+  init device 159 = n_2_10
+Recv: n_2_10:__init__ : next_t = 2.40271, next_spin = 1
+Recv: n_2_10:__init__ :    times[42538720] = 0.412985
+
+Recv: n_2_10:__init__ :    times[42538720] = 0.807902
+
+Recv: n_2_10:__init__ :    times[42538720] = 0.585907
+
+Recv: n_2_10:__init__ :    times[42538720] = 1.87183
+
+  init device 160 = n_13_7
+Recv: n_13_7:__init__ : next_t = 0.089328, next_spin = 1
+Recv: n_13_7:__init__ :    times[42538720] = 0.601181
+
+Recv: n_13_7:__init__ :    times[42538720] = 1.21552
+
+Recv: n_13_7:__init__ :    times[42538720] = 0.67688
+
+Recv: n_13_7:__init__ :    times[42538720] = 1.63885
+
+  init device 161 = n_12_11
+Recv: n_12_11:__init__ : next_t = 0.304859, next_spin = 1
+Recv: n_12_11:__init__ :    times[42538720] = 0.140808
+
+Recv: n_12_11:__init__ :    times[42538720] = 1.30978
+
+Recv: n_12_11:__init__ :    times[42538720] = 0.656731
+
+Recv: n_12_11:__init__ :    times[42538720] = 2.45935
+
+  init device 162 = n_9_3
+Recv: n_9_3:__init__ : next_t = 1.12419, next_spin = 1
+Recv: n_9_3:__init__ :    times[42538720] = 0.288724
+
+Recv: n_9_3:__init__ :    times[42538720] = 4.39314
+
+Recv: n_9_3:__init__ :    times[42538720] = 0.528694
+
+Recv: n_9_3:__init__ :    times[42538720] = 0.44181
+
+  init device 163 = n_12_0
+Recv: n_12_0:__init__ : next_t = 2.75667, next_spin = 1
+Recv: n_12_0:__init__ :    times[42538720] = 1.18816
+
+Recv: n_12_0:__init__ :    times[42538720] = 1.34615
+
+Recv: n_12_0:__init__ :    times[42538720] = 0.39912
+
+Recv: n_12_0:__init__ :    times[42538720] = 0.467474
+
+  init device 164 = n_14_2
+Recv: n_14_2:__init__ : next_t = 1.83076, next_spin = -1
+Recv: n_14_2:__init__ :    times[42538720] = 3.0035
+
+Recv: n_14_2:__init__ :    times[42538720] = 0.424253
+
+Recv: n_14_2:__init__ :    times[42538720] = 1.29622
+
+Recv: n_14_2:__init__ :    times[42538720] = 0.637919
+
+  init device 165 = n_0_14
+Recv: n_0_14:__init__ : next_t = 0.020688, next_spin = 1
+Recv: n_0_14:__init__ :    times[42538720] = 0.641938
+
+Recv: n_0_14:__init__ :    times[42538720] = 2.26939
+
+Recv: n_0_14:__init__ :    times[42538720] = 0.666961
+
+Recv: n_0_14:__init__ :    times[42538720] = 0.329191
+
+  init device 166 = n_13_1
+Recv: n_13_1:__init__ : next_t = 0.727184, next_spin = -1
+Recv: n_13_1:__init__ :    times[42538720] = 1.34615
+
+Recv: n_13_1:__init__ :    times[42538720] = 3.0035
+
+Recv: n_13_1:__init__ :    times[42538720] = 0.637919
+
+Recv: n_13_1:__init__ :    times[42538720] = 0.39912
+
+  init device 167 = n_10_7
+Recv: n_10_7:__init__ : next_t = 0.0681696, next_spin = 1
+Recv: n_10_7:__init__ :    times[42538720] = 2.25096
+
+Recv: n_10_7:__init__ :    times[42538720] = 1.60279
+
+Recv: n_10_7:__init__ :    times[42538720] = 1.05782
+
+Recv: n_10_7:__init__ :    times[42538720] = 2.03962
+
+  init device 168 = n_10_12
+Recv: n_10_12:__init__ : next_t = 2.07434, next_spin = -1
+Recv: n_10_12:__init__ :    times[42538720] = 1.4151
+
+Recv: n_10_12:__init__ :    times[42538720] = 0.266308
+
+Recv: n_10_12:__init__ :    times[42538720] = 0.32407
+
+Recv: n_10_12:__init__ :    times[42538720] = 1.36807
+
+  init device 169 = n_2_11
+Recv: n_2_11:__init__ : next_t = 0.585907, next_spin = 1
+Recv: n_2_11:__init__ :    times[42538720] = 2.40271
+
+Recv: n_2_11:__init__ :    times[42538720] = 5.0733
+
+Recv: n_2_11:__init__ :    times[42538720] = 0.439776
+
+Recv: n_2_11:__init__ :    times[42538720] = 1.70049
+
+  init device 170 = n_14_6
+Recv: n_14_6:__init__ : next_t = 0.657811, next_spin = 1
+Recv: n_14_6:__init__ :    times[42538720] = 0.0986879
+
+Recv: n_14_6:__init__ :    times[42538720] = 0.448466
+
+Recv: n_14_6:__init__ :    times[42538720] = 1.21552
+
+Recv: n_14_6:__init__ :    times[42538720] = 0.601181
+
+  init device 171 = n_4_5
+Recv: n_4_5:__init__ : next_t = 1.82163, next_spin = -1
+Recv: n_4_5:__init__ :    times[42538720] = 2.8533
+
+Recv: n_4_5:__init__ :    times[42538720] = 2.83911
+
+Recv: n_4_5:__init__ :    times[42538720] = 0.19043
+
+Recv: n_4_5:__init__ :    times[42538720] = 0.0814609
+
+  init device 172 = n_6_4
+Recv: n_6_4:__init__ : next_t = 0.270671, next_spin = 1
+Recv: n_6_4:__init__ :    times[42538720] = 0.602701
+
+Recv: n_6_4:__init__ :    times[42538720] = 0.34656
+
+Recv: n_6_4:__init__ :    times[42538720] = 4.20325
+
+Recv: n_6_4:__init__ :    times[42538720] = 2.91204
+
+  init device 173 = n_12_6
+Recv: n_12_6:__init__ : next_t = 2.37669, next_spin = 1
+Recv: n_12_6:__init__ :    times[42538720] = 0.843107
+
+Recv: n_12_6:__init__ :    times[42538720] = 0.601181
+
+Recv: n_12_6:__init__ :    times[42538720] = 1.63885
+
+Recv: n_12_6:__init__ :    times[42538720] = 1.27945
+
+  init device 174 = n_13_3
+Recv: n_13_3:__init__ : next_t = 0.409571, next_spin = -1
+Recv: n_13_3:__init__ :    times[42538720] = 0.637919
+
+Recv: n_13_3:__init__ :    times[42538720] = 1.29622
+
+Recv: n_13_3:__init__ :    times[42538720] = 0.444392
+
+Recv: n_13_3:__init__ :    times[42538720] = 0.72986
+
+  init device 175 = n_9_14
+Recv: n_9_14:__init__ : next_t = 1.00677, next_spin = -1
+Recv: n_9_14:__init__ :    times[42538720] = 1.93417
+
+Recv: n_9_14:__init__ :    times[42538720] = 0.606359
+
+Recv: n_9_14:__init__ :    times[42538720] = 0.628775
+
+Recv: n_9_14:__init__ :    times[42538720] = 0.0677639
+
+  init device 176 = n_11_5
+Recv: n_11_5:__init__ : next_t = 0.837001, next_spin = 1
+Recv: n_11_5:__init__ :    times[42538720] = 0.0974943
+
+Recv: n_11_5:__init__ :    times[42538720] = 0.843107
+
+Recv: n_11_5:__init__ :    times[42538720] = 1.27945
+
+Recv: n_11_5:__init__ :    times[42538720] = 0.0155259
+
+  init device 177 = n_14_10
+Recv: n_14_10:__init__ : next_t = 0.65272, next_spin = -1
+Recv: n_14_10:__init__ :    times[42538720] = 0.837172
+
+Recv: n_14_10:__init__ :    times[42538720] = 3.27864
+
+Recv: n_14_10:__init__ :    times[42538720] = 4.11357
+
+Recv: n_14_10:__init__ :    times[42538720] = 0.47699
+
+  init device 178 = n_12_3
+Recv: n_12_3:__init__ : next_t = 0.72986, next_spin = -1
+Recv: n_12_3:__init__ :    times[42538720] = 2.50841
+
+Recv: n_12_3:__init__ :    times[42538720] = 0.409571
+
+Recv: n_12_3:__init__ :    times[42538720] = 2.28077
+
+Recv: n_12_3:__init__ :    times[42538720] = 0.0922196
+
+  init device 179 = n_5_1
+Recv: n_5_1:__init__ : next_t = 0.164152, next_spin = 1
+Recv: n_5_1:__init__ :    times[42538720] = 0.920343
+
+Recv: n_5_1:__init__ :    times[42538720] = 2.92738
+
+Recv: n_5_1:__init__ :    times[42538720] = 2.35909
+
+Recv: n_5_1:__init__ :    times[42538720] = 0.547223
+
+  init device 180 = n_4_9
+Recv: n_4_9:__init__ : next_t = 0.668679, next_spin = -1
+Recv: n_4_9:__init__ :    times[42538720] = 0.662919
+
+Recv: n_4_9:__init__ :    times[42538720] = 1.37301
+
+Recv: n_4_9:__init__ :    times[42538720] = 0.1415
+
+Recv: n_4_9:__init__ :    times[42538720] = 0.0750937
+
+  init device 181 = n_12_12
+Recv: n_12_12:__init__ : next_t = 0.656731, next_spin = 1
+Recv: n_12_12:__init__ :    times[42538720] = 0.304859
+
+Recv: n_12_12:__init__ :    times[42538720] = 0.138071
+
+Recv: n_12_12:__init__ :    times[42538720] = 1.02519
+
+Recv: n_12_12:__init__ :    times[42538720] = 0.266308
+
+  init device 182 = n_15_9
+Recv: n_15_9:__init__ : next_t = 1.22222, next_spin = -1
+Recv: n_15_9:__init__ :    times[42538720] = 0.0238769
+
+Recv: n_15_9:__init__ :    times[42538720] = 1.14516
+
+Recv: n_15_9:__init__ :    times[42538720] = 3.27864
+
+Recv: n_15_9:__init__ :    times[42538720] = 0.837172
+
+  init device 183 = n_3_2
+Recv: n_3_2:__init__ : next_t = 0.129834, next_spin = -1
+Recv: n_3_2:__init__ :    times[42538720] = 1.36412
+
+Recv: n_3_2:__init__ :    times[42538720] = 0.296708
+
+Recv: n_3_2:__init__ :    times[42538720] = 0.505912
+
+Recv: n_3_2:__init__ :    times[42538720] = 1.52758
+
+  init device 184 = n_3_5
+Recv: n_3_5:__init__ : next_t = 0.0814609, next_spin = 1
+Recv: n_3_5:__init__ :    times[42538720] = 1.7472
+
+Recv: n_3_5:__init__ :    times[42538720] = 1.82163
+
+Recv: n_3_5:__init__ :    times[42538720] = 2.82
+
+Recv: n_3_5:__init__ :    times[42538720] = 0.305191
+
+  init device 185 = n_7_7
+Recv: n_7_7:__init__ : next_t = 0.343659, next_spin = 1
+Recv: n_7_7:__init__ :    times[42538720] = 0.702579
+
+Recv: n_7_7:__init__ :    times[42538720] = 0.772179
+
+Recv: n_7_7:__init__ :    times[42538720] = 0.131546
+
+Recv: n_7_7:__init__ :    times[42538720] = 0.931229
+
+  init device 186 = n_14_13
+Recv: n_14_13:__init__ : next_t = 2.31285, next_spin = 1
+Recv: n_14_13:__init__ :    times[42538720] = 0.292212
+
+Recv: n_14_13:__init__ :    times[42538720] = 0.148708
+
+Recv: n_14_13:__init__ :    times[42538720] = 1.5006
+
+Recv: n_14_13:__init__ :    times[42538720] = 0.209222
+
+  init device 187 = n_10_0
+Recv: n_10_0:__init__ : next_t = 0.100017, next_spin = 1
+Recv: n_10_0:__init__ :    times[42538720] = 0.840847
+
+Recv: n_10_0:__init__ :    times[42538720] = 0.467474
+
+Recv: n_10_0:__init__ :    times[42538720] = 0.72474
+
+Recv: n_10_0:__init__ :    times[42538720] = 0.300056
+
+  init device 188 = n_8_0
+Recv: n_8_0:__init__ : next_t = 1.81114, next_spin = 1
+Recv: n_8_0:__init__ :    times[42538720] = 2.06096
+
+Recv: n_8_0:__init__ :    times[42538720] = 0.300056
+
+Recv: n_8_0:__init__ :    times[42538720] = 1.5541
+
+Recv: n_8_0:__init__ :    times[42538720] = 0.435321
+
+  init device 189 = n_12_13
+Recv: n_12_13:__init__ : next_t = 1.02519, next_spin = 1
+Recv: n_12_13:__init__ :    times[42538720] = 0.656731
+
+Recv: n_12_13:__init__ :    times[42538720] = 0.209222
+
+Recv: n_12_13:__init__ :    times[42538720] = 1.26759
+
+Recv: n_12_13:__init__ :    times[42538720] = 0.472979
+
+  init device 190 = n_9_4
+Recv: n_9_4:__init__ : next_t = 0.528694, next_spin = -1
+Recv: n_9_4:__init__ :    times[42538720] = 1.12419
+
+Recv: n_9_4:__init__ :    times[42538720] = 0.835426
+
+Recv: n_9_4:__init__ :    times[42538720] = 0.862486
+
+Recv: n_9_4:__init__ :    times[42538720] = 0.129253
+
+  init device 191 = n_9_1
+Recv: n_9_1:__init__ : next_t = 0.432856, next_spin = 1
+Recv: n_9_1:__init__ :    times[42538720] = 0.300056
+
+Recv: n_9_1:__init__ :    times[42538720] = 0.72474
+
+Recv: n_9_1:__init__ :    times[42538720] = 0.288724
+
+Recv: n_9_1:__init__ :    times[42538720] = 1.5541
+
+  init device 192 = n_1_11
+Recv: n_1_11:__init__ : next_t = 1.70049, next_spin = 1
+Recv: n_1_11:__init__ :    times[42538720] = 1.87183
+
+Recv: n_1_11:__init__ :    times[42538720] = 0.585907
+
+Recv: n_1_11:__init__ :    times[42538720] = 1.52188
+
+Recv: n_1_11:__init__ :    times[42538720] = 0.861376
+
+  init device 193 = n_5_3
+Recv: n_5_3:__init__ : next_t = 0.691183, next_spin = -1
+Recv: n_5_3:__init__ :    times[42538720] = 2.35909
+
+Recv: n_5_3:__init__ :    times[42538720] = 0.602701
+
+Recv: n_5_3:__init__ :    times[42538720] = 2.91204
+
+Recv: n_5_3:__init__ :    times[42538720] = 0.0721432
+
+  init device 194 = n_7_14
+Recv: n_7_14:__init__ : next_t = 0.225097, next_spin = 1
+Recv: n_7_14:__init__ :    times[42538720] = 0.336384
+
+Recv: n_7_14:__init__ :    times[42538720] = 0.0677639
+
+Recv: n_7_14:__init__ :    times[42538720] = 0.0247234
+
+Recv: n_7_14:__init__ :    times[42538720] = 2.10339
+
+  init device 195 = n_12_4
+Recv: n_12_4:__init__ : next_t = 2.28077, next_spin = -1
+Recv: n_12_4:__init__ :    times[42538720] = 0.72986
+
+Recv: n_12_4:__init__ :    times[42538720] = 0.444392
+
+Recv: n_12_4:__init__ :    times[42538720] = 0.843107
+
+Recv: n_12_4:__init__ :    times[42538720] = 0.0974943
+
+  init device 196 = n_12_10
+Recv: n_12_10:__init__ : next_t = 0.140808, next_spin = -1
+Recv: n_12_10:__init__ :    times[42538720] = 2.07927
+
+Recv: n_12_10:__init__ :    times[42538720] = 0.47699
+
+Recv: n_12_10:__init__ :    times[42538720] = 0.304859
+
+Recv: n_12_10:__init__ :    times[42538720] = 0.880313
+
+  init device 197 = n_10_14
+Recv: n_10_14:__init__ : next_t = 0.606359, next_spin = -1
+Recv: n_10_14:__init__ :    times[42538720] = 0.32407
+
+Recv: n_10_14:__init__ :    times[42538720] = 3.72617
+
+Recv: n_10_14:__init__ :    times[42538720] = 0.840847
+
+Recv: n_10_14:__init__ :    times[42538720] = 1.00677
+
+  init device 198 = n_5_9
+Recv: n_5_9:__init__ : next_t = 1.37301, next_spin = 1
+Recv: n_5_9:__init__ :    times[42538720] = 0.137052
+
+Recv: n_5_9:__init__ :    times[42538720] = 0.814713
+
+Recv: n_5_9:__init__ :    times[42538720] = 0.681632
+
+Recv: n_5_9:__init__ :    times[42538720] = 0.668679
+
+  init device 199 = n_13_0
+Recv: n_13_0:__init__ : next_t = 1.34615, next_spin = -1
+Recv: n_13_0:__init__ :    times[42538720] = 0.366813
+
+Recv: n_13_0:__init__ :    times[42538720] = 0.0201067
+
+Recv: n_13_0:__init__ :    times[42538720] = 0.727184
+
+Recv: n_13_0:__init__ :    times[42538720] = 2.75667
+
+  init device 200 = n_13_8
+Recv: n_13_8:__init__ : next_t = 0.67688, next_spin = -1
+Recv: n_13_8:__init__ :    times[42538720] = 0.089328
+
+Recv: n_13_8:__init__ :    times[42538720] = 0.16284
+
+Recv: n_13_8:__init__ :    times[42538720] = 2.17439
+
+Recv: n_13_8:__init__ :    times[42538720] = 0.868576
+
+  init device 201 = n_8_8
+Recv: n_8_8:__init__ : next_t = 0.18945, next_spin = -1
+Recv: n_8_8:__init__ :    times[42538720] = 0.772179
+
+Recv: n_8_8:__init__ :    times[42538720] = 0.691185
+
+Recv: n_8_8:__init__ :    times[42538720] = 1.81805
+
+Recv: n_8_8:__init__ :    times[42538720] = 0.131546
+
+  init device 202 = n_9_15
+Recv: n_9_15:__init__ : next_t = 0.628775, next_spin = 1
+Recv: n_9_15:__init__ :    times[42538720] = 1.00677
+
+Recv: n_9_15:__init__ :    times[42538720] = 0.840847
+
+Recv: n_9_15:__init__ :    times[42538720] = 0.300056
+
+Recv: n_9_15:__init__ :    times[42538720] = 2.06096
+
+  init device 203 = n_10_4
+Recv: n_10_4:__init__ : next_t = 0.835426, next_spin = -1
+Recv: n_10_4:__init__ :    times[42538720] = 4.39314
+
+Recv: n_10_4:__init__ :    times[42538720] = 0.0974943
+
+Recv: n_10_4:__init__ :    times[42538720] = 0.0155259
+
+Recv: n_10_4:__init__ :    times[42538720] = 0.528694
+
+  init device 204 = n_15_11
+Recv: n_15_11:__init__ : next_t = 1.90366, next_spin = -1
+Recv: n_15_11:__init__ :    times[42538720] = 3.27864
+
+Recv: n_15_11:__init__ :    times[42538720] = 0.861376
+
+Recv: n_15_11:__init__ :    times[42538720] = 1.40888
+
+Recv: n_15_11:__init__ :    times[42538720] = 4.11357
+
+  init device 205 = n_11_14
+Recv: n_11_14:__init__ : next_t = 3.72617, next_spin = -1
+Recv: n_11_14:__init__ :    times[42538720] = 0.472979
+
+Recv: n_11_14:__init__ :    times[42538720] = 1.26759
+
+Recv: n_11_14:__init__ :    times[42538720] = 2.99309
+
+Recv: n_11_14:__init__ :    times[42538720] = 0.606359
+
+  init device 206 = n_4_7
+Recv: n_4_7:__init__ : next_t = 0.290857, next_spin = 1
+Recv: n_4_7:__init__ :    times[42538720] = 0.19043
+
+Recv: n_4_7:__init__ :    times[42538720] = 0.988281
+
+Recv: n_4_7:__init__ :    times[42538720] = 0.662919
+
+Recv: n_4_7:__init__ :    times[42538720] = 0.449407
+
+  init device 207 = n_1_4
+Recv: n_1_4:__init__ : next_t = 0.382913, next_spin = 1
+Recv: n_1_4:__init__ :    times[42538720] = 0.932686
+
+Recv: n_1_4:__init__ :    times[42538720] = 0.314581
+
+Recv: n_1_4:__init__ :    times[42538720] = 0.306229
+
+Recv: n_1_4:__init__ :    times[42538720] = 1.65688
+
+  init device 208 = n_5_6
+Recv: n_5_6:__init__ : next_t = 0.399676, next_spin = -1
+Recv: n_5_6:__init__ :    times[42538720] = 2.83911
+
+Recv: n_5_6:__init__ :    times[42538720] = 0.228375
+
+Recv: n_5_6:__init__ :    times[42538720] = 0.988281
+
+Recv: n_5_6:__init__ :    times[42538720] = 0.19043
+
+  init device 209 = n_14_12
+Recv: n_14_12:__init__ : next_t = 0.292212, next_spin = -1
+Recv: n_14_12:__init__ :    times[42538720] = 4.11357
+
+Recv: n_14_12:__init__ :    times[42538720] = 1.40888
+
+Recv: n_14_12:__init__ :    times[42538720] = 2.31285
+
+Recv: n_14_12:__init__ :    times[42538720] = 0.138071
+
+  init device 210 = n_3_10
+Recv: n_3_10:__init__ : next_t = 0.807902, next_spin = 1
+Recv: n_3_10:__init__ :    times[42538720] = 0.0750937
+
+Recv: n_3_10:__init__ :    times[42538720] = 0.1415
+
+Recv: n_3_10:__init__ :    times[42538720] = 5.0733
+
+Recv: n_3_10:__init__ :    times[42538720] = 2.40271
+
+  init device 211 = n_11_12
+Recv: n_11_12:__init__ : next_t = 0.266308, next_spin = -1
+Recv: n_11_12:__init__ :    times[42538720] = 2.45935
+
+Recv: n_11_12:__init__ :    times[42538720] = 0.656731
+
+Recv: n_11_12:__init__ :    times[42538720] = 0.472979
+
+Recv: n_11_12:__init__ :    times[42538720] = 2.07434
+
+  init device 212 = n_3_4
+Recv: n_3_4:__init__ : next_t = 1.7472, next_spin = 1
+Recv: n_3_4:__init__ :    times[42538720] = 0.505912
+
+Recv: n_3_4:__init__ :    times[42538720] = 2.8533
+
+Recv: n_3_4:__init__ :    times[42538720] = 0.0814609
+
+Recv: n_3_4:__init__ :    times[42538720] = 0.314581
+
+  init device 213 = n_6_12
+Recv: n_6_12:__init__ : next_t = 1.66142, next_spin = -1
+Recv: n_6_12:__init__ :    times[42538720] = 0.214493
+
+Recv: n_6_12:__init__ :    times[42538720] = 1.03813
+
+Recv: n_6_12:__init__ :    times[42538720] = 0.262092
+
+Recv: n_6_12:__init__ :    times[42538720] = 1.81475
+
+  init device 214 = n_2_12
+Recv: n_2_12:__init__ : next_t = 0.439776, next_spin = 1
+Recv: n_2_12:__init__ :    times[42538720] = 0.585907
+
+Recv: n_2_12:__init__ :    times[42538720] = 1.29462
+
+Recv: n_2_12:__init__ :    times[42538720] = 1.90391
+
+Recv: n_2_12:__init__ :    times[42538720] = 1.52188
+
+  init device 215 = n_8_10
+Recv: n_8_10:__init__ : next_t = 1.73214, next_spin = -1
+Recv: n_8_10:__init__ :    times[42538720] = 1.81805
+
+Recv: n_8_10:__init__ :    times[42538720] = 1.51876
+
+Recv: n_8_10:__init__ :    times[42538720] = 1.23435
+
+Recv: n_8_10:__init__ :    times[42538720] = 1.66868
+
+  init device 216 = n_1_1
+Recv: n_1_1:__init__ : next_t = 1.52722, next_spin = -1
+Recv: n_1_1:__init__ :    times[42538720] = 0.91126
+
+Recv: n_1_1:__init__ :    times[42538720] = 0.619727
+
+Recv: n_1_1:__init__ :    times[42538720] = 0.740431
+
+Recv: n_1_1:__init__ :    times[42538720] = 0.000652466
+
+  init device 217 = n_11_3
+Recv: n_11_3:__init__ : next_t = 0.0922196, next_spin = 1
+Recv: n_11_3:__init__ :    times[42538720] = 0.638503
+
+Recv: n_11_3:__init__ :    times[42538720] = 0.72986
+
+Recv: n_11_3:__init__ :    times[42538720] = 0.0974943
+
+Recv: n_11_3:__init__ :    times[42538720] = 4.39314
+
+  init device 218 = n_15_15
+Recv: n_15_15:__init__ : next_t = 2.20646, next_spin = 1
+Recv: n_15_15:__init__ :    times[42538720] = 0.329191
+
+Recv: n_15_15:__init__ :    times[42538720] = 0.666961
+
+Recv: n_15_15:__init__ :    times[42538720] = 1.11849
+
+Recv: n_15_15:__init__ :    times[42538720] = 1.47316
+
+  init device 219 = n_1_10
+Recv: n_1_10:__init__ : next_t = 1.87183, next_spin = -1
+Recv: n_1_10:__init__ :    times[42538720] = 2.5654
+
+Recv: n_1_10:__init__ :    times[42538720] = 2.40271
+
+Recv: n_1_10:__init__ :    times[42538720] = 1.70049
+
+Recv: n_1_10:__init__ :    times[42538720] = 0.425861
+
+  init device 220 = n_6_7
+Recv: n_6_7:__init__ : next_t = 0.931229, next_spin = 1
+Recv: n_6_7:__init__ :    times[42538720] = 0.228375
+
+Recv: n_6_7:__init__ :    times[42538720] = 0.343659
+
+Recv: n_6_7:__init__ :    times[42538720] = 0.565645
+
+Recv: n_6_7:__init__ :    times[42538720] = 0.988281
+
+  init device 221 = n_5_13
+Recv: n_5_13:__init__ : next_t = 0.167372, next_spin = -1
+Recv: n_5_13:__init__ :    times[42538720] = 1.81475
+
+Recv: n_5_13:__init__ :    times[42538720] = 0.262092
+
+Recv: n_5_13:__init__ :    times[42538720] = 0.607271
+
+Recv: n_5_13:__init__ :    times[42538720] = 2.0757
+
+  init device 222 = n_2_14
+Recv: n_2_14:__init__ : next_t = 2.92308, next_spin = 1
+Recv: n_2_14:__init__ :    times[42538720] = 1.90391
+
+Recv: n_2_14:__init__ :    times[42538720] = 1.96903
+
+Recv: n_2_14:__init__ :    times[42538720] = 1.27057
+
+Recv: n_2_14:__init__ :    times[42538720] = 2.26939
+
+  init device 223 = n_14_8
+Recv: n_14_8:__init__ : next_t = 0.16284, next_spin = 1
+Recv: n_14_8:__init__ :    times[42538720] = 1.21552
+
+Recv: n_14_8:__init__ :    times[42538720] = 0.0238769
+
+Recv: n_14_8:__init__ :    times[42538720] = 0.837172
+
+Recv: n_14_8:__init__ :    times[42538720] = 0.67688
+
+  init device 224 = n_9_2
+Recv: n_9_2:__init__ : next_t = 0.288724, next_spin = -1
+Recv: n_9_2:__init__ :    times[42538720] = 0.432856
+
+Recv: n_9_2:__init__ :    times[42538720] = 0.626987
+
+Recv: n_9_2:__init__ :    times[42538720] = 1.12419
+
+Recv: n_9_2:__init__ :    times[42538720] = 0.213444
+
+  init device 225 = n_2_4
+Recv: n_2_4:__init__ : next_t = 0.314581, next_spin = 1
+Recv: n_2_4:__init__ :    times[42538720] = 0.220972
+
+Recv: n_2_4:__init__ :    times[42538720] = 1.7472
+
+Recv: n_2_4:__init__ :    times[42538720] = 0.305191
+
+Recv: n_2_4:__init__ :    times[42538720] = 0.382913
+
+  init device 226 = n_0_11
+Recv: n_0_11:__init__ : next_t = 0.861376, next_spin = -1
+Recv: n_0_11:__init__ :    times[42538720] = 0.425861
+
+Recv: n_0_11:__init__ :    times[42538720] = 1.70049
+
+Recv: n_0_11:__init__ :    times[42538720] = 0.194286
+
+Recv: n_0_11:__init__ :    times[42538720] = 1.90366
+
+  init device 227 = n_6_0
+Recv: n_6_0:__init__ : next_t = 1.42217, next_spin = 1
+Recv: n_6_0:__init__ :    times[42538720] = 0.918344
+
+Recv: n_6_0:__init__ :    times[42538720] = 0.435321
+
+Recv: n_6_0:__init__ :    times[42538720] = 2.92738
+
+Recv: n_6_0:__init__ :    times[42538720] = 0.920343
+
+  init device 228 = n_15_6
+Recv: n_15_6:__init__ : next_t = 0.448466, next_spin = -1
+Recv: n_15_6:__init__ :    times[42538720] = 0.642356
+
+Recv: n_15_6:__init__ :    times[42538720] = 0.412369
+
+Recv: n_15_6:__init__ :    times[42538720] = 0.659376
+
+Recv: n_15_6:__init__ :    times[42538720] = 0.657811
+
+  init device 229 = n_5_15
+Recv: n_5_15:__init__ : next_t = 0.555115, next_spin = 1
+Recv: n_5_15:__init__ :    times[42538720] = 0.607271
+
+Recv: n_5_15:__init__ :    times[42538720] = 0.918344
+
+Recv: n_5_15:__init__ :    times[42538720] = 0.920343
+
+Recv: n_5_15:__init__ :    times[42538720] = 1.20362
+
+  init device 230 = n_12_7
+Recv: n_12_7:__init__ : next_t = 1.63885, next_spin = -1
+Recv: n_12_7:__init__ :    times[42538720] = 2.37669
+
+Recv: n_12_7:__init__ :    times[42538720] = 0.089328
+
+Recv: n_12_7:__init__ :    times[42538720] = 0.868576
+
+Recv: n_12_7:__init__ :    times[42538720] = 1.60279
+
+  init device 231 = n_8_1
+Recv: n_8_1:__init__ : next_t = 1.5541, next_spin = -1
+Recv: n_8_1:__init__ :    times[42538720] = 1.81114
+
+Recv: n_8_1:__init__ :    times[42538720] = 0.432856
+
+Recv: n_8_1:__init__ :    times[42538720] = 0.213444
+
+Recv: n_8_1:__init__ :    times[42538720] = 0.322359
+
+  init device 232 = n_13_14
+Recv: n_13_14:__init__ : next_t = 0.797783, next_spin = -1
+Recv: n_13_14:__init__ :    times[42538720] = 0.209222
+
+Recv: n_13_14:__init__ :    times[42538720] = 1.5006
+
+Recv: n_13_14:__init__ :    times[42538720] = 0.366813
+
+Recv: n_13_14:__init__ :    times[42538720] = 1.26759
+
+  init device 233 = n_9_9
+Recv: n_9_9:__init__ : next_t = 0.298987, next_spin = 1
+Recv: n_9_9:__init__ :    times[42538720] = 0.691185
+
+Recv: n_9_9:__init__ :    times[42538720] = 0.712809
+
+Recv: n_9_9:__init__ :    times[42538720] = 1.51876
+
+Recv: n_9_9:__init__ :    times[42538720] = 1.81805
+
+  init device 234 = n_4_1
+Recv: n_4_1:__init__ : next_t = 0.547223, next_spin = 1
+Recv: n_4_1:__init__ :    times[42538720] = 1.47701
+
+Recv: n_4_1:__init__ :    times[42538720] = 0.164152
+
+Recv: n_4_1:__init__ :    times[42538720] = 0.296708
+
+Recv: n_4_1:__init__ :    times[42538720] = 1.36412
+
+  init device 235 = n_1_3
+Recv: n_1_3:__init__ : next_t = 0.932686, next_spin = 1
+Recv: n_1_3:__init__ :    times[42538720] = 0.740431
+
+Recv: n_1_3:__init__ :    times[42538720] = 0.220972
+
+Recv: n_1_3:__init__ :    times[42538720] = 0.382913
+
+Recv: n_1_3:__init__ :    times[42538720] = 0.110215
+
+  init device 236 = n_10_15
+Recv: n_10_15:__init__ : next_t = 0.840847, next_spin = 1
+Recv: n_10_15:__init__ :    times[42538720] = 0.606359
+
+Recv: n_10_15:__init__ :    times[42538720] = 2.99309
+
+Recv: n_10_15:__init__ :    times[42538720] = 0.100017
+
+Recv: n_10_15:__init__ :    times[42538720] = 0.628775
+
+  init device 237 = n_3_14
+Recv: n_3_14:__init__ : next_t = 1.96903, next_spin = -1
+Recv: n_3_14:__init__ :    times[42538720] = 0.218392
+
+Recv: n_3_14:__init__ :    times[42538720] = 5.13255
+
+Recv: n_3_14:__init__ :    times[42538720] = 1.30138
+
+Recv: n_3_14:__init__ :    times[42538720] = 2.92308
+
+  init device 238 = n_12_1
+Recv: n_12_1:__init__ : next_t = 0.39912, next_spin = 1
+Recv: n_12_1:__init__ :    times[42538720] = 2.75667
+
+Recv: n_12_1:__init__ :    times[42538720] = 0.727184
+
+Recv: n_12_1:__init__ :    times[42538720] = 2.50841
+
+Recv: n_12_1:__init__ :    times[42538720] = 1.4644
+
+  init device 239 = n_8_6
+Recv: n_8_6:__init__ : next_t = 0.510501, next_spin = 1
+Recv: n_8_6:__init__ :    times[42538720] = 0.55957
+
+Recv: n_8_6:__init__ :    times[42538720] = 4.72294
+
+Recv: n_8_6:__init__ :    times[42538720] = 0.772179
+
+Recv: n_8_6:__init__ :    times[42538720] = 0.702579
+
+  init device 240 = n_3_15
+Recv: n_3_15:__init__ : next_t = 1.30138, next_spin = -1
+Recv: n_3_15:__init__ :    times[42538720] = 1.96903
+
+Recv: n_3_15:__init__ :    times[42538720] = 1.20362
+
+Recv: n_3_15:__init__ :    times[42538720] = 0.296079
+
+Recv: n_3_15:__init__ :    times[42538720] = 1.27057
+
+  init device 241 = n_15_10
+Recv: n_15_10:__init__ : next_t = 3.27864, next_spin = -1
+Recv: n_15_10:__init__ :    times[42538720] = 1.22222
+
+Recv: n_15_10:__init__ :    times[42538720] = 0.425861
+
+Recv: n_15_10:__init__ :    times[42538720] = 1.90366
+
+Recv: n_15_10:__init__ :    times[42538720] = 0.65272
+
+  init device 242 = n_8_14
+Recv: n_8_14:__init__ : next_t = 0.0677639, next_spin = 1
+Recv: n_8_14:__init__ :    times[42538720] = 0.180547
+
+Recv: n_8_14:__init__ :    times[42538720] = 1.00677
+
+Recv: n_8_14:__init__ :    times[42538720] = 2.06096
+
+Recv: n_8_14:__init__ :    times[42538720] = 0.225097
+
+  init device 243 = n_10_13
+Recv: n_10_13:__init__ : next_t = 0.32407, next_spin = -1
+Recv: n_10_13:__init__ :    times[42538720] = 2.07434
+
+Recv: n_10_13:__init__ :    times[42538720] = 0.472979
+
+Recv: n_10_13:__init__ :    times[42538720] = 0.606359
+
+Recv: n_10_13:__init__ :    times[42538720] = 1.93417
+
+  init device 244 = n_4_15
+Recv: n_4_15:__init__ : next_t = 1.20362, next_spin = -1
+Recv: n_4_15:__init__ :    times[42538720] = 5.13255
+
+Recv: n_4_15:__init__ :    times[42538720] = 0.555115
+
+Recv: n_4_15:__init__ :    times[42538720] = 1.47701
+
+Recv: n_4_15:__init__ :    times[42538720] = 1.30138
+
+  init device 245 = n_11_0
+Recv: n_11_0:__init__ : next_t = 0.467474, next_spin = -1
+Recv: n_11_0:__init__ :    times[42538720] = 2.99309
+
+Recv: n_11_0:__init__ :    times[42538720] = 2.75667
+
+Recv: n_11_0:__init__ :    times[42538720] = 1.4644
+
+Recv: n_11_0:__init__ :    times[42538720] = 0.100017
+
+  init device 246 = n_1_7
+Recv: n_1_7:__init__ : next_t = 0.410932, next_spin = 1
+Recv: n_1_7:__init__ :    times[42538720] = 0.120377
+
+Recv: n_1_7:__init__ :    times[42538720] = 0.35172
+
+Recv: n_1_7:__init__ :    times[42538720] = 0.966749
+
+Recv: n_1_7:__init__ :    times[42538720] = 0.883045
+
+  init device 247 = n_5_4
+Recv: n_5_4:__init__ : next_t = 2.91204, next_spin = -1
+Recv: n_5_4:__init__ :    times[42538720] = 0.691183
+
+Recv: n_5_4:__init__ :    times[42538720] = 0.270671
+
+Recv: n_5_4:__init__ :    times[42538720] = 2.83911
+
+Recv: n_5_4:__init__ :    times[42538720] = 2.8533
+
+  init device 248 = n_2_2
+Recv: n_2_2:__init__ : next_t = 1.52758, next_spin = 1
+Recv: n_2_2:__init__ :    times[42538720] = 0.619727
+
+Recv: n_2_2:__init__ :    times[42538720] = 0.129834
+
+Recv: n_2_2:__init__ :    times[42538720] = 0.220972
+
+Recv: n_2_2:__init__ :    times[42538720] = 0.740431
+
+  init device 249 = n_15_12
+Recv: n_15_12:__init__ : next_t = 1.40888, next_spin = -1
+Recv: n_15_12:__init__ :    times[42538720] = 1.90366
+
+Recv: n_15_12:__init__ :    times[42538720] = 0.194286
+
+Recv: n_15_12:__init__ :    times[42538720] = 0.148708
+
+Recv: n_15_12:__init__ :    times[42538720] = 0.292212
+
+  init device 250 = n_6_1
+Recv: n_6_1:__init__ : next_t = 2.92738, next_spin = 1
+Recv: n_6_1:__init__ :    times[42538720] = 1.42217
+
+Recv: n_6_1:__init__ :    times[42538720] = 0.322359
+
+Recv: n_6_1:__init__ :    times[42538720] = 0.434636
+
+Recv: n_6_1:__init__ :    times[42538720] = 0.164152
+
+  init device 251 = n_13_6
+Recv: n_13_6:__init__ : next_t = 0.601181, next_spin = -1
+Recv: n_13_6:__init__ :    times[42538720] = 1.03914
+
+Recv: n_13_6:__init__ :    times[42538720] = 0.657811
+
+Recv: n_13_6:__init__ :    times[42538720] = 0.089328
+
+Recv: n_13_6:__init__ :    times[42538720] = 2.37669
+
+  init device 252 = n_3_0
+Recv: n_3_0:__init__ : next_t = 0.296079, next_spin = -1
+Recv: n_3_0:__init__ :    times[42538720] = 1.30138
+
+Recv: n_3_0:__init__ :    times[42538720] = 1.47701
+
+Recv: n_3_0:__init__ :    times[42538720] = 1.36412
+
+Recv: n_3_0:__init__ :    times[42538720] = 1.25318
+
+  init device 253 = n_0_6
+Recv: n_0_6:__init__ : next_t = 0.412369, next_spin = 1
+Recv: n_0_6:__init__ :    times[42538720] = 1.08052
+
+Recv: n_0_6:__init__ :    times[42538720] = 0.120377
+
+Recv: n_0_6:__init__ :    times[42538720] = 0.883045
+
+Recv: n_0_6:__init__ :    times[42538720] = 0.448466
+
+  init device 254 = n_7_13
+Recv: n_7_13:__init__ : next_t = 0.336384, next_spin = -1
+Recv: n_7_13:__init__ :    times[42538720] = 1.03813
+
+Recv: n_7_13:__init__ :    times[42538720] = 0.180547
+
+Recv: n_7_13:__init__ :    times[42538720] = 0.225097
+
+Recv: n_7_13:__init__ :    times[42538720] = 0.262092
+
+  init device 255 = n_10_8
+Recv: n_10_8:__init__ : next_t = 1.05782, next_spin = -1
+Recv: n_10_8:__init__ :    times[42538720] = 0.0681696
+
+Recv: n_10_8:__init__ :    times[42538720] = 0.124071
+
+Recv: n_10_8:__init__ :    times[42538720] = 0.712809
+
+Recv: n_10_8:__init__ :    times[42538720] = 0.691185
+
+Send: n_3_0:out : prev_t = 0.296079, next_t = 0.582321, curr_spin = 1
+Send: n_3_0:out : sendAgain = 1
+
+Send: n_1_0:out : prev_t = 0.91126, next_t = 1.62512, curr_spin = -1
+Send: n_1_0:out : sendAgain = 0
+
+Send: n_5_8:out : prev_t = 0.137052, next_t = 0.660363, curr_spin = -1
+Send: n_5_8:out : sendAgain = 0
+
+Send: n_15_8:out : prev_t = 0.0238769, next_t = 0.312181, curr_spin = -1
+Send: n_15_8:out : sendAgain = 0
+
+Send: n_11_8:out : prev_t = 0.124071, next_t = 1.83474, curr_spin = -1
+Send: n_11_8:out : sendAgain = 0
+
+Send: n_14_0:out : prev_t = 0.0201067, next_t = 0.571122, curr_spin = -1
+Send: n_14_0:out : sendAgain = 1
+
+Send: n_0_1:out : prev_t = 0.000652466, next_t = 0.269329, curr_spin = -1
+Send: n_0_1:out : sendAgain = 0
+
+Send: n_13_12:out : prev_t = 0.138071, next_t = 1.53597, curr_spin = -1
+Send: n_13_12:out : sendAgain = 0
+
+Send: n_8_4:out : prev_t = 0.129253, next_t = 1.4507, curr_spin = 1
+Send: n_8_4:out : sendAgain = 0
+
+Send: n_13_15:out : prev_t = 0.366813, next_t = 2.35287, curr_spin = -1
+Send: n_13_15:out : sendAgain = 0
+
+Send: n_4_3:out : prev_t = 0.0721432, next_t = 0.715127, curr_spin = 1
+Send: n_4_3:out : sendAgain = 0
+
+Send: n_6_6:out : prev_t = 0.228375, next_t = 1.09502, curr_spin = 1
+Send: n_6_6:out : sendAgain = 0
+
+Send: n_2_6:out : prev_t = 0.0150718, next_t = 0.924206, curr_spin = 1
+Send: n_2_6:out : sendAgain = 0
+
+Send: n_7_15:out : prev_t = 0.0247234, next_t = 0.113208, curr_spin = 1
+Send: n_7_15:out : sendAgain = 1
+
+Send: n_2_1:out : prev_t = 0.619727, next_t = 0.62305, curr_spin = 1
+Send: n_2_1:out : sendAgain = 1
+
+Send: n_4_10:out : prev_t = 0.1415, next_t = 0.300049, curr_spin = 1
+Send: n_4_10:out : sendAgain = 1
+
+Send: n_2_3:out : prev_t = 0.220972, next_t = 3.71758, curr_spin = 1
+Send: n_2_3:out : sendAgain = 0
+
+Send: n_0_10:out : prev_t = 0.425861, next_t = 2.4436, curr_spin = -1
+Send: n_0_10:out : sendAgain = 0
+
+Send: n_14_5:out : prev_t = 0.0986879, next_t = 0.8354, curr_spin = 1
+Send: n_14_5:out : sendAgain = 0
+
+Send: n_6_10:out : prev_t = 0.024363, next_t = 0.216256, curr_spin = -1
+Send: n_6_10:out : sendAgain = 0
+
+Send: n_3_13:out : prev_t = 0.218392, next_t = 0.374498, curr_spin = -1
+Send: n_3_13:out : sendAgain = 1
+
+Send: n_0_12:out : prev_t = 0.194286, next_t = 0.430593, curr_spin = -1
+Send: n_0_12:out : sendAgain = 1
+
+Send: n_7_9:out : prev_t = 0.0295813, next_t = 0.851874, curr_spin = 1
+Send: n_7_9:out : sendAgain = 0
+
+Send: n_6_2:out : prev_t = 0.434636, next_t = 1.59683, curr_spin = 1
+Send: n_6_2:out : sendAgain = 0
+
+Send: n_4_6:out : prev_t = 0.19043, next_t = 0.561234, curr_spin = -1
+Send: n_4_6:out : sendAgain = 0
+
+Send: n_7_1:out : prev_t = 0.322359, next_t = 0.331691, curr_spin = 1
+Send: n_7_1:out : sendAgain = 1
+
+Send: n_5_11:out : prev_t = 0.0256311, next_t = 0.0477695, curr_spin = 1
+Send: n_5_11:out : sendAgain = 1
+
+Send: n_15_4:out : prev_t = 0.185638, next_t = 0.702212, curr_spin = 1
+Send: n_15_4:out : sendAgain = 0
+
+Send: n_9_11:out : prev_t = 1.02693, next_t = 1.20332, curr_spin = 1
+Send: n_9_11:out : sendAgain = 1
+
+Send: n_1_13:out : prev_t = 0.247031, next_t = 1.73297, curr_spin = 1
+Send: n_1_13:out : sendAgain = 0
+
+Send: n_10_5:out : prev_t = 0.0155259, next_t = 0.402859, curr_spin = -1
+Send: n_10_5:out : sendAgain = 1
+
+Send: n_8_2:out : prev_t = 0.213444, next_t = 5.93263, curr_spin = -1
+Send: n_8_2:out : sendAgain = 0
+
+Send: n_13_7:out : prev_t = 0.089328, next_t = 0.426113, curr_spin = -1
+Send: n_13_7:out : sendAgain = 1
+
+Send: n_0_14:out : prev_t = 0.020688, next_t = 1.6046, curr_spin = -1
+Send: n_0_14:out : sendAgain = 0
+
+Send: n_10_7:out : prev_t = 0.0681696, next_t = 0.489143, curr_spin = -1
+Send: n_10_7:out : sendAgain = 1
+
+Send: n_6_4:out : prev_t = 0.270671, next_t = 1.60511, curr_spin = -1
+Send: n_6_4:out : sendAgain = 0
+
+Send: n_13_3:out : prev_t = 0.409571, next_t = 4.12649, curr_spin = 1
+Send: n_13_3:out : sendAgain = 0
+
+Send: n_5_1:out : prev_t = 0.164152, next_t = 0.341438, curr_spin = 1
+Send: n_5_1:out : sendAgain = 1
+
+Send: n_3_2:out : prev_t = 0.129834, next_t = 1.36306, curr_spin = 1
+Send: n_3_2:out : sendAgain = 0
+
+Send: n_3_5:out : prev_t = 0.0814609, next_t = 2.96083, curr_spin = -1
+Send: n_3_5:out : sendAgain = 0
+
+Send: n_10_0:out : prev_t = 0.100017, next_t = 0.517033, curr_spin = -1
+Send: n_10_0:out : sendAgain = 0
+
+Send: n_12_10:out : prev_t = 0.140808, next_t = 0.52094, curr_spin = -1
+Send: n_12_10:out : sendAgain = 0
+
+Send: n_11_12:out : prev_t = 0.266308, next_t = 1.34255, curr_spin = -1
+Send: n_11_12:out : sendAgain = 0
+
+Send: n_2_12:out : prev_t = 0.439776, next_t = 1.18244, curr_spin = 1
+Send: n_2_12:out : sendAgain = 0
+
+Send: n_11_3:out : prev_t = 0.0922196, next_t = 1.68257, curr_spin = -1
+Send: n_11_3:out : sendAgain = 0
+
+Send: n_5_13:out : prev_t = 0.167372, next_t = 4.88399, curr_spin = -1
+Send: n_5_13:out : sendAgain = 0
+
+Send: n_9_9:out : prev_t = 0.298987, next_t = 1.09915, curr_spin = -1
+Send: n_9_9:out : sendAgain = 0
+
+Send: n_12_1:out : prev_t = 0.39912, next_t = 1.26408, curr_spin = -1
+Send: n_12_1:out : sendAgain = 0
+
+Send: n_8_6:out : prev_t = 0.510501, next_t = 2.753, curr_spin = 1
+Send: n_8_6:out : sendAgain = 0
+
+Send: n_8_14:out : prev_t = 0.0677639, next_t = 0.832398, curr_spin = -1
+Send: n_8_14:out : sendAgain = 0
+
+Send: n_10_13:out : prev_t = 0.32407, next_t = 1.78483, curr_spin = -1
+Send: n_10_13:out : sendAgain = 0
+
+Epoch 0 : sends/device/epoch = 0.199219 (51.000000 / 256)
+
+Epoch 1 : sends/device/epoch = 0.191406 (49.000000 / 256)
+
+Epoch 2 : sends/device/epoch = 0.164062 (42.000000 / 256)
+
+Epoch 3 : sends/device/epoch = 0.136719 (35.000000 / 256)
+
+Epoch 4 : sends/device/epoch = 0.117188 (30.000000 / 256)
+
+Done

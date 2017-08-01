@@ -1,0 +1,45 @@
+svg {
+	position: fixed;
+	left: 0;
+	display: inline-block;
+	border: solid 2px #dddddd;
+}
+
+#sidebar {
+	position: fixed;
+	right: 0;
+	width: 28%;
+	height: 98%;
+	display: inline-block;
+}
+
+button {
+	display: inline-block;
+}
+
+g.nodes > * {
+	cursor: pointer;
+}
+
+.selected-node {
+	stroke: #000000;
+}
+
+.tooltip {
+  position: absolute;
+  display: none;
+  min-width: 80px;
+  height: auto;
+  background: none repeat scroll 0 0 #ffffff;
+  border: 1px solid #6F257F;
+  padding: 14px;
+  text-align: left;
+}
+
+.border-node {
+	display: none;
+}
+
+.subborder-node {
+	opacity: 0.5;
+}

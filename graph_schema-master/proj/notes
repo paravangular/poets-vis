@@ -1,0 +1,40 @@
+user acceptance tests
+	- expected result based on a set procedure
+	- user stories
+
+heatmaps for number of messages received
+
+
+
+AIMS
+	JULY
+	- bigquery querying
+	- device view
+		- ports
+		- circular view
+		- messages
+	- dynamic zoom
+		- graph subsetting with fixed border nodes
+		- fast algo to extend
+		- messages
+	AUGUST
+	- overall
+		- new dev property: number of messages sent/recv
+		- new edge property: number of messages traveling via that node
+	- heatmap overview (aggregation)
+	- benchmarking
+
+
+
+19/7/17
+	- device view VISUALS
+
+
+- storing preprocessed aggregate data
+- figure out data structure for max speed during user interaction
+- cluster megadevice (all edges collapse into one edge) (metis)
+
+design brief document
+	- user should be able to...
+	- frame rate should be...
+	- lag should be...

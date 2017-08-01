@@ -1,0 +1,2 @@
+id|parent_id|state|properties|metadata
+cell|ising_spin|{"lastFlipTime": 0, "rng": 0, "spins": [0, 0, 0, 0, 0], "rts": 0, "spin": 0, "times": [0, 0, 0, 0, 0]}|{"x": 0, "y": 0}|None

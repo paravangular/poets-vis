@@ -1,0 +1,9 @@
+digraph "token_ring_2_2"{
+  sep="+10,10";
+  overlap=false;
+  spline=true;
+  "n_1" [shape=oval];
+  "n_2" [shape=oval];
+  "n_2" -> "n_1" [headlabel="in",color="blue4",label="update",taillabel="out"];
+  "n_1" -> "n_2" [headlabel="in",color="blue4",label="update",taillabel="out"];
+}

@@ -1,0 +1,5 @@
+dev_type_id|name|type|message_type_id|properties|state|metadata
+cell|out|output|update|||None
+cell|__print__|input|__print__|null|null|None
+cell|in|input|update|{"direction": 0}|{"time": 0.0}|None
+cell|__init__|input|__init__|null|null|None
