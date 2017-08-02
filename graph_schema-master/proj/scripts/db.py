@@ -19,13 +19,16 @@ from scripts.graph.load_xml import *
 from scripts.graph_builder import *
 
 class DBBuilder():
-	def __init__(self, db_name):
+	def __init__(self, db_name, dir_name = "data/"):
 
 
-		graph_src = 'data/' + db_name + '.xml'
-		event_src = 'data/' + db_name + '_event.xml'
+		graph_src = dir_name + db_name + '.xml'
+		event_src = dir_name + db_name + '_event.xml'
 
-		db_filename = "data/db/" + db_name + ".db"
+		if not os.path.exists(dir_name + "db/"):
+			os.makedirs(directory + "db/")
+
+		db_filename = dir_name + "db/" + db_name + ".db"
 
 		if not os.path.isfile(db_filename):
 			print("Creating database " + db_name + "...")
@@ -59,6 +62,9 @@ class DBBuilder():
 			print
 			print
 			self.db.close()
+			print("******************************************************************************")
+			print("FINISH (%3f seconds)" % (time.time() - start_time))
+			print("******************************************************************************")
 
 		else:
 			print("Database already exists.")
