@@ -41,7 +41,6 @@ class DBBuilder():
 			print("Creating database file " + db_name + ".db...")
 			self.db = sqlite3.connect(db_filename)
 			self.cursor = self.db.cursor()
-			self.devices()
 			self.device_states()
 			self.device_partitions()
 			self.device_properties()
@@ -173,7 +172,7 @@ class DBBuilder():
 		for row in pragma_cursor.fetchall():
 			name = row[1]
 
-			if name != "id":
+			if name != "id" and name != "type":
 				if row[2] in aggregable_types:
 					if not first:
 						query += ", "
@@ -210,16 +209,10 @@ class DBBuilder():
 		self.db.executemany(insert_query, values)
 		self.db.commit()
 
-	def devices(self):
-		fields = []
-		fields.append(Field("id", "string", set(["unique", "key"])))
-		fields.append(Field("type", "int", set(["not null"])))
-
-		self.create_table("devices", fields)
-
 	def device_properties(self):
 		fields = []
 		fields.append(Field("id", "string", set(["unique", "key"])))
+		fields.append(Field("type", "string", set(["not null"])))
 		fields.append(Field("messages_sent", "int", set(["not null"])))
 		fields.append(Field("messages_received", "int", set(["not null"])))
 
@@ -235,7 +228,7 @@ class DBBuilder():
 		self.create_table("device_properties", fields)
 		values = []
 		for id, dev in self.graph.raw.device_instances.iteritems():
-			v = {"id": id, "messages_sent": self.graph.nodes[id]["messages_sent"], "messages_received": self.graph.nodes[id]["messages_received"]}
+			v = {"id": id, "type": dev.device_type.id, "messages_sent": self.graph.nodes[id]["messages_sent"], "messages_received": self.graph.nodes[id]["messages_received"]}
 			p = dev.properties.copy()
 			v.update(p)
 			values.append(v)
@@ -245,6 +238,7 @@ class DBBuilder():
 		print("Creating indexes for table device_properties...")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_properties_id ON device_properties(id)")
 
+		fields = fields[1:]
 		fields[0] = Field("partition_id", "int", set(["unique", "key"]))
 		for i in range(self.metis.nlevels - 1):
 			self.create_table("device_properties_aggregate_" + str(i), fields)

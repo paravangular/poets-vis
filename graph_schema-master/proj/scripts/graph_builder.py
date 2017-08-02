@@ -149,12 +149,6 @@ class GraphBuilder():
 	def __init__(self, graph_src, event_src):
 		self.raw = load_graph(graph_src, graph_src)
 		
-		# networkx
-		# partitioned node attributes: id n_type sent_msgs recv_msgs
-		# partitioned edge attributes: to from weight/num_links messages
-		# self.graph = nx.DiGraph()
-		# self.graph.graph['node_weight_attr'] = ['type', 'messages_sent', 'messages_received']
-		# self.graph.graph['edge_weight_attr'] = ['weight', 'messages']
 		self.levels = 1
 
 		self.type_map = {}
@@ -174,23 +168,11 @@ class GraphBuilder():
 		self.set_node_attributes()
 		self.set_edge_attributes()
 
-		# self.add_nodes_to_graph()
-		# self.add_edges_to_graph()
-
 	def number_of_nodes(self):
 		return len(self.nodes)
 
 	def number_of_edges(self):
 		return len(self.edges)
-
-	def add_nodes_to_graph(self):
-		for id, node in self.nodes.iteritems():
-			self.graph.add_node(id, node)
-
-	def add_edges_to_graph(self):
-		for id, edge in self.edges.iteritems():
-			src, dst = id.split(":")
-			self.graph.add_edge(src, dst, weight = edge["messages"]) # TODO: option to partition by num edges or messages
 
 	def set_device_instances(self):
 		i = 0
@@ -228,12 +210,6 @@ class GraphBuilder():
 			self.type_map[dev_type] = i
 			i += 1
 
-
-
-# local_file = 'ising_spin_16_2'
-# graph = GraphBuilder('../data/' + local_file + '.xml', '../data/' + local_file + '_event.xml')
-# metis = MetisHandler(graph, "../data/metis_input", 5)
-# metis.execute_metis()
 
 '''
 
