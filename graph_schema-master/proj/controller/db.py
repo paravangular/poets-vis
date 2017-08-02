@@ -18,46 +18,47 @@ from graph.events import *
 from graph.load_xml import *
 from graph_builder import *
 
-'''
-SCHEMA
-
-device_partitions
-devices
-	- device id
-	- type
-	- messages_sent
-	- messages_received
-device_properties
-	- properties (for every device)
-device_states: device state at every change
-	- id
-	- time
-	- states
-
-
-'''
-
 class DBBuilder():
-	def __init__(self, graph_src, event_src):
-		
-		self.graph = GraphBuilder(graph_src, event_src)
-		db_filename = "../data/db/" + self.graph.raw.id + ".db"
+	def __init__(self, db_name):
+
+
+		graph_src = '../data/' + local_file + '.xml'
+		event_src = '../data/' + local_file + '_event.xml'
+
+		db_filename = "../data/db/" + db_name + ".db"
 
 		if not os.path.isfile(db_filename):
+			print("Creating database " + db_name + "...")
+			self.graph = GraphBuilder(graph_src, event_src) # TODO: loading xml
+			print
+			print
+			print("Partitioning...")
 			self.metis = MetisHandler(self.graph, "../data/metis/", 50)
 			self.metis.execute_metis()
 
+			print
+			print("******************************************************************************")
+			print("DATABASE CREATION")
+			print("******************************************************************************")
+			print("Creating database file " + db_name + ".db...")
 			self.db = sqlite3.connect(db_filename)
 			self.cursor = self.db.cursor()
 			self.devices()
 			self.device_states()
 			self.device_partitions()
 			self.device_properties()
+
 			for i in range(self.metis.nlevels - 1):
 				self.aggregate_state_entries(level = i)
+				self.aggregate_property_entries(level = i)
 				self.db.execute("CREATE INDEX IF NOT EXISTS index_states_" + str(i) + "_partition_id ON device_states_aggregate_" + str(i) + " (partition_id)")
+				self.db.execute("CREATE INDEX IF NOT EXISTS index_properties_" + str(i) + "_partition_id ON device_properties_aggregate_" + str(i) + " (partition_id)")
 
-			db.close()
+			print
+			print("Database created.")
+			print
+			print
+			self.db.close()
 
 		else:
 			print("Database already exists.")
@@ -137,8 +138,11 @@ class DBBuilder():
 		pragma_cursor.close()
 
 		cursor = self.db.cursor()
+
+		print
+		print("Aggregating states, level " + str(level) + " at time " + str(epoch) + "...")
 		print("Executing query...")
-		print(query)
+		# print(query)
 		cursor.execute(query)
 
 		print("Fetching results...")
@@ -155,12 +159,55 @@ class DBBuilder():
 		self.db.executemany(insert_query, values)
 		self.db.commit()
 
+	def aggregate_property_entries(self, level):
+		aggregable_types = set(["INT", "int", "INTEGER", "integer", "REAL", "real"])
+		aggregable_columns = []
+		pragma_cursor = self.db.cursor()
+		pragma_query = "PRAGMA table_info('device_properties')"
 
-		'''
-		group rows by partition_number
-		fetch average per partition where time is the maximum time smaller than epoch
+		pragma_cursor.execute(pragma_query)
 
-		'''
+		query = "SELECT partition_" + str(level) + " AS partition_id, "
+		first = True
+		for row in pragma_cursor.fetchall():
+			name = row[1]
+
+			if name != "id":
+				if row[2] in aggregable_types:
+					if not first:
+						query += ", "
+					aggregable_columns.append(name)
+					if name == "messages_sent" or name == "messages_received":
+						query += "SUM(" + name + ") AS " + name
+					else:
+						query += "AVG(" + name + ") AS " + name
+					first = False
+
+		query += (" FROM device_properties AS s1" + 
+		" INNER JOIN device_partitions ON s1.id = device_partitions.id " + 
+		" GROUP BY partition_" + str(level))
+		
+		pragma_cursor.close()
+
+		cursor = self.db.cursor()
+		print
+		print("Aggregating properties, level " + str(level) + "...")
+		print("Executing query...")
+		# print(query)
+		cursor.execute(query)
+
+		print("Fetching results...")
+		rows = cursor.fetchall()
+		values = []
+		for row in rows:
+			values.append(row)
+		
+		print("Inserting aggregates...")
+		insert_query = ("INSERT INTO device_properties_aggregate_" + str(level) +
+						"(partition_id, " + ", ".join(aggregable_columns) + ") VALUES(?, " + ", ".join(["?" for x in range(len(aggregable_columns))]) + ")")
+
+		self.db.executemany(insert_query, values)
+		self.db.commit()
 
 	def devices(self):
 		fields = []
@@ -178,10 +225,26 @@ class DBBuilder():
 		types = self.graph.raw.graph_type.device_types
 		for id, dev_type in types.iteritems():
 			for prop in dev_type.properties.elements_by_index:
-				fields.append(Field(prop.name, prop.type))
+				if not isinstance(prop, ArrayTypedDataSpec): 
+					fields.append(Field(prop.name, prop.type))
+				else: 
+					fields.append(Field(prop.name, "array"))
+
+
+		self.create_table("device_properties", fields)
+		values = []
+		for id, dev in self.graph.raw.device_instances.iteritems():
+			v = {"id": id, "messages_sent": self.graph.nodes[id]["messages_sent"], "messages_received": self.graph.nodes[id]["messages_received"]}
+			p = dev.properties.copy()
+			v.update(p)
+			values.append(v)
+
+		self.insert_rows("device_properties", fields, values)
+
+		print("Creating indexes for table device_properties...")
+		self.db.execute("CREATE INDEX IF NOT EXISTS index_properties_id ON device_properties(id)")
 
 		fields[0] = Field("partition_id", "int", set(["unique", "key"]))
-		self.create_table("device_properties", fields)
 		for i in range(self.metis.nlevels - 1):
 			self.create_table("device_properties_aggregate_" + str(i), fields)
 
@@ -202,9 +265,10 @@ class DBBuilder():
 		values = []
 
 		for id, evt in self.graph.events.iteritems():
-			values.append(self.build_values(evt))
+			values.append(self.build_state_values(evt))
 		self.insert_rows("device_states", fields, values)
 
+		print("Creating indexes for table device_states...")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_states_id ON device_states (id)")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_states_time ON device_states (time)")
 
@@ -213,7 +277,7 @@ class DBBuilder():
 			self.create_table("device_states_aggregate_" + str(i), fields)
 
 	
-	def build_values(self, evt):
+	def build_state_values(self, evt):
 		value = defaultdict(lambda:None, evt.S)
 		value["id"] = evt.dev
 		value["time"] = evt.time
@@ -234,7 +298,7 @@ class DBBuilder():
 		self.db.commit()
 
 	def create_table(self, table_name, fields):
-
+		print
 		print("Creating table " + table_name + "...")
 		query = "CREATE TABLE IF NOT EXISTS " + table_name + "("
 		first = True
@@ -302,7 +366,10 @@ class Field():
 
 start_time = time.time()
 
-local_file = 'ising_spin_100x100'
-db = DBBuilder('../data/' + local_file + '.xml', '../data/' + local_file + '_event.xml')
+assert(len(sys.argv) == 2)
+local_file = sys.argv[1]
+db = DBBuilder(local_file)
 
-print("--- %s seconds ---" % (time.time() - start_time))
+print("******************************************************************************")
+print("FINISH (%3f seconds)" % (time.time() - start_time))
+print("******************************************************************************")
