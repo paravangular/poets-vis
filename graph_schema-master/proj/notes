@@ -18,10 +18,6 @@ AIMS
 		- fast algo to extend
 		- messages
 	AUGUST
-	- overall
-		- new dev property: number of messages sent/recv
-		- new edge property: number of messages traveling via that node
-	- heatmap overview (aggregation)
 	- benchmarking
 
 
@@ -38,3 +34,9 @@ design brief document
 	- user should be able to...
 	- frame rate should be...
 	- lag should be...
+
+
+NEXT STEPS:
+	- d3 show aggregates!
+	- event incorportation
+	- device view + expand ports
