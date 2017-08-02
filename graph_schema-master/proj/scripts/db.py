@@ -2,17 +2,10 @@ import sqlite3
 
 import time
 
-import xml.sax
 import json
 import sys, os
 from collections import defaultdict
 
-import xml.etree.ElementTree as ET
-from lxml import etree
-
-# from controller.graph.core import *
-# from controller.graph.events import *
-# from controller.graph.load_xml import *
 from scripts.graph.core import *
 from scripts.graph.events import *
 from scripts.graph.load_xml import *
@@ -31,6 +24,8 @@ class DBBuilder():
 		db_filename = dir_name + "db/" + db_name + ".db"
 
 		if not os.path.isfile(db_filename):
+
+			start_time = time.time()
 			print("Creating database " + db_name + "...")
 			self.graph = GraphBuilder(graph_src, event_src) # TODO: loading xml
 			print

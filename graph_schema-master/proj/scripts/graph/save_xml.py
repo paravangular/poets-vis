@@ -1,4 +1,4 @@
-from core import *
+from scripts.graph.core import *
 
 #from xml.etree import ElementTree as etree
 from lxml import etree

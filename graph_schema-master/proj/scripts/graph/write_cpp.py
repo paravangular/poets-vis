@@ -1,4 +1,4 @@
-from core import *
+from scripts.graph.core import *
 
 import sys
 

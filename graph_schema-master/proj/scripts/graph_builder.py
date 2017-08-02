@@ -6,12 +6,6 @@ import sys, os
 from collections import defaultdict
 from collections import deque
 
-import xml.etree.ElementTree as ET
-from lxml import etree
-
-# from controller.graph.core import *
-# from controller.graph.events import *
-# from controller.graph.load_xml import *
 from scripts.graph.core import *
 from scripts.graph.events import *
 from scripts.graph.load_xml import *

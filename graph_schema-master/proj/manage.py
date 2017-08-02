@@ -12,12 +12,9 @@ class CreateDB(Command):
 		)
 
 	def run(self, name):
-		start_time = time.time()
 		db = DBBuilder(name)
 
-
-manager.add_command('create_db', CreateDB())
-
+manager.add_command('db', CreateDB())
 
 if __name__ == "__main__":
     manager.run()

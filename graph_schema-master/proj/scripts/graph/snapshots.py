@@ -2,7 +2,7 @@ import xml.sax
 import json
 import sys
 
-from graph.core import expand_typed_data
+from scripts.graph..core import expand_typed_data
 
 class SnapshotReaderEvents(object):
     def __init__(self):

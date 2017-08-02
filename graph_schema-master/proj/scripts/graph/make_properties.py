@@ -1,4 +1,4 @@
-from graph.core import *
+from scripts.graph.core import *
 
 def add_properties(a,b):
     r=dict(a)
