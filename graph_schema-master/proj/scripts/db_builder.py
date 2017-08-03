@@ -52,8 +52,10 @@ class DBBuilder():
 			for i in range(self.metis.nlevels - 1):
 				self.aggregate_state_entries(level = i)
 				self.aggregate_property_entries(level = i)
+				self.db.execute("CREATE INDEX IF NOT EXISTS index_states_" + str(i) + "_parent ON device_states_aggregate_" + str(i) + " (parent)")
 				self.db.execute("CREATE INDEX IF NOT EXISTS index_states_" + str(i) + "_partition_id ON device_states_aggregate_" + str(i) + " (partition_id)")
 				self.db.execute("CREATE INDEX IF NOT EXISTS index_states_time ON device_states_aggregate_" + str(i) + " (time)")
+				self.db.execute("CREATE INDEX IF NOT EXISTS index_properties_" + str(i) + "_parent ON device_properties_aggregate_" + str(i) + " (parent)")
 				self.db.execute("CREATE INDEX IF NOT EXISTS index_properties_" + str(i) + "_partition_id ON device_properties_aggregate_" + str(i) + " (partition_id)")
 
 			print
@@ -94,14 +96,17 @@ class DBBuilder():
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_edges_target_port ON edges (target_port)")
 
 	def interpartition_edges(self):
-		fields = [Field("higher_level", "string", set("key")), Field("lower_level", "string", set("key")), Field("count", "int")]
+		fields = [Field("parent", "string", set("key")), Field("higher_level", "string", set("key")), Field("lower_level", "string", set("key")), Field("count", "int")]
 
-		for i in range(self.metis.nlevels - 2, 0, -1):
+		for i in range(self.metis.nlevels - 2, -1, -1):
 			if i > 0:
-				self.create_table("interpartition_edges_{}_{}".format(i, i - 1), fields)
-
+				
 				part = "partition_" + str(i)
 				prev_part = "partition_" + str(i - 1)
+				curr = self.metis.nlevels - i - 1
+				prev = self.metis.nlevels - i
+				self.create_table("interpartition_edges_{}_{}".format(curr, prev), fields)
+
 
 				query = ("SELECT p1." + part + " AS higher_level, p2." + prev_part + " AS lower_level, COUNT(*) AS count" + 
 					" FROM device_partitions AS p1 INNER JOIN edges ON edges.source = p1.id" + 
@@ -115,21 +120,54 @@ class DBBuilder():
 					" WHERE p3." + prev_part + " != p4." + prev_part + 
 					" GROUP BY p3." + part + ", p4." + prev_part)
 
-				insert_query = ("INSERT INTO interpartition_edges_{}_{}(higher_level, lower_level, count) VALUES(?, ?, ?)".format(i, i - 1))
-				cursor = self.db.cursor()
+				insert_query = ("INSERT INTO interpartition_edges_{}_{}(higher_level, lower_level, count, parent) VALUES(?, ?, ?, ?)".format(curr, prev))
 
+				cursor = self.db.cursor()
 				cursor.execute(query)
 				entries = []
+				
 				for row in cursor.fetchall():
-					entries.append(tuple(row))
-
+					v = list(row)
+					parent = "_".join(row[0].split("_")[:-1])
+					v.append(parent)
+					entries.append(tuple(v))
 				cursor.close()
-
 				self.db.executemany(insert_query, entries)
 
-				print("  Creating indexes...")
-				self.db.execute("CREATE INDEX IF NOT EXISTS index_interpartition_edges_{0}_{1}_higher ON interpartition_edges_{0}_{1} (higher_level)".format(i, i - 1))
-				self.db.execute("CREATE INDEX IF NOT EXISTS index_interpartition_edges_{0}_{1}_lower ON interpartition_edges_{0}_{1} (lower_level)".format(i, i - 1))
+			else:
+				curr = self.metis.nlevels - 1
+				prev = self.metis.nlevels
+				self.create_table("interpartition_edges_{}_{}".format(curr, prev), fields)
+				part = "partition_" + str(self.metis.nlevels - 2)
+				query = ("SELECT p1.id AS higher_level, p2." + part + " AS lower_level, COUNT(*) AS count, p1." + part + 
+					" FROM device_partitions AS p1 INNER JOIN edges ON edges.source = p1.id" + 
+					" INNER JOIN device_partitions AS p2 ON edges.target = p2.id" + 
+					" WHERE p1." + part + " != p2." + part + 
+					" GROUP BY p1.id , p2." + part + 
+					" UNION " + 
+					" SELECT p3.id AS higher_level, p4." + part + " AS lower_level, COUNT(*) AS count, p3." + part + 
+					" FROM device_partitions AS p3 INNER JOIN edges ON edges.target = p3.id" + 
+					" INNER JOIN device_partitions AS p4 ON edges.source = p4.id" + 
+					" WHERE p3." + part + " != p4." + part + 
+					" GROUP BY p3.id , p4." + part)
+
+				insert_query = ("INSERT INTO interpartition_edges_{}_{}(higher_level, lower_level, count, parent) VALUES(?, ?, ?, ?)".format(curr, prev))
+
+				cursor = self.db.cursor()
+				cursor.execute(query)
+				entries = []
+				
+				for row in cursor.fetchall():
+					entries.append(tuple(row))
+				cursor.close()
+				self.db.executemany(insert_query, entries)
+
+			
+			print("  Creating indexes...")
+			self.db.execute("CREATE INDEX IF NOT EXISTS index_interpartition_edges_{0}_{1}_parent ON interpartition_edges_{0}_{1} (parent)".format(curr, prev))
+			self.db.execute("CREATE INDEX IF NOT EXISTS index_interpartition_edges_{0}_{1}_higher ON interpartition_edges_{0}_{1} (higher_level)".format(curr, prev))
+			self.db.execute("CREATE INDEX IF NOT EXISTS index_interpartition_edges_{0}_{1}_lower ON interpartition_edges_{0}_{1} (lower_level)".format(curr, prev))
+
 
 	def max_levels(self):
 		self.create_table("levels", [Field("max", "int")])
@@ -140,27 +178,57 @@ class DBBuilder():
 		self.db.execute(query, value)
 
 	def partition_edges(self):
-		fields = [Field("source_partition", "string", set("key")), Field("target_partition", "string", set("key")), Field("count", "int")]
-		for i in range(self.metis.nlevels - 1):
+		fields = [Field("parent", "string", set("key")), Field("source", "string", set("key")), Field("target", "string", set("key")), Field("count", "int")]
+		for i in range(self.metis.nlevels):
 			self.create_table("partition_edges_{}".format(i), fields)
+			if i < self.metis.nlevels - 1:
+				part = "partition_" + str(i)
 
-			part = "partition_" + str(i)
+				query = ("SELECT p1." + part + " AS source, p2." + part + " AS target, COUNT(*) AS count" + 
+					" FROM device_partitions AS p1 INNER JOIN edges ON edges.source = p1.id" + 
+					" INNER JOIN device_partitions AS p2 ON edges.target = p2.id" + 
+					" WHERE p1.id != p2.id " + 
+					" GROUP BY p1." + part + ", p2." + part)
+				insert_query = ("INSERT INTO partition_edges_{}(source, target, count, parent) VALUES(?, ?, ?, ?)".format(i))
+				cursor = self.db.cursor()
+				cursor.execute(query)
+				entries = []
+				for row in cursor.fetchall():
+					source_parent = "_".join(row[0].split("_")[:-1])
+					target_parent = "_".join(row[1].split("_")[:-1])
 
-			query = ("SELECT p1." + part + " AS source_partition, p2." + part + " AS target_partition, COUNT(*) AS count" + 
-				" FROM device_partitions AS p1 INNER JOIN edges ON edges.source = p1.id" + 
-				" INNER JOIN device_partitions AS p2 ON edges.target = p2.id" + 
-				" GROUP BY p1." + part + ", p2." + part)
-			insert_query = ("INSERT INTO partition_edges_{}(source_partition, target_partition, count) VALUES(?, ?, ?)".format(i))
-			cursor = self.db.cursor()
-			cursor.execute(query)
-			entries = []
-			for row in cursor.fetchall():
-				entries.append(tuple(row))
+					if source_parent == target_parent:
+						v = list(row)
+						v.append(source_parent)
+						entries.append(tuple(v))
+
+			else:
+				part = "partition_" + str(i - 1)
+				query = ("SELECT p1.id AS source, p2.id AS target, p1." + part + 
+					" FROM device_partitions AS p1 INNER JOIN edges ON edges.source = p1.id" + 
+					" INNER JOIN device_partitions AS p2 ON edges.target = p2.id" + 
+					" WHERE p1." + part + " = p2." + part + 
+					" AND p1.id != p2.id")
+
+				cursor = self.db.cursor()
+				cursor.execute(query)
+				entries = []
+				for row in cursor.fetchall():
+					entries.append(tuple(row))
+
+				insert_query = ("INSERT INTO partition_edges_{}(source, target, parent) VALUES(?, ?, ?)".format(i))
+				ursor = self.db.cursor()
+				cursor.execute(query)
+				entries = []
+				for row in cursor.fetchall():
+					entries.append(tuple(row))
+
 			cursor.close()
 			self.db.executemany(insert_query, entries)
 			print("  Creating indexes...")
-			self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_edges_{0}_source ON partition_edges_{0} (source_partition)".format(i))
-			self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_edges_{0}_target ON partition_edges_{0} (target_partition)".format(i))
+			self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_edges_{0}_parent ON partition_edges_{0} (parent)".format(i))
+			self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_edges_{0}_source ON partition_edges_{0} (source)".format(i))
+			self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_edges_{0}_target ON partition_edges_{0} (target)".format(i))
 
 	def device_partitions(self):
 		query = "INSERT INTO device_partitions(id, "
@@ -246,12 +314,13 @@ class DBBuilder():
 			rows = cursor.fetchall()
 			values = []
 			for row in rows:
-				v = list(row) + [i]
-				values.append(v)
+				parent = "_".join(row[0].split("_")[:-1])
+				v = list(row) + [parent, i]
+				values.append(tuple(v))
 			
 			print("  Inserting aggregates...")
 			insert_query = ("INSERT INTO device_states_aggregate_" + str(level) +
-							"(partition_id, " + ", ".join(aggregable_columns) + ", epoch) VALUES(?, " + ", ".join(["?" for x in range(len(aggregable_columns))]) + ",?)")
+							"(partition_id, " + ", ".join(aggregable_columns) + ", parent, epoch) VALUES(?, " + ", ".join(["?" for x in range(len(aggregable_columns))]) + ",?, ?)")
 
 			self.db.executemany(insert_query, values)
 			self.db.commit()
@@ -297,11 +366,14 @@ class DBBuilder():
 		rows = cursor.fetchall()
 		values = []
 		for row in rows:
-			values.append(row)
+			parent = "_".join(row[0].split("_")[:-1])
+			v = list(row)
+			v.append(parent)
+			values.append(tuple(v))
 		
 		print("  Inserting aggregates...")
 		insert_query = ("INSERT INTO device_properties_aggregate_" + str(level) +
-						"(partition_id, " + ", ".join(aggregable_columns) + ") VALUES(?, " + ", ".join(["?" for x in range(len(aggregable_columns))]) + ")")
+						"(partition_id, " + ", ".join(aggregable_columns) + ", parent) VALUES(?, " + ", ".join(["?" for x in range(len(aggregable_columns))]) + ", ?)")
 
 		self.db.executemany(insert_query, values)
 		self.db.commit()
@@ -335,8 +407,8 @@ class DBBuilder():
 		print("  Creating indexes for table device_properties...")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_properties_id ON device_properties(id)")
 
-		fields = fields[1:]
-		fields[0] = Field("partition_id", "int", set(["unique", "key"]))
+		fields[0] = Field("parent", "int", set(["key"]))
+		fields[1] = Field("partition_id", "int", set(["unique", "key"]))
 		for i in range(self.metis.nlevels - 1):
 			self.create_table("device_properties_aggregate_" + str(i), fields)
 
@@ -364,6 +436,7 @@ class DBBuilder():
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_states_id ON device_states (id)")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_states_time ON device_states (epoch)")
 
+		fields.append(Field("parent", "int", set(["key"])))
 		fields[0] = Field("partition_id", "int")
 		for i in range(self.metis.nlevels - 1):
 			self.create_table("device_states_aggregate_" + str(i), fields)
