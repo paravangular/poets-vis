@@ -1,17 +1,3 @@
-'''
-
-necessary data for partition view:
-
-nodes (all partitions + connecting partitions)
-	select nodes from device_partitions, union with interpartition edges
-
-edges
-	select all edges from partition_edges where parent = param union interpartition where parent = param
-
-BOOM. layout done
-
-'''
-
 from scripts import helper
 
 class CSVBuilder():
