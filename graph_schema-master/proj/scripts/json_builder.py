@@ -32,7 +32,7 @@ class JSONBuilder():
 
 		interior_edges = helper.execute_query("SELECT source, target, count FROM partition_edges_{} WHERE parent = ? AND source != target".format(level), [self.part_id])
 		border = helper.execute_query("SELECT DISTINCT lower_level FROM interpartition_edges_{}_{} WHERE parent = ?".format(level, level + 1), [self.part_id])
-		border_edges = helper.execute_query("SELECT source, target, count FROM partition_edges_{} WHERE parent = ? AND source != target".format(level), [self.part_id])
+		border_edges = helper.execute_query("SELECT higher_level, lower_level, count FROM interpartition_edges_{}_{} WHERE parent = ?".format(level, level + 1), [self.part_id])
 		nodes = interior + border
 
 		nodes_json = []

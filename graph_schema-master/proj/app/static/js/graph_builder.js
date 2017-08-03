@@ -4,7 +4,6 @@ function ForceGraph(selector, data) {
 	var width = window.innerWidth * 0.7;
    	var height = window.innerHeight * 0.98;
   	var _data = data;
-  	console.log(data)
 
 	// logic vars
 	var simulating = false;
@@ -46,7 +45,7 @@ function ForceGraph(selector, data) {
 
    	this.draw = function() {
    		var simulation = d3.forceSimulation()
-				    .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(50).strength(1))
+				    .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(50).strength(0.3))
 				    .force("charge", d3.forceManyBody())
 				    .force("center", d3.forceCenter(width / 2, height / 2));
 
