@@ -13,3 +13,4 @@ def execute_query(query, args=()):
     rows = cur.fetchall()
     cur.close()
     return rows
+    

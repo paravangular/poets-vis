@@ -2,7 +2,9 @@ from app import app
 from flask import render_template, url_for
 import sqlite3
 
-from scripts.csv_builder import CSVBuilder
+import json
+
+from scripts.json_builder import JSONBuilder
 from scripts import helper
 
 @app.teardown_appcontext
@@ -31,5 +33,6 @@ def db():
 
 @app.route("/graph/<part_id>")
 def graph(part_id):
-	csv = CSVBuilder(part_id)
-	return '<br />'.join(csv.get())
+	
+	builder = JSONBuilder(part_id)
+	return render_template("graph.html", data = builder.json)

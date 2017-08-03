@@ -1,8 +1,5 @@
 $(document).ready(function() {
-	var props = load_node_props("data/ising_spin_16_2.xml");
-	load_property_menu(props);
-	var data, events;
-
+	
 	reset_graph()
 
 	$('input[type="radio"]').click(function(){
@@ -40,15 +37,8 @@ $(document).ready(function() {
 	  	}
 
 	  	d3.selectAll("svg").remove();
-	  	// slowing down?
-		data = load_graph_instance("data/ising_spin_16_2.xml");
-		load_initial_graph_state("data/ising_spin_16_2_event.xml", data);
+		data.events = [];
 
-		events = load_graph_events("data/ising_spin_16_2_event.xml");
-
-		data.events = events;
-
-		sessionStorage.setItem("data", JSON.stringify(data));
 		graph = new ForceGraph("body", data);
 		graph.draw();
     }

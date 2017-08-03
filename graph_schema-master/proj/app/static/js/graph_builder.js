@@ -4,14 +4,14 @@ function ForceGraph(selector, data) {
 	var width = window.innerWidth * 0.7;
    	var height = window.innerHeight * 0.98;
   	var _data = data;
-
+  	console.log(data)
 
 	// logic vars
 	var simulating = false;
   	var prop_domain = [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY];
   	var message_passing_time = 100;
   	var symbol_size = 300;
-  	var last_event_time = get_last_event_time();
+  	// var last_event_time = get_last_event_time();
 
   	svg = d3.select("body")
       	.append("svg")
@@ -67,7 +67,7 @@ function ForceGraph(selector, data) {
 				    .attr("d", d3.symbol().size(symbol_size).type(d3.symbolCircle))
 				    .attr("fill", function(d) { 
 				    	var selected = $("input[name='property']:checked").val();
-				    	return get_node_colour(selected, d.p[selected])
+				    	return "#000000" //get_node_colour(selected, d.p[selected])
 				    })
 				    .attr("stroke", "#FFFFFF")
 				    .attr("stroke-width", "2px")

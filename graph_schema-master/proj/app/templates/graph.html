@@ -22,7 +22,10 @@
         <script src="{{ url_for('static', filename='js/lib/d3-legend.js') }}"></script>
         <script src="{{ url_for('static', filename='js/lib/colorbrewer.js') }}"></script>
 
-        <script src="{{ url_for('static', filename='js/loader.js') }}"></script>
+        <!-- script src="{{ url_for('static', filename='js/loader.js') }}"></script-->
+        <script>
+            var data = JSON.parse('{{ data | tojson | safe}}');
+        </script>
         <script src="{{ url_for('static', filename='js/graph_builder.js') }}"></script>
         <script src="{{ url_for('static', filename='js/graph_runner.js') }}"></script>
     </body>
