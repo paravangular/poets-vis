@@ -45,18 +45,19 @@ class DBBuilder():
 			self.device_partitions()
 			self.device_properties()
 			self.edges()
+			self.partition_edges()
 			self.interpartition_edges()
+			self.max_levels()
 
 			for i in range(self.metis.nlevels - 1):
 				self.aggregate_state_entries(level = i)
 				self.aggregate_property_entries(level = i)
 				self.db.execute("CREATE INDEX IF NOT EXISTS index_states_" + str(i) + "_partition_id ON device_states_aggregate_" + str(i) + " (partition_id)")
+				self.db.execute("CREATE INDEX IF NOT EXISTS index_states_time ON device_states_aggregate_" + str(i) + " (time)")
 				self.db.execute("CREATE INDEX IF NOT EXISTS index_properties_" + str(i) + "_partition_id ON device_properties_aggregate_" + str(i) + " (partition_id)")
 
 			print
 			print("Database created.")
-			print
-			print
 			self.db.close()
 			print("******************************************************************************")
 			print("FINISH (%3f seconds)" % (time.time() - start_time))
@@ -86,7 +87,7 @@ class DBBuilder():
 		query = "INSERT INTO edges(source, target, source_port, target_port, message_type) VALUES(?, ?, ?, ?, ?)"
 		self.db.executemany(query, values)
 
-		print("Creating indexes...")
+		print("  Creating indexes...")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_edges_source ON edges (source)")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_edges_target ON edges (target)")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_edges_source_port ON edges (source_port)")
@@ -126,10 +127,40 @@ class DBBuilder():
 
 				self.db.executemany(insert_query, entries)
 
-				print("Creating indexes...")
+				print("  Creating indexes...")
 				self.db.execute("CREATE INDEX IF NOT EXISTS index_interpartition_edges_{0}_{1}_higher ON interpartition_edges_{0}_{1} (higher_level)".format(i, i - 1))
 				self.db.execute("CREATE INDEX IF NOT EXISTS index_interpartition_edges_{0}_{1}_lower ON interpartition_edges_{0}_{1} (lower_level)".format(i, i - 1))
 
+	def max_levels(self):
+		self.create_table("levels", [Field("max", "int")])
+
+		query = "INSERT INTO levels(max) VALUES(?)"
+		value = [self.metis.nlevels]
+
+		self.db.execute(query, value)
+
+	def partition_edges(self):
+		fields = [Field("source_partition", "string", set("key")), Field("target_partition", "string", set("key")), Field("count", "int")]
+		for i in range(self.metis.nlevels - 1):
+			self.create_table("partition_edges_{}".format(i), fields)
+
+			part = "partition_" + str(i)
+
+			query = ("SELECT p1." + part + " AS source_partition, p2." + part + " AS target_partition, COUNT(*) AS count" + 
+				" FROM device_partitions AS p1 INNER JOIN edges ON edges.source = p1.id" + 
+				" INNER JOIN device_partitions AS p2 ON edges.target = p2.id" + 
+				" GROUP BY p1." + part + ", p2." + part)
+			insert_query = ("INSERT INTO partition_edges_{}(source_partition, target_partition, count) VALUES(?, ?, ?)".format(i))
+			cursor = self.db.cursor()
+			cursor.execute(query)
+			entries = []
+			for row in cursor.fetchall():
+				entries.append(tuple(row))
+			cursor.close()
+			self.db.executemany(insert_query, entries)
+			print("  Creating indexes...")
+			self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_edges_{0}_source ON partition_edges_{0} (source_partition)".format(i))
+			self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_edges_{0}_target ON partition_edges_{0} (target_partition)".format(i))
 
 	def device_partitions(self):
 		query = "INSERT INTO device_partitions(id, "
@@ -170,7 +201,7 @@ class DBBuilder():
 		for i in range(self.metis.nlevels - 1):
 			self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_" + str(i) + " ON device_partitions (partition_" + str(i) + ")")
 
-	def aggregate_state_entries(self, level, epoch = 0):
+	def aggregate_state_entries(self, level, epoch = 5):
 		aggregable_types = set(["INT", "int", "INTEGER", "integer", "REAL", "real"])
 		aggregable_columns = []
 		pragma_cursor = self.db.cursor()
@@ -183,7 +214,7 @@ class DBBuilder():
 		for row in pragma_cursor.fetchall():
 			name = row[1]
 
-			if name != "id" or name != "time":
+			if name != "id" and name != "epoch":
 				if row[2] in aggregable_types:
 					if not first:
 						query += ", "
@@ -191,37 +222,39 @@ class DBBuilder():
 					query += "AVG(" + name + ") AS " + name
 					first = False
 
-		# select the latest event
-		query += (" FROM device_states AS s1" + 
-		" INNER JOIN device_partitions ON s1.id = device_partitions.id " + 
-		" WHERE s1.time = " + 
-		" (SELECT s2.time FROM device_states AS s2 WHERE s2.time <=" + str(epoch) + " AND s2.id = s1.id ORDER BY s2.time DESC LIMIT 1) "
-		" GROUP BY partition_" + str(level))
+		
 		
 		#(SELECT s2.time FROM device_states AS s2 WHERE s2.time <=" + str(epoch) + " AND s2.id = s1.id ORDER BY s2.time DESC LIMIT 1)"
 		pragma_cursor.close()
 
 		cursor = self.db.cursor()
 
-		print
-		print("Aggregating states, level " + str(level) + " at time " + str(epoch) + "...")
-		print("Executing query...")
-		# print(query)
-		cursor.execute(query)
+		for i in range(epoch):
+			print
+			print("Aggregating states, level " + str(level) + " at epoch " + str(i) + "...")
+			# select the latest event
+			time_query = (" FROM device_states AS s1" + 
+				" INNER JOIN device_partitions ON s1.id = device_partitions.id " + 
+				" WHERE s1.epoch = " + 
+				" (SELECT s2.epoch FROM device_states AS s2 WHERE s2.epoch <=" + str(i) + " AND s2.id = s1.id ORDER BY s2.epoch DESC LIMIT 1) "
+				" GROUP BY partition_" + str(level))
+			print("  Executing query...")
+			# print(query)
+			cursor.execute(query + time_query)
 
-		print("Fetching results...")
-		rows = cursor.fetchall()
-		values = []
-		for row in rows:
-			v = list(row) + [epoch]
-			values.append(v)
-		
-		print("Inserting aggregates...")
-		insert_query = ("INSERT INTO device_states_aggregate_" + str(level) +
-						"(partition_id, " + ", ".join(aggregable_columns) + ", time) VALUES(?, " + ", ".join(["?" for x in range(len(aggregable_columns))]) + ",?)")
+			print("  Fetching results...")
+			rows = cursor.fetchall()
+			values = []
+			for row in rows:
+				v = list(row) + [i]
+				values.append(v)
+			
+			print("  Inserting aggregates...")
+			insert_query = ("INSERT INTO device_states_aggregate_" + str(level) +
+							"(partition_id, " + ", ".join(aggregable_columns) + ", epoch) VALUES(?, " + ", ".join(["?" for x in range(len(aggregable_columns))]) + ",?)")
 
-		self.db.executemany(insert_query, values)
-		self.db.commit()
+			self.db.executemany(insert_query, values)
+			self.db.commit()
 
 	def aggregate_property_entries(self, level):
 		aggregable_types = set(["INT", "int", "INTEGER", "integer", "REAL", "real"])
@@ -256,17 +289,17 @@ class DBBuilder():
 		cursor = self.db.cursor()
 		print
 		print("Aggregating properties, level " + str(level) + "...")
-		print("Executing query...")
+		print("  Executing query...")
 		# print(query)
 		cursor.execute(query)
 
-		print("Fetching results...")
+		print("  Fetching results...")
 		rows = cursor.fetchall()
 		values = []
 		for row in rows:
 			values.append(row)
 		
-		print("Inserting aggregates...")
+		print("  Inserting aggregates...")
 		insert_query = ("INSERT INTO device_properties_aggregate_" + str(level) +
 						"(partition_id, " + ", ".join(aggregable_columns) + ") VALUES(?, " + ", ".join(["?" for x in range(len(aggregable_columns))]) + ")")
 
@@ -299,7 +332,7 @@ class DBBuilder():
 
 		self.insert_rows("device_properties", fields, values)
 
-		print("Creating indexes for table device_properties...")
+		print("  Creating indexes for table device_properties...")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_properties_id ON device_properties(id)")
 
 		fields = fields[1:]
@@ -310,7 +343,7 @@ class DBBuilder():
 	def device_states(self):
 		fields = []
 		fields.append(Field("id", "string", set(["unique", "key", "not null"])))
-		fields.append(Field("time", "integer", set(["unique", "key", "not null"])))
+		fields.append(Field("epoch", "integer", set(["unique", "key", "not null"])))
 
 		types = self.graph.raw.graph_type.device_types
 		for id, dev_type in types.iteritems():
@@ -327,9 +360,9 @@ class DBBuilder():
 			values.append(self.build_state_values(evt))
 		self.insert_rows("device_states", fields, values)
 
-		print("Creating indexes for table device_states...")
+		print("  Creating indexes for table device_states...")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_states_id ON device_states (id)")
-		self.db.execute("CREATE INDEX IF NOT EXISTS index_states_time ON device_states (time)")
+		self.db.execute("CREATE INDEX IF NOT EXISTS index_states_time ON device_states (epoch)")
 
 		fields[0] = Field("partition_id", "int")
 		for i in range(self.metis.nlevels - 1):
@@ -339,7 +372,7 @@ class DBBuilder():
 	def build_state_values(self, evt):
 		value = defaultdict(lambda:None, evt.S)
 		value["id"] = evt.dev
-		value["time"] = evt.time
+		value["epoch"] = evt.time
 		
 		for k, v in value.iteritems():
 			if isinstance(v, list):
