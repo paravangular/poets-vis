@@ -181,7 +181,7 @@ class GraphBuilder():
 			i += 1
 
 	def set_node_attributes(self):
-		for id, evt in self.events.iteritems():
+		for id, evt in self.events["msg"].iteritems():
 			if evt.type == "send":
 				self.nodes[evt.dev]["messages_sent"] += 1
 			elif evt.type == "recv":
@@ -199,7 +199,7 @@ class GraphBuilder():
 	def set_edge_attributes(self):
 		for evt_pair in self.event_pairs:
 			send_id, recv_id = evt_pair.split(":")
-			edge_id =  min(self.events[send_id].dev, self.events[recv_id].dev) + ":" + max(self.events[send_id].dev, self.events[recv_id].dev)
+			edge_id =  min(self.events["msg"][send_id].dev, self.events["msg"][recv_id].dev) + ":" + max(self.events["msg"][send_id].dev, self.events["msg"][recv_id].dev)
 			self.edges[edge_id]["messages"] += 1
 
 	def set_type_map(self):

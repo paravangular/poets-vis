@@ -2,7 +2,7 @@ import xml.sax
 import json
 import sys
 
-import xml.etree.ElementTree as ET
+import xml.etree.cElementTree as ET
 from lxml import etree
 
 # from controller.graph.core import expand_typed_data
@@ -87,38 +87,38 @@ class RecvEvent(MessageEvent):
 
 class LogWriter(object):
     def __init__(self):
-        self.log = {};
+        self.log = {"init": {}, "msg": {}};
         self.event_pairs = []
 
     def onInitEvent(self,initEvent):
-        if initEvent.eventId not in self.log:
-            self.log[initEvent.eventId] = initEvent
+        if initEvent.eventId not in self.log["init"]:
+            self.log["init"][initEvent.eventId] = initEvent
     
     def onSendEvent(self,sendEvent):
-        if sendEvent.eventId not in self.log:
-            self.log[sendEvent.eventId] = sendEvent
+        if sendEvent.eventId not in self.log["msg"]:
+            self.log["msg"][sendEvent.eventId] = sendEvent
     
     def onRecvEvent(self,recvEvent):
-        if recvEvent.eventId not in self.log:
-            self.log[recvEvent.eventId] = recvEvent
+        if recvEvent.eventId not in self.log["msg"]:
+            self.log["msg"][recvEvent.eventId] = recvEvent
             self.event_pairs.append(recvEvent.sendEventId + ":" + recvEvent.eventId)
 
 def extractInitEvent(n,writer):
-    eventId=get_attrib(n,"eventId")
-    time=float(get_attrib(n,"time"))
-    elapsed=float(get_attrib(n,"elapsed"))
-    dev=get_attrib(n,"dev")
-    rts=int(get_attrib(n,"rts"),0)
-    seq=int(get_attrib(n,"seq"))
+    eventId = n.get('eventId')
+    time=float( n.get('time'))
+    elapsed=float( n.get('elapsed'))
+    dev= n.get('dev')
+    rts=int( n.get('rts'),0)
+    seq=int( n.get('seq'))
     
     L=[]
-    for l in n.findall("p:L",ns):
-        L.append(l.text)
-    
-    S=n.find("p:S",ns)
-    if S is not None:
-        #print(S.text)
-        S=json.loads("{"+S.text+"}")
+    S = None
+    for child in n:
+        if deNS(child.tag) == "p:L":
+            L.append(child.text)
+
+        if deNS(child.tag) == "p:S":
+            S = json.loads("{" + child.text + "}")
     
     e=InitEvent(
         eventId, time, elapsed,
@@ -127,28 +127,30 @@ def extractInitEvent(n,writer):
     writer.onInitEvent(e)
     
 def extractSendEvent(n,writer):
-    eventId=get_attrib(n,"eventId")
-    time=float(get_attrib(n,"time"))
-    elapsed=float(get_attrib(n,"elapsed"))
-    dev=get_attrib(n,"dev")
-    rts=int(get_attrib(n,"rts"),0)
-    seq=int(get_attrib(n,"seq"))
+    eventId = n.get('eventId')
+    time=float( n.get('time'))
+    elapsed=float( n.get('elapsed'))
+    dev= n.get('dev')
+    rts=int( n.get('rts'),0)
+    seq=int( n.get('seq'))
     
     L=[]
-    for l in n.findall("p:L",ns):
-        L.append(l.text)
-    
-    S=n.find("p:S",ns)
-    if S is not None:
-        S=json.loads("{"+S.text+"}")
+    S = None
+    M = None
+    for child in n:
+        if deNS(child.tag) == "p:L":
+            L.append(child.text)
+
+        if deNS(child.tag) == "p:S":
+            S = json.loads("{" + child.text + "}")
+
+        if deNS(child.tag) == "p:M":
+            M = json.loads("{"+ child.text+"}")
+
         
-    port=get_attrib(n,"port")
-    cancel=bool(get_attrib(n,"cancel"))
-    fanout=int(get_attrib(n,"fanout"))
-    
-    M=n.find("p:M",ns)
-    if M is not None:
-        M=json.loads("{"+M.text+"}")
+    port=n.get("port")
+    cancel=bool(n.get("cancel"))
+    fanout=int(n.get("fanout"))
     
     writer.onSendEvent( SendEvent(
         eventId, time, elapsed,
@@ -158,23 +160,24 @@ def extractSendEvent(n,writer):
     ) )
 
 def extractRecvEvent(n,writer):
-    eventId=get_attrib(n,"eventId")
-    time=float(get_attrib(n,"time"))
-    elapsed=float(get_attrib(n,"elapsed"))
-    dev=get_attrib(n,"dev")
-    rts=int(get_attrib(n,"rts"),0)
-    seq=int(get_attrib(n,"seq"))
+    eventId = n.get('eventId')
+    time=float( n.get('time'))
+    elapsed=float( n.get('elapsed'))
+    dev= n.get('dev')
+    rts=int( n.get('rts'),0)
+    seq=int( n.get('seq'))
     
     L=[]
-    for l in n.findall("p:L",ns):
-        L.append(l.text)
-    
-    S=n.find("p:S",ns)
-    if S is not None:
-        S=json.loads("{"+S.text+"}")
+    S = None
+    for child in n:
+        if deNS(child.tag) == "p:L":
+            L.append(child.text)
+
+        if deNS(child.tag) == "p:S":
+            S = json.loads("{" + child.text + "}")
         
-    port=get_attrib(n,"port")
-    sendEventId=get_attrib(n,"sendEventId")
+    port=n.get("port")
+    sendEventId=n.get("sendEventId")
     
     writer.onRecvEvent( RecvEvent(
         eventId, time, elapsed,
@@ -194,15 +197,35 @@ def extractEvent(n,writer):
     else:
         raise XMLSyntaxError("DIdn't understand node type.", n)
 
-def parseEvents(src,writer):
-    tree = etree.parse(src)
-    doc = tree.getroot()
-    eventsNode = doc;
+# def parseEvents(src,writer):
+#     tree = etree.parse(src)
+#     doc = tree.getroot()
+#     eventsNode = doc;
 
-    if deNS(eventsNode.tag)!="p:GraphLog":
-        raise XMLSyntaxError("Expected GraphLog tag.", eventsNode)
+#     if deNS(eventsNode.tag)!="p:GraphLog":
+#         raise XMLSyntaxError("Expected GraphLog tag.", eventsNode)
 
-    for e in eventsNode.findall("p:*",ns):
-        extractEvent(e,writer)
+#     for e in eventsNode.findall("p:*",ns):
+#         extractEvent(e,writer)
 
         
+
+def parseEvents(src, writer, max_events = 10000):
+    context = etree.iterparse(src, events=('start', 'end',))
+    root = True
+    for action, elem in context:
+        
+        if root:
+            if deNS(elem.tag)!="p:GraphLog":
+                raise XMLSyntaxError("Expected GraphLog tag.", elem)
+
+            root = False
+        else:
+
+            if action == 'end' and (deNS(elem.tag) == "p:InitEvent" or deNS(elem.tag) == "p:RecvEvent" or deNS(elem.tag) == "p:SendEvent"):
+                extractEvent(elem, writer)
+
+                elem.clear()
+          
+                while elem.getprevious() is not None:
+                    del elem.getparent()[0]
