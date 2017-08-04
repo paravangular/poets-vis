@@ -55,7 +55,7 @@ class DBBuilder():
 				self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_" + str(i) + "_init ON device_states_aggregate_" + str(i) + " (init)")
 				self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_" + str(i) + "_parent ON device_states_aggregate_" + str(i) + " (parent)")
 				self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_" + str(i) + "_partition_id ON device_states_aggregate_" + str(i) + " (partition_id)")
-				self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_time ON device_states_aggregate_" + str(i) + " (time)")
+				self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_aggregate_" + str(i) + "_epoch ON device_states_aggregate_" + str(i) + " (epoch)")
 				self.db.execute("CREATE INDEX IF NOT EXISTS index_device_properties_" + str(i) + "_parent ON device_properties_aggregate_" + str(i) + " (parent)")
 				self.db.execute("CREATE INDEX IF NOT EXISTS index_device_properties_" + str(i) + "_partition_id ON device_properties_aggregate_" + str(i) + " (partition_id)")
 
@@ -413,12 +413,15 @@ class DBBuilder():
 		fields.append(Field("messages_received", "int", set(["not null"])))
 
 		types = self.graph.raw.graph_type.device_types
+		cols = {}
 		for id, dev_type in types.iteritems():
 			for prop in dev_type.properties.elements_by_index:
-				if not isinstance(prop, ArrayTypedDataSpec): 
-					fields.append(Field(prop.name, prop.type))
-				else: 
-					fields.append(Field(prop.name, "array"))
+				if prop.name not in cols:
+					if not isinstance(prop, ArrayTypedDataSpec): 
+						fields.append(Field(prop.name, prop.type))
+						cols[prop.name] = None
+					else: 
+						fields.append(Field(prop.name, "array"))
 
 
 		self.create_table("device_properties", fields)
@@ -426,8 +429,10 @@ class DBBuilder():
 		for id, dev in self.graph.raw.device_instances.iteritems():
 			v = {"id": id, "type": dev.device_type.id, "messages_sent": self.graph.nodes[id]["messages_sent"], "messages_received": self.graph.nodes[id]["messages_received"]}
 			p = dev.properties.copy()
+			c = cols.copy()
 			v.update(p)
-			values.append(v)
+			c.update(v)
+			values.append(c)
 
 		self.insert_rows("device_properties", fields, values)
 
@@ -446,21 +451,24 @@ class DBBuilder():
 		fields.append(Field("init", "integer", set(["not null", "key"])))
 
 		types = self.graph.raw.graph_type.device_types
+		cols = set()
 		for id, dev_type in types.iteritems():
 			for state in dev_type.state.elements_by_index:
-				if not isinstance(state, ArrayTypedDataSpec): 
-					fields.append(Field(state.name, state.type))
-				else: 
-					fields.append(Field(state.name, "array"))
+				if state.name not in cols:
+					if not isinstance(state, ArrayTypedDataSpec): 
+						fields.append(Field(state.name, state.type))
+						cols.add(state.name)
+					else: 
+						fields.append(Field(state.name, "array"))
 
 		self.create_table("device_states", fields)
 		values = []
 
 		for id, evt in self.graph.events["init"].iteritems():
-			values.append(self.build_state_values(evt))
+			values.append(self.build_state_values(evt, cols))
 
 		for id, evt in self.graph.events["msg"].iteritems():
-			values.append(self.build_state_values(evt))
+			values.append(self.build_state_values(evt, cols))
 		
 		self.insert_rows("device_states", fields, values)
 
@@ -475,7 +483,7 @@ class DBBuilder():
 			self.create_table("device_states_aggregate_" + str(i), fields)
 
 	
-	def build_state_values(self, evt):
+	def build_state_values(self, evt, col = None):
 		value = defaultdict(lambda:None, evt.S)
 		value["id"] = evt.dev
 		value["epoch"] = evt.time
@@ -488,6 +496,12 @@ class DBBuilder():
 		for k, v in value.iteritems():
 			if isinstance(v, list):
 				value[k] = str(v)
+
+		if col:
+			if len(value) != len(col):
+				for i in col:
+					if i not in value:
+						value[i] = None
 
 		return value
 

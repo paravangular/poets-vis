@@ -36,3 +36,8 @@ def graph(part_id):
 	
 	builder = JSONBuilder(part_id)
 	return render_template("graph.html", data = builder.json)
+
+@app.route("/device/<dev_id>")
+def device(dev_id):
+	
+	return render_template("graph.html", data = builder.json)
