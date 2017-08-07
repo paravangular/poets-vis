@@ -1,3 +1,5 @@
+var SYMBOLS = [d3.symbolCircle, d3.symbolSquare, d3.symbolTriangle, d3.symbolDiamond, d3.symbolCross, d3.symbolStar, d3.symbolWye];
+
 function ForceGraph(selector, data) {
 
   	// d3 vars
@@ -11,6 +13,33 @@ function ForceGraph(selector, data) {
   	var message_passing_time = 100;
   	var symbol_size = 300;
   	// var last_event_time = get_last_event_time();
+
+  	var prop_domains = {}
+  	var types = {}
+
+  	for (var prop in _data.nodes[0]) {
+  		prop_domains[prop] = [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]
+  	}
+
+  	var si = 0
+  	for (var i = 0; i < _data.nodes.length; i++) {
+  		if (_data.nodes[i]["type"] && !(_data.nodes[i]["type"] in device_types)) { 
+  			device_types[_data.nodes[i]["type"]] = SYMBOLS[si];
+  			si++;
+  		}
+
+  		for (var prop in prop_domains) {
+  			var n = _data.nodes[i][prop]
+  			if (!isNaN(parseFloat(n)) && isFinite(n)) {
+  				prop_domains[prop][0] = Math.min(Number(n), prop_domains[prop][0])
+  				prop_domains[prop][1] = Math.max(Number(n), prop_domains[prop][1])
+  			}
+
+  		}
+  	}
+
+
+  	console.log(device_types)
 
   	svg = d3.select("body")
       	.append("svg")
@@ -52,7 +81,7 @@ function ForceGraph(selector, data) {
 		link = g.append("g")
 				    	.attr("class", "edges")
 				    	.selectAll("line")
-				    	.data(data.edges)
+				    	.data(_data.edges)
 				    	.enter().append("line")
 						.attr("stroke", "#cccccc")
 						.attr("class", function(d) { return d.source + ":" + d.target });
@@ -60,13 +89,16 @@ function ForceGraph(selector, data) {
 		node = g.append("g")
 				    .attr("class", "nodes")
 				    .selectAll(".device") // TODO: device shape
-				    .data(d3.values(data.nodes))
+				    .data(d3.values(_data.nodes))
 				    .enter().append("path")
 				    .attr("class", function(d) { return "device " + d.id })
-				    .attr("d", d3.symbol().size(symbol_size).type(d3.symbolCircle))
+				    .attr("d", d3.symbol().size(symbol_size).type(function(d) { 
+				    	if (d.type) {return device_types[d.type]}
+				    	else {return d3.symbolCircle} } ))
 				    .attr("fill", function(d) { 
 				    	var selected = $("input[name='property']:checked").val();
-				    	return "#000000" //get_node_colour(selected, d.p[selected])
+				    	var selected = "spin"
+				    	return get_node_colour(selected, d[selected])
 				    })
 				    .attr("stroke", "#FFFFFF")
 				    .attr("stroke-width", "2px")
@@ -113,11 +145,11 @@ function ForceGraph(selector, data) {
 			        .on("drag", dragged)
 			        .on("end", dragended));
 
-		simulation.nodes(d3.values(data.nodes))
+		simulation.nodes(d3.values(_data.nodes))
 	      			.on("tick", ticked);
 
 	  	simulation.force("link")
-	      			.links(data.edges);
+	      			.links(_data.edges);
 
 	    function ticked() {
 			link
@@ -229,9 +261,13 @@ function ForceGraph(selector, data) {
 		return Math.max(sends[sends.length - 1], recvs[recvs.length - 1]);
 	}
 
+	function get_node_shape(dev_type) {
+		d3.symbolCircle
+	}
+
 	function get_node_colour(prop, value) {
 		var colour = d3.scaleLinear()
-  						.domain(prop_domain)
+  						.domain(prop_domains[prop])
   						.interpolate(d3.interpolateHcl)
       					.range([d3.rgb("#007AFF"), d3.rgb('#FF0000')]);
 

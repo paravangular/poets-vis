@@ -16,15 +16,18 @@ class JSONBuilder():
 		self.init = init
 		level = len(self.part_id.split("_")) - 1
 		nlevels = helper.execute_query("SELECT max FROM levels")
-		node_prop = [row[1] for row in helper.execute_query("PRAGMA table_info(device_states)")] + ["parent"]
 		edge_prop = ["source", "target", "count"]
 
+
 		if level < nlevels[0][0] - 1:
+			node_prop = [row[1] for row in helper.execute_query("PRAGMA table_info(device_states_aggregate_{0})".format(level))] + [row[1] for row in helper.execute_query("PRAGMA table_info(device_properties_aggregate_{0})".format(level))] + ["parent"] 
 			iquery = ("SELECT * FROM device_states_aggregate_{0} AS states ".format(level) + 
 				" JOIN device_properties_aggregate_{0} AS properties ON properties.partition_id = states.partition_id".format(level) + 
 				" WHERE init = ? AND epoch = ? AND states.parent = ? ")
 			interior = helper.execute_query(iquery, [self.init, self.epoch, self.part_id])
 		else:
+
+			node_prop = [row[1] for row in helper.execute_query("PRAGMA table_info(device_states)")] + [row[1] for row in helper.execute_query("PRAGMA table_info(device_properties)")]
 			iquery = ("SELECT * FROM device_states AS states" + 
 				" JOIN device_properties AS properties ON properties.id = states.id" + 
 				" JOIN (SELECT id FROM device_partitions WHERE partition_{} = ?) AS parts ON states.id = parts.id"
@@ -39,14 +42,21 @@ class JSONBuilder():
 			border_edges = helper.execute_query("SELECT higher_level, lower_level, count FROM interpartition_edges_{}_{} WHERE parent = ?".format(level, level + 1), [self.part_id])
 		nodes = interior + border
 
+
 		nodes_json = []
 		for node in nodes:
 			n = {}
 
 			for i in range(len(node_prop)):
-				n[node_prop[i]] = safe_list_get(node, i, None)
+				if node_prop[i] == "partition_id":
+					node_prop[i] = "id"
+					
+				if node_prop[i] not in n:
+					n[node_prop[i]] = safe_list_get(node, i, None)
 
 			nodes_json.append(n)
+
+		print nodes[-1][0]
 
 		edges_json = []
 		# self.nodes_csv = ["|".join(map(str, [x for x in node])) for node in nodes]
@@ -61,7 +71,6 @@ class JSONBuilder():
 			edges_json.append(e)
 
 		self.json = {"nodes": nodes_json, "edges": edges_json}
-		print(self.json)
 
 
 
