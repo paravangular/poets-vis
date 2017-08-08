@@ -10,10 +10,14 @@ class DBSetup(Command):
 	option_list = (
 		Option('--name', '-n', dest='name'),
 		Option('--location', '-l', dest='base'),
+		Option('--event-num', '-e', dest='events')
 		)
 
-	def run(self, name, base = "data/db/"):
-		db = DBBuilder(name)
+	def run(self, name, base = "data/", events = 1000000):
+		if base and events:
+			db = DBBuilder(name, base, events)
+		else:
+			db = DBBuilder(name)
 
 manager.add_command('initdb', DBSetup())
 

@@ -181,11 +181,17 @@ class GraphBuilder():
 			i += 1
 
 	def set_node_attributes(self):
+		print("Loading node attributes from {} events...".format(len(self.events["msg"])))
+		i = 0
 		for id, evt in self.events["msg"].iteritems():
 			if evt.type == "send":
 				self.nodes[evt.dev]["messages_sent"] += 1
 			elif evt.type == "recv":
 				self.nodes[evt.dev]["messages_received"] += 1
+			print("   Loaded event {}".format(i))
+			i += 1
+		print("Finished loading node attributes.")
+
 
 	def set_edge_instances(self):
 		for edge_id, edge in self.raw.edge_instances.iteritems():
@@ -197,10 +203,15 @@ class GraphBuilder():
 				self.edges[edge_id] = {"weight": 1, "messages": 1} # TODO: because edge weights must be > 0
 
 	def set_edge_attributes(self):
+		print("Loading edge attributes from {} event pairs...".format(len(self.event_pairs)))
+		i = 0
 		for evt_pair in self.event_pairs:
 			send_id, recv_id = evt_pair.split(":")
 			edge_id =  min(self.events["msg"][send_id].dev, self.events["msg"][recv_id].dev) + ":" + max(self.events["msg"][send_id].dev, self.events["msg"][recv_id].dev)
 			self.edges[edge_id]["messages"] += 1
+			print("   Loaded event pair {}".format(i))
+			i += 1
+		print("Finished loading edge attributes.")
 
 	def set_type_map(self):
 		types = self.raw.graph_type.device_types

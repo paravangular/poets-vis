@@ -12,11 +12,12 @@ from scripts.graph.load_xml import *
 from scripts.graph_builder import *
 
 class DBBuilder():
-	def __init__(self, db_name, dir_name = "data/"):
+	def __init__(self, db_name, dir_name = "data/", max_events = 1000000):
 
 
 		graph_src = dir_name + db_name + '.xml'
 		event_src = dir_name + db_name + '_event.xml'
+		self.max_events = max_events
 
 		if not os.path.exists(dir_name + "db/"):
 			os.makedirs(directory + "db/")
@@ -271,7 +272,7 @@ class DBBuilder():
 		for i in range(self.metis.nlevels - 1):
 			self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_" + str(i) + " ON device_partitions (partition_" + str(i) + ")")
 
-	def aggregate_state_entries(self, level, epoch = 5):
+	def aggregate_state_entries(self, level, epoch = 10):
 		aggregable_types = set(["INT", "int", "INTEGER", "integer", "REAL", "real"])
 		aggregable_columns = []
 		pragma_cursor = self.db.cursor()
@@ -324,7 +325,9 @@ class DBBuilder():
 		self.db.executemany(insert_query, values)
 		self.db.commit()
 
-		for i in range(epoch):
+		interval = self.max_events // epoch
+
+		for i in range(0, self.max_events, interval):
 			print
 			print("Aggregating states, level " + str(level) + " at epoch " + str(i) + "...")
 			# select the latest event
@@ -475,7 +478,7 @@ class DBBuilder():
 		print("  Creating indexes...")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_id ON device_states (id)")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_init ON device_states (init)")
-		self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_time ON device_states (epoch)")
+		self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_epoch ON device_states (epoch)")
 
 		fields.append(Field("parent", "int", set(["key"])))
 		fields[0] = Field("partition_id", "int")

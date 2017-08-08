@@ -1,6 +1,6 @@
 var SYMBOLS = [d3.symbolCircle, d3.symbolSquare, d3.symbolTriangle, d3.symbolDiamond, d3.symbolCross, d3.symbolStar, d3.symbolWye];
 
-function ForceGraph(selector, data) {
+function ForceGraph(selector, data, level) {
 
   	// d3 vars
 	var width = window.innerWidth * 0.7;
@@ -38,8 +38,6 @@ function ForceGraph(selector, data) {
   		}
   	}
 
-
-  	console.log(device_types)
 
   	svg = d3.select("body")
       	.append("svg")
@@ -92,13 +90,16 @@ function ForceGraph(selector, data) {
 				    .data(d3.values(_data.nodes))
 				    .enter().append("path")
 				    .attr("class", function(d) { return "device " + d.id })
-				    .attr("d", d3.symbol().size(symbol_size).type(function(d) { 
+				    .attr("d", d3.symbol().size( function(d) { return get_node_size(d.id) } ).type(function(d) { 
 				    	if (d.type) {return device_types[d.type]}
 				    	else {return d3.symbolCircle} } ))
 				    .attr("fill", function(d) { 
 				    	var selected = $("input[name='property']:checked").val();
 				    	var selected = "spin"
 				    	return get_node_colour(selected, d[selected])
+				    })
+				    .attr("opacity", function(d) {
+				    	return get_node_opacity(d.id)
 				    })
 				    .attr("stroke", "#FFFFFF")
 				    .attr("stroke-width", "2px")
@@ -263,6 +264,25 @@ function ForceGraph(selector, data) {
 
 	function get_node_shape(dev_type) {
 		d3.symbolCircle
+	}
+
+	function get_node_size(id) {
+		var ls = id.split("_")
+		if (ls[0] == "base" && ls.length == level + 1) {
+			console.log("WHY")
+			return symbol_size * 7
+		} else {
+			return symbol_size
+		}
+	}
+
+	function get_node_opacity(id) {
+		var ls = id.split("_")
+		if (ls[0] == "base" && ls.length == level + 1) {
+			return 0.3
+		} else {
+			return 1
+		}
 	}
 
 	function get_node_colour(prop, value) {

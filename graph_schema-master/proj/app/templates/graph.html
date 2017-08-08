@@ -27,8 +27,16 @@
         <!-- script src="{{ url_for('static', filename='js/loader.js') }}"></script-->
         <script>
             var data = JSON.parse('{{ data | tojson | safe}}');
-            console.log(data)
             var device_types = {};
+            var parent_id = '{{ parent }}'
+            var levels = parent_id.split("_")
+            var level;
+            if (levels[0] == "base") {
+                level = levels.length - 1
+            } else {
+                level = 4
+            }
+
         </script>
         <script src="{{ url_for('static', filename='js/graph_builder.js') }}"></script>
         <script src="{{ url_for('static', filename='js/graph_runner.js') }}"></script>

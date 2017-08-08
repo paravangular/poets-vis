@@ -39,7 +39,8 @@ $(document).ready(function() {
 	  	d3.selectAll("svg").remove();
 		data.events = [];
 
-		graph = new ForceGraph("body", data);
+
+		graph = new ForceGraph("body", data, level);
 		graph.draw();
     }
 });

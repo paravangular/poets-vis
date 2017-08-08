@@ -35,7 +35,7 @@ def db():
 def graph(part_id):
 	
 	builder = JSONBuilder(part_id)
-	return render_template("graph.html", data = builder.json)
+	return render_template("graph.html", data = builder.json, parent = part_id)
 
 @app.route("/device/<dev_id>")
 def device(dev_id):

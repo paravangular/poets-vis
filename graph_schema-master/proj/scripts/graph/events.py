@@ -210,22 +210,27 @@ def extractEvent(n,writer):
 
         
 
-def parseEvents(src, writer, max_events = 10000):
+def parseEvents(src, writer, max_events = 1000000):
+    print("Parsing events...")
     context = etree.iterparse(src, events=('start', 'end',))
     root = True
+    i = 0
     for action, elem in context:
-        
         if root:
             if deNS(elem.tag)!="p:GraphLog":
                 raise XMLSyntaxError("Expected GraphLog tag.", elem)
 
             root = False
         else:
-
             if action == 'end' and (deNS(elem.tag) == "p:InitEvent" or deNS(elem.tag) == "p:RecvEvent" or deNS(elem.tag) == "p:SendEvent"):
                 extractEvent(elem, writer)
-
+                i += 1
                 elem.clear()
+                print("   loaded event " + str(i))
           
                 while elem.getprevious() is not None:
                     del elem.getparent()[0]
+
+                if i >= max_events:
+                    break
+    print("Finished parsing events.")
