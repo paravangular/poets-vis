@@ -96,7 +96,7 @@ function ForceGraph(selector, data, level) {
 				    	else {return d3.symbolCircle} } ))
 				    .attr("fill", function(d) { 
 				    	var selected = $("input[name='property']:checked").val();
-				    	var selected = "ca"
+				    	var selected = "spin"
 				    	return get_node_colour(selected, d[selected])
 				    })
 				    .attr("opacity", function(d) {
@@ -253,7 +253,7 @@ function ForceGraph(selector, data, level) {
 		var node = d3.select("." + device);
 
 		node.attr("fill", function(d) { 
-			return get_node_colour("ca", data.nodes[device]["ca"]);
+			return get_node_colour("spin", data.nodes[device]["spin"]);
 		});
 	}
 

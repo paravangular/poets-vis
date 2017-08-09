@@ -30,8 +30,8 @@ class JSONBuilder():
 			node_prop = [row[1] for row in helper.execute_query("PRAGMA table_info(device_states)")] + [row[1] for row in helper.execute_query("PRAGMA table_info(device_properties)")]
 			iquery = ("SELECT * FROM device_states AS states" + 
 				" JOIN device_properties AS properties ON properties.id = states.id" + 
-				" JOIN (SELECT id FROM device_partitions WHERE partition_{} = ?) AS parts ON states.id = parts.id"
-				" WHERE init = ? AND epoch = ?".format(level - 1))
+				" JOIN (SELECT id FROM device_partitions WHERE partition_{} = ?) AS parts ON states.id = parts.id".format(level - 1) + 
+				" WHERE init = ? AND epoch = ?")
 			interior = helper.execute_query(iquery, [self.part_id, self.init, self.epoch])
 
 		interior_edges = helper.execute_query("SELECT source, target, count FROM partition_edges_{} WHERE parent = ? AND source != target".format(level), [self.part_id])
