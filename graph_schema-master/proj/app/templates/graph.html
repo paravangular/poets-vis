@@ -37,6 +37,7 @@
         <!-- script src="{{ url_for('static', filename='js/loader.js') }}"></script-->
         <script>
             var data = JSON.parse('{{ data | tojson | safe}}');
+            var max_time = '{{ max_time[0][0] }}'
             var device_types = {};
             var parent_id = '{{ parent }}'
             var levels = parent_id.split("_")
@@ -50,7 +51,7 @@
             $('#slider').slider({
                 range: true,
                 min: 0,
-                max: 10,
+                max: max_time,
                 values: [ 0, 5 ],
                 slide: function( event, ui ) {
                   $('#rangeval').html(ui.values[0]+" - "+ui.values[1]);

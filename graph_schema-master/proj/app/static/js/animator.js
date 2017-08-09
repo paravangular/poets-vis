@@ -34,8 +34,6 @@ function Message(graph, g, send_event, recv_event) {
 		}
 
 
-		
-
 		function transition(graph, marker, recv_event) {
 			marker.transition()
 			    .duration(event_duration)
@@ -61,17 +59,6 @@ function Message(graph, g, send_event, recv_event) {
 			  
 			  return [matrix.e, matrix.f];
 			}
-
-    	function translate_along(path) {
-			var l = path.getTotalLength();
-			return function(d, i, a) {
-				return function(t) {
-		    		var p = path.getPointAtLength(t * l);
-		    		return "translate(" + p.x + "," + p.y + ")";
-		    	};
-			};
-		}
-
 	}
 
 	this.set_event_time = function(time) {

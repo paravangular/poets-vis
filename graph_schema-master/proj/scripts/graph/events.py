@@ -89,19 +89,23 @@ class LogWriter(object):
     def __init__(self):
         self.log = {"init": {}, "msg": {}};
         self.event_pairs = []
+        self.max_time = 0
 
     def onInitEvent(self,initEvent):
         if initEvent.eventId not in self.log["init"]:
             self.log["init"][initEvent.eventId] = initEvent
+
     
     def onSendEvent(self,sendEvent):
         if sendEvent.eventId not in self.log["msg"]:
             self.log["msg"][sendEvent.eventId] = sendEvent
+            self.max_time = max(sendEvent.time, self.max_time)
     
     def onRecvEvent(self,recvEvent):
         if recvEvent.eventId not in self.log["msg"]:
             self.log["msg"][recvEvent.eventId] = recvEvent
             self.event_pairs.append(recvEvent.sendEventId + ":" + recvEvent.eventId)
+            self.max_time = max(recvEvent.time, self.max_time)
 
 def extractInitEvent(n,writer):
     eventId = n.get('eventId')

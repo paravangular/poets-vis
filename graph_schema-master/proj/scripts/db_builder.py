@@ -1,6 +1,7 @@
 import sqlite3
 
 import time
+import math
 
 import json
 import sys, os
@@ -48,7 +49,7 @@ class DBBuilder():
 			self.edges()
 			self.partition_edges()
 			self.interpartition_edges()
-			self.max_levels()
+			self.graph_properties()
 
 			for i in range(self.metis.nlevels - 1):
 				self.aggregate_state_entries(level = i)
@@ -171,13 +172,13 @@ class DBBuilder():
 			self.db.execute("CREATE INDEX IF NOT EXISTS index_interpartition_edges_{0}_{1}_lower ON interpartition_edges_{0}_{1} (lower_level)".format(curr, prev))
 
 
-	def max_levels(self):
-		self.create_table("levels", [Field("max", "int")])
+	def graph_properties(self):
+		self.create_table("graph_properties", [Field("name", "string", set(["key", "not null", "unique"])), Field("max", "int")])
+		query = "INSERT INTO graph_properties(name, max) VALUES(?, ?)"
+		values = [("level", self.metis.nlevels), ("time", int(math.ceil(self.graph.max_time)))]
+		
+		self.db.executemany(query, values)
 
-		query = "INSERT INTO levels(max) VALUES(?)"
-		value = [self.metis.nlevels]
-
-		self.db.execute(query, value)
 
 	def partition_edges(self):
 		fields = [Field("parent", "string", set("key")), Field("source", "string", set("key")), Field("target", "string", set("key")), Field("count", "int")]
@@ -325,10 +326,13 @@ class DBBuilder():
 		self.db.executemany(insert_query, values)
 		self.db.commit()
 
-		nevents = min(self.max_events, len(self.graph.events["init"]) + len(self.graph.events["msg"]))
-		interval = nevents // epoch
+		if int(math.ceil(self.graph.max_time)) > epoch:
+			interval = int(math.ceil(self.graph.max_time)) // epoch
+		else:
+			interval = 1
 
-		for i in range(0, nevents, interval):
+
+		for i in range(0, int(math.ceil(self.graph.max_time)) + 1, interval):
 			print
 			print("Aggregating states, level " + str(level) + " at epoch " + str(i) + "...")
 			# select the latest event

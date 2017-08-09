@@ -163,6 +163,7 @@ class GraphBuilder():
 		event_writer = LogWriter()
 		parseEvents(event_src, event_writer)
 		self.events = event_writer.log
+		self.max_time = event_writer.max_time
 		self.event_pairs = event_writer.event_pairs
 
 		self.set_node_attributes()
@@ -209,7 +210,6 @@ class GraphBuilder():
 			send_id, recv_id = evt_pair.split(":")
 			edge_id =  min(self.events["msg"][send_id].dev, self.events["msg"][recv_id].dev) + ":" + max(self.events["msg"][send_id].dev, self.events["msg"][recv_id].dev)
 			self.edges[edge_id]["messages"] += 1
-			print("   Loaded event pair {}".format(i))
 			i += 1
 		print("Finished loading edge attributes.")
 
