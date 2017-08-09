@@ -325,9 +325,10 @@ class DBBuilder():
 		self.db.executemany(insert_query, values)
 		self.db.commit()
 
-		interval = self.max_events // epoch
+		nevents = min(self.max_events, len(self.graph.events["init"]) + len(self.graph.events["msg"]))
+		interval = nevents // epoch
 
-		for i in range(0, self.max_events, interval):
+		for i in range(0, nevents, interval):
 			print
 			print("Aggregating states, level " + str(level) + " at epoch " + str(i) + "...")
 			# select the latest event
@@ -348,7 +349,7 @@ class DBBuilder():
 				v = list(row) + [parent, i, 0]
 				values.append(tuple(v))
 			
-			print("  Inserting aggregates...")
+			print("  Inserting {} records to device_states_aggregate_{}...".format(len(values), level))
 			insert_query = ("INSERT INTO device_states_aggregate_" + str(level) +
 							"(partition_id, " + ", ".join(aggregable_columns) + ", parent, epoch, init) VALUES(?, " + ", ".join(["?" for x in range(len(aggregable_columns))]) + ",?, ?, ?)")
 
@@ -401,7 +402,7 @@ class DBBuilder():
 			v.append(parent)
 			values.append(tuple(v))
 		
-		print("  Inserting aggregates...")
+		print("  Inserting {} records to device_properties_aggregate_{}...".format(len(values), level))
 		insert_query = ("INSERT INTO device_properties_aggregate_" + str(level) +
 						"(partition_id, " + ", ".join(aggregable_columns) + ", parent) VALUES(?, " + ", ".join(["?" for x in range(len(aggregable_columns))]) + ", ?)")
 
@@ -447,6 +448,24 @@ class DBBuilder():
 		for i in range(self.metis.nlevels - 1):
 			self.create_table("device_properties_aggregate_" + str(i), fields)
 
+	def events(self):
+		fields = []
+		fields.append(Field("id", "string", set(["unique", "key", "not null"])))
+		fields.append(Field("dev", "string", set(["key", "not null"])))
+		fields.append(Field("type", "string", set(["not null"])))
+		fields.append(Field("time", "float", set(["key", "not null"])))
+		fields.append(Field("elapsed", "float",set(["not null"])))
+		fields.append(Field("rts", "string", set(["not null"])))
+		fields.append(Field("seq", "integer", set(["not null"])))
+		fields.append(Field("port", "string", set(["not null"])))
+		fields.append(Field("send_id", "string"))
+		fields.append(Field("cancel", "string"))
+		fields.append(Field("fanout", "string"))
+		fields.append(Field("m", "string"))
+
+		self.create_table("events", fields)
+		return fields
+
 	def device_states(self):
 		fields = []
 		fields.append(Field("id", "string", set(["unique", "key", "not null"])))
@@ -464,17 +483,27 @@ class DBBuilder():
 					else: 
 						fields.append(Field(state.name, "array"))
 
-		self.create_table("device_states", fields)
 		values = []
-
+		evt_values = []
 		for id, evt in self.graph.events["init"].iteritems():
 			values.append(self.build_state_values(evt, cols))
 
 		for id, evt in self.graph.events["msg"].iteritems():
 			values.append(self.build_state_values(evt, cols))
+			evt_values.append(self.build_event_values(evt))
 		
-		self.insert_rows("device_states", fields, values)
+		evt_fields = self.events()
+		self.insert_rows("events", evt_fields, evt_values)
+		print("  Creating indexes...")
+		self.db.execute("CREATE INDEX IF NOT EXISTS index_events_id ON events (id)")
+		self.db.execute("CREATE INDEX IF NOT EXISTS index_events_dev ON events (dev)")
+		self.db.execute("CREATE INDEX IF NOT EXISTS index_events_time ON events (time)")
+		self.db.execute("CREATE INDEX IF NOT EXISTS index_events_type ON events (type)")
+		self.db.execute("CREATE INDEX IF NOT EXISTS index_events_send_id ON events (send_id)")
 
+
+		self.create_table("device_states", fields)
+		self.insert_rows("device_states", fields, values)
 		print("  Creating indexes...")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_id ON device_states (id)")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_init ON device_states (init)")
@@ -485,7 +514,31 @@ class DBBuilder():
 		for i in range(self.metis.nlevels - 1):
 			self.create_table("device_states_aggregate_" + str(i), fields)
 
-	
+	def build_event_values(self, evt):
+		value = defaultdict(lambda:None)
+		value["id"] = evt.eventId
+		value["dev"] = evt.dev
+		value["type"] = evt.type
+		value["time"] = evt.time
+		value["elapsed"] = evt.elapsed
+		value["rts"] = evt.rts
+		value["seq"] = evt.seq
+		value["port"] = evt.port
+
+		if evt.type == "recv":
+			value["send_id"] = evt.sendEventId
+			value["cancel"] = None
+			value["fanout"] = None
+			value["m"] = None
+		else:
+			value["send_id"] = None
+			value["cancel"] = int(evt.cancel)
+			value["fanout"] = evt.fanout
+			value["m"] = json.dumps(evt.M)
+
+		return value
+
+
 	def build_state_values(self, evt, col = None):
 		value = defaultdict(lambda:None, evt.S)
 		value["id"] = evt.dev
@@ -509,6 +562,7 @@ class DBBuilder():
 		return value
 
 	def insert_rows(self, table_name, fields, values):
+		print("  Inserting {} records to {}...".format(len(values), table_name))
 		colnames = map(str, fields)
 		columns = ",".join(colnames)
 		placeholders = ":" + ",:".join(colnames)

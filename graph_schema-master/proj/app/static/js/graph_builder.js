@@ -7,13 +7,8 @@ function ForceGraph(selector, data, level) {
    	var height = window.innerHeight * 0.98;
   	var _data = data;
 
-	// logic vars
-	var simulating = false;
-  	var prop_domain = [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY];
-  	var message_passing_time = 100;
+  	var simulating = false;
   	var symbol_size = 300;
-  	// var last_event_time = get_last_event_time();
-
   	var prop_domains = {}
   	var types = {}
 
@@ -72,7 +67,7 @@ function ForceGraph(selector, data, level) {
 
    	this.draw = function() {
    		var simulation = d3.forceSimulation()
-				    .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(50).strength(0.3))
+				    .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(80).strength(0.15))
 				    .force("charge", d3.forceManyBody())
 				    .force("center", d3.forceCenter(width / 2, height / 2));
 
@@ -164,10 +159,10 @@ function ForceGraph(selector, data, level) {
 
 		function show_device_details(d) {
 			$.get({
-			       url: '/device_details', 
+			       url: '/graph/' + d.id, 
 			       success: function(response) {
-				        sessionStorage.setItem('active_device', d.id);
-				        window.location.href = '/device_details';
+				        window.location.href = '/graph/' + d.id;
+				        parent_id = d.id;
 
 			       }
 			});
@@ -214,10 +209,6 @@ function ForceGraph(selector, data, level) {
    		d3.selectAll("g > *").remove();
    	}
 
-   	this.change_colour = function(prop) {
-   		set_prop_domain(prop);
-   	}
-
 	this.stop_poets_simulation = function() {
 		simulating = false;
 		d3.selectAll("circle.marker").remove();
@@ -226,40 +217,14 @@ function ForceGraph(selector, data, level) {
         $("#start").prop('disabled', false);
 	}
 	   	
-	this.start_poets_simulation = function() {
+	this.start_poets_simulation = function(start, end) {
 
         $("#start").prop('disabled', true);
         $("#stop").prop('disabled', false);
 		simulating = true;
 
+		var animator = new Animator(g, 0.0, 5.0, parent_id);
 
-		setTimeout(function() {timeout_loop(0)}, 50);
-
-		function timeout_loop(i) {
-			if (simulating) {
-				update_dataset(data, data.events.send[i]);
-			    i++;
-			    if (i < data.events.send.length) {
-			    	setTimeout(function(){timeout_loop(i);}, 50);
-			    } else {
-			    	// stop_poets_simulation is not defined?
-			    	simulating = false;
-					d3.selectAll("circle.marker").remove();
-
-			        $("#stop").prop('disabled', true);
-			        $("#start").prop('disabled', false);
-			    }
-			}
-			
-		}
-
-	}
-
-	function get_last_event_time() {
-		var sends = data.events.send;
-		var recvs = data.events.recv;
-
-		return Math.max(sends[sends.length - 1], recvs[recvs.length - 1]);
 	}
 
 	function get_node_shape(dev_type) {
@@ -292,27 +257,6 @@ function ForceGraph(selector, data, level) {
       					.range([d3.rgb("#007AFF"), d3.rgb('#FF0000')]);
 
       	return colour(value);
-   	}
-
-
-   	function set_prop_domain(prop) {
-   		// TODO: to avoid recalculation, store this as property?
-   		var min = Number.POSITIVE_INFINITY,
-   			max = Number.NEGATIVE_INFINITY;
-
-   		var all_events = data.events.send.concat(data.events.recv);
-  		
-  		for (var i = 0; i < all_events.length; i++) {
-			var p = all_events[i].node_prop[prop];
-
-			if (typeof(p) != "undefined") {
-				min = Math.min(min, p);
-				max = Math.max(max, p);
-	   		}
-	   	}
-   		
-   		prop_domain[0] = min;
-   		prop_domain[1] = max;
    	}
 
 	function update_dataset(data, send_evt) {

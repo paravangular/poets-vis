@@ -215,6 +215,7 @@ def parseEvents(src, writer, max_events = 1000000):
     context = etree.iterparse(src, events=('start', 'end',))
     root = True
     i = 0
+    interval = max_events // 200
     for action, elem in context:
         if root:
             if deNS(elem.tag)!="p:GraphLog":
@@ -226,7 +227,8 @@ def parseEvents(src, writer, max_events = 1000000):
                 extractEvent(elem, writer)
                 i += 1
                 elem.clear()
-                print("   loaded event " + str(i))
+                if i % interval == 0:
+                    print("   loaded event " + str(i))
           
                 while elem.getprevious() is not None:
                     del elem.getparent()[0]

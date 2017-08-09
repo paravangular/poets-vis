@@ -1,13 +1,12 @@
 from scripts import helper
 import json
-
+from operator import itemgetter
 
 def safe_list_get (l, idx, default):
   try:
     return l[idx]
   except IndexError:
     return default
-
 
 class JSONBuilder():
 	def __init__(self, part_id, init = 1, epoch = 0):
@@ -74,3 +73,35 @@ class JSONBuilder():
 
 
 
+class EventJSONBuilder():
+	def __init__(self, start, end, part_id):
+		epsilon = 0.005
+		self.cols = [row[1] for row in helper.execute_query("PRAGMA table_info(events)")]
+		for i in range(len(self.cols)):
+			if self.cols[i] == "type":
+				type_col = i
+			if self.cols[i] == "send_id":
+				send_event_col = i
+
+		level = len(part_id.split("_")) - 2
+		self.events = helper.execute_query("SELECT * FROM events" + 
+								" JOIN (SELECT device_partitions.id FROM device_partitions" +
+								" WHERE partition_{0} = '{1}') AS parts".format(level, part_id) + 
+								" ON events.dev = parts.id" + 
+								" WHERE time >= {0} AND time <= {1}".format(start - 1, end + 1))
+		self.json = {"send": [], "recv": {}}
+
+		for evt in self.events:
+			e = {}
+			for i in range(len(self.cols)):
+				e[self.cols[i]] = safe_list_get(evt, i, None)
+			
+			if evt[type_col] == "send":
+				self.json["send"].append(e)
+			else:
+				self.json["recv"][safe_list_get(evt, send_event_col, "unidentified")] = e
+
+		self.json["send"].sort(key=itemgetter("time")) # potential bottleneck
+
+
+		
