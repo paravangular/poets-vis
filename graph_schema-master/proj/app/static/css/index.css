@@ -1,4 +1,5 @@
 svg {
+	margin: 10px;
 	position: fixed;
 	left: 0;
 	display: inline-block;
@@ -42,4 +43,8 @@ g.nodes > * {
 
 .subborder-node {
 	opacity: 0.5;
+}
+
+#slider {
+	margin-top: 20px;
 }

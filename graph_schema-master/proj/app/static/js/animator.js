@@ -109,7 +109,7 @@ function Animator(graph, g, _start, _end, _part_id) {
 		setTimeout(function() { 
 			var msg = new Message(graph, g, events.send[i], events.recv[events.send[i].id]);
 			msg.draw();
-		}, events.send[i].time * 1000)
+		}, (events.send[i].time - _start) * 1000)
 
 
 	}

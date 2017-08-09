@@ -3,6 +3,7 @@
 	<head>
 		<meta content="utf-8" http-equiv="encoding">
 	    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
 	</head>
     <body>
         <div id="sidebar">
@@ -12,13 +13,9 @@
             <button type="button" id="stop">stop</button>
             <button type="button" id="reset">reset</button>
 
-              <div id="sliderval">
-                <span id="currentval">500</span>
-              </div>
-              
               <div id="slider"></div>
               <div id="rangedval">
-                Range Value: <span id="rangeval">90 - 290</span>
+                Range Value: <span id="rangeval">0 - 5</span>
               </div>
               
               <div id="rangeslider"></div>
@@ -31,6 +28,7 @@
                   crossorigin="anonymous"></script> -->
         
         <script src="{{ url_for('static', filename='js/lib/jquery.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/lib/jquery-ui.js') }}"></script>
         <script src="{{ url_for('static', filename='js/lib/d3.js') }}"></script>
         <script src="{{ url_for('static', filename='js/lib/d3-tip.js') }}"></script>
         <script src="{{ url_for('static', filename='js/lib/d3-legend.js') }}"></script>
@@ -49,6 +47,15 @@
                 level = 4
             }
 
+            $('#slider').slider({
+                range: true,
+                min: 0,
+                max: 10,
+                values: [ 0, 5 ],
+                slide: function( event, ui ) {
+                  $('#rangeval').html(ui.values[0]+" - "+ui.values[1]);
+                }
+            });
         </script>
         <script src="{{ url_for('static', filename='js/animator.js') }}"></script>
         <script src="{{ url_for('static', filename='js/grapher.js') }}"></script>

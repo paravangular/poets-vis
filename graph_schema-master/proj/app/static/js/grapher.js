@@ -4,7 +4,7 @@ function ForceGraph(selector, data, level) {
 
   	// d3 vars
 	var width = window.innerWidth * 0.7;
-   	var height = window.innerHeight * 0.98;
+   	var height = window.innerHeight * 0.8;
   	var _data = data;
 
   	var simulating = false;
@@ -233,13 +233,14 @@ function ForceGraph(selector, data, level) {
         $("#start").prop('disabled', false);
 	}
 	   	
-	this.start_poets_simulation = function(start, end) {
+	this.start_poets_simulation = function() {
 
         $("#start").prop('disabled', true);
         $("#stop").prop('disabled', false);
 		simulating = true;
 
-		var animator = new Animator(this, g, 0.0, 5.0, parent_id);
+		var range = $('#slider').slider("option", "values");
+		var animator = new Animator(this, g, parseFloat(range[0]), parseFloat(range[1]), parent_id);
 
 	}
 
