@@ -42,7 +42,7 @@ class JSONBuilder():
 		nodes = interior + border
 
 
-		nodes_json = []
+		nodes_json = {}
 		for node in nodes:
 			n = {}
 
@@ -53,7 +53,7 @@ class JSONBuilder():
 				if node_prop[i] not in n:
 					n[node_prop[i]] = safe_list_get(node, i, None)
 
-			nodes_json.append(n)
+			nodes_json[safe_list_get(node, 0, "unidentified")] = n
 
 		print nodes[-1][0]
 

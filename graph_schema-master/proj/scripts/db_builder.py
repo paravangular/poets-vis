@@ -462,6 +462,7 @@ class DBBuilder():
 		fields.append(Field("cancel", "string"))
 		fields.append(Field("fanout", "string"))
 		fields.append(Field("m", "string"))
+		fields.append(Field("s", "string"))
 
 		self.create_table("events", fields)
 		return fields
@@ -536,6 +537,7 @@ class DBBuilder():
 			value["fanout"] = evt.fanout
 			value["m"] = json.dumps(evt.M)
 
+		value["s"] = json.dumps(evt.S)
 		return value
 
 

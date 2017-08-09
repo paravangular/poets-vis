@@ -12,19 +12,25 @@ function ForceGraph(selector, data, level) {
   	var prop_domains = {}
   	var types = {}
 
-  	for (var prop in _data.nodes[0]) {
+  	var key;
+  	for (var k in data.nodes) {
+  		key = k;
+  		break;
+  	}
+
+  	for (var prop in _data.nodes[key]) {
   		prop_domains[prop] = [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]
   	}
 
   	var si = 0
-  	for (var i = 0; i < _data.nodes.length; i++) {
-  		if (_data.nodes[i]["type"] && !(_data.nodes[i]["type"] in device_types)) { 
-  			device_types[_data.nodes[i]["type"]] = SYMBOLS[si];
+  	for (var node in _data.nodes) {
+  		if (_data.nodes[node]["type"] && !(_data.nodes[node]["type"] in device_types)) { 
+  			device_types[_data.nodes[node]["type"]] = SYMBOLS[si];
   			si++;
   		}
 
   		for (var prop in prop_domains) {
-  			var n = _data.nodes[i][prop]
+  			var n = _data.nodes[node][prop]
   			if (!isNaN(parseFloat(n)) && isFinite(n)) {
   				prop_domains[prop][0] = Math.min(Number(n), prop_domains[prop][0])
   				prop_domains[prop][1] = Math.max(Number(n), prop_domains[prop][1])
@@ -82,7 +88,7 @@ function ForceGraph(selector, data, level) {
 		node = g.append("g")
 				    .attr("class", "nodes")
 				    .selectAll(".device") // TODO: device shape
-				    .data(d3.values(_data.nodes))
+				    .data(d3.values(d3.values(_data.nodes)))
 				    .enter().append("path")
 				    .attr("class", function(d) { return "device " + d.id })
 				    .attr("d", d3.symbol().size( function(d) { return get_node_size(d.id) } ).type(function(d) { 
@@ -124,7 +130,7 @@ function ForceGraph(selector, data, level) {
 				    	}
 					})
 				    .on("dblclick", function(d) {
-				    	show_device_details(d);
+				    	show_details(d);
 				    })
 				    .on("mouseout", function(d) {
 				    	tooltip
@@ -157,15 +163,25 @@ function ForceGraph(selector, data, level) {
 		    node.attr("transform", function (d) {return "translate(" + d.x + ", " + d.y + ")";});
 		}
 
-		function show_device_details(d) {
-			$.get({
-			       url: '/graph/' + d.id, 
-			       success: function(response) {
-				        window.location.href = '/graph/' + d.id;
-				        parent_id = d.id;
+		function show_details(d) {
 
-			       }
-			});
+			if (d.id.split("_")[0] == "base") {
+				$.get({
+				       url: '/graph/' + d.id, 
+				       success: function(response) {
+					        window.location.href = '/graph/' + d.id;
+					        parent_id = d.id;
+
+				       }
+				});
+			} else {
+				$.get({
+					url: '/device/' + d.id,
+					success: function(response) {
+						window.location.href = '/device/' + d.id;
+					}
+				})
+			}
 
 		}
 
@@ -223,8 +239,21 @@ function ForceGraph(selector, data, level) {
         $("#stop").prop('disabled', false);
 		simulating = true;
 
-		var animator = new Animator(g, 0.0, 5.0, parent_id);
+		var animator = new Animator(this, g, 0.0, 5.0, parent_id);
 
+	}
+
+	this.update_nodes = function(device, evt) {
+		val = JSON.parse(evt.s)
+		for (var prop in val) {
+			data.nodes[device][prop] = val[prop]
+		}
+
+		var node = d3.select("." + device);
+
+		node.attr("fill", function(d) { 
+			return get_node_colour("spin", data.nodes[device]["spin"]);
+		});
 	}
 
 	function get_node_shape(dev_type) {
@@ -234,7 +263,6 @@ function ForceGraph(selector, data, level) {
 	function get_node_size(id) {
 		var ls = id.split("_")
 		if (ls[0] == "base" && ls.length == level + 1) {
-			console.log("WHY")
 			return symbol_size * 7
 		} else {
 			return symbol_size
@@ -259,88 +287,6 @@ function ForceGraph(selector, data, level) {
       	return colour(value);
    	}
 
-	function update_dataset(data, send_evt) {
-		// TODO: disallow animation when force-directed graph is still moving
-		var id = send_evt.dev;
-		var p = send_evt.node_prop;
-
-
-		var n = data.nodes[id];
-		n.p = p;
-
-		// TODO: find better way: use d3 merges?
-		var source_dev = d3.select("." + id);
-
-		var selected = $("input[name='property']:checked").val();
-
-		source_dev.attr("fill", function(d) { 
-			return get_node_colour(selected, n.p[selected]);
-		});
-
-	    var start = get_symbol_centroid(source_dev);
-	    var ends = [];
-
-		var recv_evts = find_recv_event(data.events, send_evt);
-		for (var i = 0; i < recv_evts.length; i++) {
-			var target_dev = d3.select("." + recv_evts[i].dev)
-			ends.push(get_symbol_centroid(target_dev));
-
-		}
-
-		message_animation(start, ends);
-
-	    function get_symbol_centroid(circle) {
-	    	var bibox = circle._groups[0][0].getBBox();
-
-		    var t = get_translation(d3.select(circle.node()).attr("transform")),
-		    	x = t[0] + (bibox.x + bibox.width)/2 - bibox.width / 4,
-		    	y = t[1] + (bibox.y + bibox.height)/2 - bibox.height / 4;
-		    return x + ", " + y;
-		}
-
-		function get_translation(transform) {
-			  var g = document.createElementNS("http://www.w3.org/2000/svg", "g")
-			  g.setAttributeNS(null, "transform", transform);
-			  var matrix = g.transform.baseVal.consolidate().matrix;
-			  
-			  return [matrix.e, matrix.f];
-			}
-
-		function message_animation(s, es) {
-			var markers = [];
-
-			for (var i = 0; i < es.length; i++) {
-				markers.push(g.append("circle"));
-				markers[i].attr("r", 4)
-					.attr("class", "marker")
-					.attr("fill", "green")
-				   	.attr("transform", "translate(" + s + ")");
-
-				markers[i].transition()
-	        		.duration(message_passing_time)
-		        	.attr("transform", "translate(" + es[i] + ")")
-		        	.remove();
-			}
-			
-		}
-
-		function find_recv_event(events, send) {
-			var send_id = send.eventId;
-
-			var recv_evts = [];
-
-			for (var i = 0; i < events.recv.length; i++) {
-
-				if (events.recv[i].sendEventId === send_id) {
-					recv_evts.push(events.recv[i]);
-				}
-			}
-
-			return recv_evts;
-		}
-
-	}
-
 }
 
 
@@ -362,6 +308,5 @@ function get_last_child(xmln) {
     }
     return x;
 }
-
 
 

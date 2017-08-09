@@ -50,5 +50,4 @@ def events():
 
 @app.route("/device/<dev_id>")
 def device(dev_id):
-	
-	return render_template("graph.html", data = builder.json)
+	return render_template("device.html")

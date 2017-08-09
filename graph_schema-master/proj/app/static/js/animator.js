@@ -1,4 +1,4 @@
-function Message(g, send_event, recv_event) {
+function Message(graph, g, send_event, recv_event) {
 	var source_device = send_event.dev,
 		source_port = send_event.port,
 		target_device = recv_event.dev,
@@ -19,6 +19,7 @@ function Message(g, send_event, recv_event) {
 		if (path) {
 			var src = get_node_centroid(source_device);
 			var dest = get_node_centroid(target_device);
+			graph.update_nodes(source_device, send_event);
 
 			var marker = g.append("circle")
 						.attr("class", "message")
@@ -29,16 +30,17 @@ function Message(g, send_event, recv_event) {
 						.attr("opacity", 0.7)
 						.attr("transform", "translate(" + src + ")");
 
-			transition(marker)
+			transition(graph, marker, recv_event)
 		}
 
 
 		
 
-		function transition(marker) {
+		function transition(graph, marker, recv_event) {
 			marker.transition()
 			    .duration(event_duration)
 			    .attr("transform", "translate(" + dest + ")")
+			    .on("end", graph.update_nodes(target_device, recv_event))
 			    .remove();
 		}
 
@@ -77,7 +79,7 @@ function Message(g, send_event, recv_event) {
 	}
 }
 
-function Animator(g, _start, _end, _part_id) {
+function Animator(graph, g, _start, _end, _part_id) {
 	$.ajax({
 	    url: "/events",
 	    type: "GET",
@@ -105,7 +107,7 @@ function Animator(g, _start, _end, _part_id) {
 
 	function create_markers(i) {
 		setTimeout(function() { 
-			var msg = new Message(g, events.send[i], events.recv[events.send[i].id]);
+			var msg = new Message(graph, g, events.send[i], events.recv[events.send[i].id]);
 			msg.draw();
 		}, events.send[i].time * 1000)
 
