@@ -64,6 +64,10 @@ function Message(graph, g, send_event, recv_event) {
 	this.set_event_time = function(time) {
 		event_duration = time;
 	}
+
+	this.start_time = function() {
+		return send_event.time;
+	}
 }
 
 function Animator(graph, g, _start, _end, _part_id) {
@@ -85,6 +89,9 @@ function Animator(graph, g, _start, _end, _part_id) {
 	    }
 	});
 
+	var anim_queue = [];
+	var msg;
+
 	function animate() {
 		var i = 0
 		for (i = 0; i < events.send.length; i++) {
@@ -93,12 +100,20 @@ function Animator(graph, g, _start, _end, _part_id) {
 	}
 
 	function create_markers(i) {
-		setTimeout(function() { 
-			var msg = new Message(graph, g, events.send[i], events.recv[events.send[i].id]);
+		anim_queue.push(setTimeout(function() { 
+			msg = new Message(graph, g, events.send[i], events.recv[events.send[i].id]);
 			msg.draw();
-		}, (events.send[i].time - _start) * 1000)
-
+		}, (events.send[i].time - _start) * 200))
 
 	}
+
+	this.stop_animation = function() {
+		var pause_time = msg.start_time();
+
+		for (var i = 0; i < anim_queue.length; i++) {
+			clearTimeout(anim_queue[i]);
+		}
+	}
+
 }
 

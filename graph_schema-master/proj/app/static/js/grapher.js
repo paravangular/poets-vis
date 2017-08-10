@@ -11,6 +11,7 @@ function ForceGraph(selector, data, level) {
   	var symbol_size = 300;
   	var selected = $("input[name='property']:checked").val();
 
+  	var animator;
   	var key;
   	for (var k in data.nodes) {
   		key = k;
@@ -223,22 +224,40 @@ function ForceGraph(selector, data, level) {
    		d3.selectAll("g > *").remove();
    	}
 
+	this.pause_poets_simulation = function() {
+		simulating = false;
+
+		animator.stop_animation();
+		d3.selectAll("circle.message").transition();
+
+
+        $("#pause").prop('disabled', true);
+        $("#stop").prop('disabled', false);
+        $("#start").prop('disabled', false);
+	}
+
 	this.stop_poets_simulation = function() {
 		simulating = false;
-		d3.selectAll("circle.marker").remove();
 
+		animator.stop_animation();
+		d3.selectAll("circle.message").remove();
+
+
+        $("#pause").prop('disabled', true);
         $("#stop").prop('disabled', true);
         $("#start").prop('disabled', false);
 	}
 	   	
 	this.start_poets_simulation = function() {
 
+
+        $("#pause").prop('disabled', false);
         $("#start").prop('disabled', true);
         $("#stop").prop('disabled', false);
 		simulating = true;
 
 		var range = $('#slider').slider("option", "values");
-		var animator = new Animator(this, g, parseFloat(range[0]), parseFloat(range[1]), parent_id);
+		animator = new Animator(this, g, parseFloat(range[0]), parseFloat(range[1]), parent_id);
 
 	}
 

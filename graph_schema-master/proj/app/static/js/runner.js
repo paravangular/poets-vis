@@ -23,6 +23,11 @@ $(document).ready(function() {
 
     }); 
 
+    $("#pause").click(function(){
+        graph.pause_poets_simulation();
+
+    }); 
+
     $("#reset").click(function(){
         window.top.location = window.top.location;
     });
