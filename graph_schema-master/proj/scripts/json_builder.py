@@ -19,6 +19,19 @@ class JSONBuilder():
 		edge_prop = ["source", "target", "count"]
 
 
+		prop_query = "SELECT * FROM device_types"
+		device_types = helper.execute_query(prop_query)
+
+		self.dev_json = {}
+		for dev in device_types:
+			self.dev_json[dev[0]] = {"states": dev[1], "properties": dev[2]}
+
+		ranges_query = "SELECT * FROM state_ranges"
+		state_ranges = helper.execute_query(ranges_query)
+		self.ranges_json = {}
+		for state in state_ranges:
+			self.ranges_json[state[0]] = {"min": state[1], "max": state[2]}
+
 		if level < nlevels[0][0] - 1:
 			node_prop = [row[1] for row in helper.execute_query("PRAGMA table_info(device_states_aggregate_{0})".format(level))] + [row[1] for row in helper.execute_query("PRAGMA table_info(device_properties_aggregate_{0})".format(level))] + ["parent"] 
 			iquery = ("SELECT * FROM device_states_aggregate_{0} AS states ".format(level) + 
@@ -50,10 +63,13 @@ class JSONBuilder():
 			for i in range(len(node_prop)):
 				if node_prop[i] == "partition_id":
 					node_prop[i] = "id"
-					
+				
 				if node_prop[i] not in n:
 					n[node_prop[i]] = safe_list_get(node, i, None)
 
+				n["messages_sent"] = 0
+				n["messages_received"] = 0
+				
 			nodes_json[safe_list_get(node, 0, "unidentified")] = n
 
 		print nodes[-1][0]
@@ -71,6 +87,7 @@ class JSONBuilder():
 			edges_json.append(e)
 
 		self.json = {"nodes": nodes_json, "edges": edges_json}
+		
 
 
 

@@ -43,6 +43,7 @@ class DBBuilder():
 			print("Creating database file " + db_name + ".db...")
 			self.db = sqlite3.connect(db_filename)
 			self.cursor = self.db.cursor()
+			self.device_types()
 			self.device_states()
 			self.device_partitions()
 			self.device_properties()
@@ -177,6 +178,35 @@ class DBBuilder():
 		query = "INSERT INTO graph_properties(name, max) VALUES(?, ?)"
 		values = [("level", self.metis.nlevels), ("time", int(math.ceil(self.graph.max_time)))]
 		
+		self.db.executemany(query, values)
+
+	def device_types(self):
+		self.create_table("device_types", [Field("type", "string", set(["key", "not null", "unique"])), Field("states", "string"), Field("properties", "string")])
+		device_types = self.graph.raw.graph_type.device_types
+		values = []
+		for type_id, dev in device_types.iteritems():
+			properties = ""
+			for prop in dev.properties.elements_by_name:
+				if isinstance(dev.properties.elements_by_name[prop], ArrayTypedDataSpec):
+					properties += "[" + prop + "]"
+				else:
+					properties += prop
+
+				properties += ","
+
+			state = ""
+			for s in dev.state.elements_by_name:
+				if isinstance(dev.state.elements_by_name[s], ArrayTypedDataSpec):
+					state += "[" + s + "]"
+				else:
+					state += s
+
+				state += ","
+
+			values.append((type_id, state[:-1], properties[:-1]))
+
+		query = "INSERT INTO device_types(type, states, properties) VALUES(?, ?, ?)"
+
 		self.db.executemany(query, values)
 
 
@@ -421,6 +451,10 @@ class DBBuilder():
 		fields.append(Field("messages_received", "int", set(["not null"])))
 
 		types = self.graph.raw.graph_type.device_types
+
+		self.ranges = {}
+
+
 		cols = {}
 		for id, dev_type in types.iteritems():
 			for prop in dev_type.properties.elements_by_index:
@@ -432,6 +466,9 @@ class DBBuilder():
 						fields.append(Field(prop.name, "array"))
 
 
+		self.ranges["messages_sent"] = [0, float("-inf")]
+		self.ranges["messages_received"] = [0, float("-inf")]
+
 		self.create_table("device_properties", fields)
 		values = []
 		for id, dev in self.graph.raw.device_instances.iteritems():
@@ -442,6 +479,9 @@ class DBBuilder():
 			c.update(v)
 			values.append(c)
 
+			self.ranges["messages_sent"][1] = max(self.ranges["messages_sent"][1], v["messages_sent"])
+			self.ranges["messages_received"][1] = max(self.ranges["messages_received"][1], v["messages_received"])
+
 		self.insert_rows("device_properties", fields, values)
 
 		print("  Creating indexes...")
@@ -451,6 +491,11 @@ class DBBuilder():
 		fields[1] = Field("partition_id", "int", set(["unique", "key"]))
 		for i in range(self.metis.nlevels - 1):
 			self.create_table("device_properties_aggregate_" + str(i), fields)
+
+		range_fields = [Field("state", "string", set(["unique", "key", "not null"])), Field("min", "float"), Field("max", "float")]
+		range_values = [(k, v[0], v[1]) for k, v in self.ranges.iteritems()]
+
+		self.insert_rows("state_ranges", range_fields, range_values)
 
 	def events(self):
 		fields = []
@@ -488,12 +533,20 @@ class DBBuilder():
 					else: 
 						fields.append(Field(state.name, "array"))
 
+		self.ranges = {}
+
+		for s in fields:
+			if s.name != "epoch" and s.name != "init" and (s.type == "INTEGER" or s.type == "REAL"):
+				self.ranges[s.name] = [float("inf"), float("-inf")]
+
 		values = []
 		evt_values = []
 		for id, evt in self.graph.events["init"].iteritems():
+			self.ranges = self.compare_ranges(evt)
 			values.append(self.build_state_values(evt, cols))
 
 		for id, evt in self.graph.events["msg"].iteritems():
+			self.ranges = self.compare_ranges(evt)
 			values.append(self.build_state_values(evt, cols))
 			evt_values.append(self.build_event_values(evt))
 		
@@ -518,6 +571,25 @@ class DBBuilder():
 		fields[0] = Field("partition_id", "int")
 		for i in range(self.metis.nlevels - 1):
 			self.create_table("device_states_aggregate_" + str(i), fields)
+
+		range_fields = [Field("state", "string", set(["unique", "key", "not null"])), Field("min", "float"), Field("max", "float")]
+		self.create_table("state_ranges", range_fields)
+		range_values = [(k, v[0], v[1]) for k, v in self.ranges.iteritems()]
+
+		self.insert_rows("state_ranges", range_fields, range_values)
+
+	def compare_ranges(self, evt):
+		values = defaultdict(lambda:None, evt.S)
+		for k, v in values.iteritems():
+			if k in self.ranges and (isinstance(v, int) or isinstance(v, float) or isdigit(v)):
+				if isinstance(v, str):
+					val = float(v)
+				else:
+					val = v
+				self.ranges[k][0] = min(self.ranges[k][0], val)
+				self.ranges[k][1] = max(self.ranges[k][1], val)
+
+		return self.ranges
 
 	def build_event_values(self, evt):
 		value = defaultdict(lambda:None)

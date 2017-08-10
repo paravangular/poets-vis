@@ -36,7 +36,7 @@ def db():
 def graph(part_id):
 	
 	builder = JSONBuilder(part_id)
-	return render_template("graph.html", data = builder.json, parent = part_id, max_time = builder.max_time)
+	return render_template("graph.html", state_ranges = builder.ranges_json, device_types = builder.dev_json, data = builder.json, parent = part_id, max_time = builder.max_time)
 
 @app.route('/events', methods=['GET'])
 def events():

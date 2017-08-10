@@ -6,20 +6,25 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
 	</head>
     <body>
+        <div id="viewport"></div>
         <div id="sidebar">
             <div id="node-detail-menu"></div>
-            <div id="property-menu"></div>
-            <button type="button" id="start">start</button>
-            <button type="button" id="stop">stop</button>
-            <button type="button" id="reset">reset</button>
 
               <div id="slider"></div>
               <div id="rangedval">
-                Range Value: <span id="rangeval">0 - 5</span>
+                <span id="rangeval">0 - 5</span>
               </div>
               
               <div id="rangeslider"></div>
-  
+
+              <div id="animation-btns"> 
+                <button type="button" id="start">start</button>
+                <button type="button" id="stop">stop</button>
+            </div>
+
+            <div id="property-menu"></div>
+            <button type="button" id="reset">reset</button>
+    
         </div>
         <!--
         <script src="https://apis.google.com/js/api.js"></script>
@@ -37,8 +42,9 @@
         <!-- script src="{{ url_for('static', filename='js/loader.js') }}"></script-->
         <script>
             var data = JSON.parse('{{ data | tojson | safe}}');
+            var device_types = JSON.parse('{{ device_types | tojson | safe}}');
+            var prop_domains = JSON.parse('{{ state_ranges | tojson | safe }}');
             var max_time = '{{ max_time[0][0] }}'
-            var device_types = {};
             var parent_id = '{{ parent }}'
             var levels = parent_id.split("_")
             var level;

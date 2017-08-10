@@ -19,7 +19,7 @@ function Message(graph, g, send_event, recv_event) {
 		if (path) {
 			var src = get_node_centroid(source_device);
 			var dest = get_node_centroid(target_device);
-			graph.update_nodes(source_device, send_event);
+			graph.update_nodes(source_device, send_event, "send");
 
 			var marker = g.append("circle")
 						.attr("class", "message")
@@ -38,7 +38,7 @@ function Message(graph, g, send_event, recv_event) {
 			marker.transition()
 			    .duration(event_duration)
 			    .attr("transform", "translate(" + dest + ")")
-			    .on("end", graph.update_nodes(target_device, recv_event))
+			    .on("end", graph.update_nodes(target_device, recv_event, "recv"))
 			    .remove();
 		}
 

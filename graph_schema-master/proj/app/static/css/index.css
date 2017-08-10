@@ -1,17 +1,33 @@
-svg {
-	margin: 10px;
-	position: fixed;
-	left: 0;
-	display: inline-block;
+body {
+	background-color: #333333;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: sans-serif;
+}
+
+
+#viewport {
+
+	background-color: #ffffff;
 	border: solid 2px #dddddd;
+	float: left;
+	width: 60vw;
+	margin: 10px;
+
 }
 
 #sidebar {
-	position: fixed;
-	right: 0;
-	width: 28%;
-	height: 98%;
 	display: inline-block;
+	float: left;
+	margin: 10px;
+	color: #dddddd;
+	width: 36vw;
+
+}
+
+#property-menu {
+	margin: 15px;
 }
 
 button {
@@ -46,5 +62,20 @@ g.nodes > * {
 }
 
 #slider {
-	margin-top: 20px;
+	margin: 15px;
+}
+
+#rangedval {
+	text-align: center;
+}
+
+#animation-btns {
+
+	margin: 15px;
+	text-align: center;
+}
+
+button {
+	margin-left: 15px;
+	margin-right: 15px;
 }
