@@ -9,7 +9,7 @@ function ForceGraph(selector, data, level) {
 
   	var simulating = false;
   	var symbol_size = 300;
-  	var types = {}
+  	var selected = $("input[name='property']:checked").val();
 
   	var key;
   	for (var k in data.nodes) {
@@ -55,6 +55,23 @@ function ForceGraph(selector, data, level) {
    	}
 
    	this.draw = function() {
+   		selected = $("input[name='property']:checked").val();
+   		var sequential_scale = d3.scaleSequential(d3.interpolateHcl(d3.rgb("#007AFF"), d3.rgb('#FF0000')))
+  				.domain([prop_domains[selected].min, prop_domains[selected].max]); 				;
+
+  		svg.append("g")
+		  .attr("class", "legend")
+		  .attr("transform", "translate(20,20)");
+
+		var legend = d3.legendColor()
+		    .shapeWidth(30)
+		    .cells(10)
+		    .orient("vertical")
+		    .scale(sequential_scale)
+
+		svg.select(".legend")
+  			.call(legend);
+
    		var simulation = d3.forceSimulation()
 				    .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(80).strength(0.15))
 				    .force("charge", d3.forceManyBody())
@@ -78,7 +95,6 @@ function ForceGraph(selector, data, level) {
 				    	if (d.type) {return device_types[d.type]["shape"]}
 				    	else {return d3.symbolCircle} } ))
 				    .attr("fill", function(d) { 
-				    	var selected = $("input[name='property']:checked").val();
 				    	return get_node_colour(selected, d[selected])
 				    })
 				    .attr("opacity", function(d) {
@@ -240,9 +256,8 @@ function ForceGraph(selector, data, level) {
 
 		var node = d3.select("." + device);
 
-		var selected = $("input[name='property']:checked").val();
+		selected = $("input[name='property']:checked").val();
 		node.attr("fill", function(d) { 
-
 			return get_node_colour(selected, data.nodes[device][selected]);
 		});
 	}
@@ -277,6 +292,9 @@ function ForceGraph(selector, data, level) {
 
       	return colour(value);
    	}
+
+
+
 
 }
 
