@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, url_for, request, jsonify
+from flask import render_template, url_for, request, jsonify, redirect
 import sqlite3
 
 import json
@@ -20,17 +20,8 @@ def close_connection(exception):
 
 
 @app.route('/')
-@app.route('/index')
 def index():
-    return render_template("graph.html")
-
-@app.route("/db")
-def db():
-	cur = helper.get_db().cursor()
-	cur.execute("""SELECT * FROM device_states""")
-	rows = cur.fetchall()
-	return '<br>'.join(str(row) for row in rows)
-
+    return redirect("/graph/base", code=302)
 
 @app.route("/graph/<part_id>")
 def graph(part_id):

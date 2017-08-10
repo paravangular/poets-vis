@@ -47,19 +47,15 @@ $(document).ready(function() {
 function load_property_selector() {
 	$('<div>States and Properties</div>').appendTo('#property-menu');
 
-	for (var dev in device_types) {
-		var title = "Device type: " + dev;
-		$('<div>' + title + '</div>').appendTo('#property-menu');
+	count = {};
 
-		$('<input type="radio" name="property" value= "messages_sent" checked="checked">messages sent<br>').appendTo("#property-menu");
-		$('<input type="radio" name="property" value= "messages_received">messages received<br>').appendTo("#property-menu");
 
-		var states = device_types[dev]["states"].split(",")
-
-		for (var i = 0; i < states.length; i++) {
-			if (states[i][0] != "[" && states[i][states[i].length - 1] != "]") {
-				$('<input type="radio" name="property" value= "' + states[i] + '">' + states[i] + '<br>').appendTo("#property-menu");
-			}
+	$('<input type="radio" name="property" value= "messages_sent" checked="checked">messages sent<br>').appendTo("#property-menu");
+	$('<input type="radio" name="property" value= "messages_received">messages received<br>').appendTo("#property-menu");
+	
+	for (var state in prop_domains) {
+		if (state != "messages_received" && state != "messages_sent") {
+			$('<input type="radio" name="property" value= "' + state + '">' + state + '<br>').appendTo("#property-menu");
 		}
 	}
 
