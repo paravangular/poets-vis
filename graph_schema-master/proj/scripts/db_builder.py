@@ -127,6 +127,7 @@ class DBBuilder():
 				insert_query = ("INSERT INTO interpartition_edges_{}_{}(higher_level, lower_level, count, parent) VALUES(?, ?, ?, ?)".format(curr, prev))
 
 				cursor = self.db.cursor()
+				cursor.arraysize = 10000
 				cursor.execute(query)
 				entries = []
 				
@@ -158,6 +159,7 @@ class DBBuilder():
 				insert_query = ("INSERT INTO interpartition_edges_{}_{}(higher_level, lower_level, count, parent) VALUES(?, ?, ?, ?)".format(curr, prev))
 
 				cursor = self.db.cursor()
+				cursor.arraysize = 10000
 				cursor.execute(query)
 				entries = []
 				
@@ -224,6 +226,7 @@ class DBBuilder():
 					" GROUP BY p1." + part + ", p2." + part)
 				insert_query = ("INSERT INTO partition_edges_{}(source, target, count, parent) VALUES(?, ?, ?, ?)".format(i))
 				cursor = self.db.cursor()
+				cursor.arraysize = 10000
 				cursor.execute(query)
 				entries = []
 				for row in cursor.fetchall():
@@ -244,13 +247,15 @@ class DBBuilder():
 					" AND p1.id != p2.id")
 
 				cursor = self.db.cursor()
+				cursor.arraysize = 10000
 				cursor.execute(query)
 				entries = []
 				for row in cursor.fetchall():
 					entries.append(tuple(row))
 
 				insert_query = ("INSERT INTO partition_edges_{}(source, target, parent) VALUES(?, ?, ?)".format(i))
-				ursor = self.db.cursor()
+				cursor = self.db.cursor()
+				cursor.arraysize = 10000
 				cursor.execute(query)
 				entries = []
 				for row in cursor.fetchall():
@@ -302,6 +307,7 @@ class DBBuilder():
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_id ON device_partitions (id)")
 		for i in range(self.metis.nlevels - 1):
 			self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_" + str(i) + " ON device_partitions (partition_" + str(i) + ")")
+			self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_id_part_id ON device_partitions (id, partition_" + str(i) + ")")
 
 	def aggregate_state_entries(self, level, epoch = 10):
 		aggregable_types = set(["INT", "int", "INTEGER", "integer", "REAL", "real"])
@@ -330,6 +336,7 @@ class DBBuilder():
 		pragma_cursor.close()
 
 		cursor = self.db.cursor()
+		cursor.arraysize = 10000
 
 		print
 		print("Aggregating states, level " + str(level) + " at init...")
@@ -369,11 +376,12 @@ class DBBuilder():
 			time_query = (" FROM device_states AS s1" + 
 				" INNER JOIN device_partitions ON s1.id = device_partitions.id " + 
 				" WHERE s1.epoch = " + 
-				" (SELECT s2.epoch FROM device_states AS s2 WHERE s2.epoch <=" + str(i) + " AND s2.id = s1.id ORDER BY s2.epoch DESC LIMIT 1) "
+				" (SELECT MAX(s2.epoch) FROM device_states AS s2 WHERE s2.epoch <=" + str(i) + " AND s2.id = s1.id GROUP BY s2.id) "
 				" GROUP BY partition_" + str(level))
 			print("  Executing query...")
 			# print(query)
 			cursor.execute(query + time_query)
+			cursor.arraysize = 10000
 
 			print("  Fetching results...")
 			rows = cursor.fetchall()
@@ -421,6 +429,7 @@ class DBBuilder():
 		pragma_cursor.close()
 
 		cursor = self.db.cursor()
+		cursor.arraysize = 10000
 		print
 		print("Aggregating properties, level " + str(level) + "...")
 		print("  Executing query...")
@@ -564,6 +573,8 @@ class DBBuilder():
 		self.insert_rows("device_states", fields, values)
 		print("  Creating indexes...")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_id ON device_states (id)")
+		self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_id_epoch ON device_states (id, epoch)")
+		self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_id_epoch ON device_states (id, init)")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_init ON device_states (init)")
 		self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_epoch ON device_states (epoch)")
 

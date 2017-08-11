@@ -74,7 +74,7 @@ function ForceGraph(selector, data, level) {
   			.call(legend);
 
    		var simulation = d3.forceSimulation()
-				    .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(80).strength(0.15))
+				    .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(function(d) { return 100 }).strength(0.15))
 				    .force("charge", d3.forceManyBody())
 				    .force("center", d3.forceCenter(width / 2, height / 2));
 
@@ -287,8 +287,8 @@ function ForceGraph(selector, data, level) {
 
 	function get_node_size(id) {
 		var ls = id.split("_")
-		if (ls[0] == "base" && ls.length == level + 1) {
-			return symbol_size * 7
+		if (ls[0] == "base" && ls.length >= level + 1) {
+			return (20 * symbol_size) / (ls.length) 
 		} else {
 			return symbol_size
 		}
