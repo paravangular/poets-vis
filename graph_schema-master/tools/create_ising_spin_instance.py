@@ -18,7 +18,7 @@ T=1
 J=1
 H=0
 
-n=100
+n=330
 if len(sys.argv)>1:
     n=int(sys.argv[1])
 if len(sys.argv)>2:

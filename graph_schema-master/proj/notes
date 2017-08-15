@@ -48,3 +48,16 @@ OPTIMISATION STEPS
 	- cursor arraysize
 	- potential solution: snapshots
 	- 
+
+
+process substition
+snapshots
+
+gzip
+
+verify if user selects nodes number
+
+overall design
+frontend
+backend
+evaluation (fps)

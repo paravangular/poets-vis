@@ -8,6 +8,7 @@ from collections import deque
 
 from scripts.graph.core import *
 from scripts.graph.events import *
+from scripts.graph.snapshots import *
 from scripts.graph.load_xml import *
 
 
@@ -165,7 +166,7 @@ class GraphBuilder():
 		self.events = event_writer.log
 		self.max_time = event_writer.max_time
 		self.event_pairs = event_writer.event_pairs
-
+		
 		self.set_node_attributes()
 		self.set_edge_attributes()
 
@@ -189,7 +190,6 @@ class GraphBuilder():
 				self.nodes[evt.dev]["messages_sent"] += 1
 			elif evt.type == "recv":
 				self.nodes[evt.dev]["messages_received"] += 1
-			print("   Loaded event {}".format(i))
 			i += 1
 		print("Finished loading node attributes.")
 

@@ -3,7 +3,7 @@ function Message(graph, g, send_event, recv_event) {
 		source_port = send_event.port,
 		target_device = recv_event.dev,
 		target_port = recv_event.port,
-		event_duration = Math.max(1000, (recv_event.time - send_event.time) * 100) // default
+		event_duration = Math.max(1000, (recv_event.time - send_event.time) * 1000) // default
 
 	/*
 	event time
@@ -103,7 +103,7 @@ function Animator(graph, g, _start, _end, _part_id) {
 		anim_queue.push(setTimeout(function() { 
 			msg = new Message(graph, g, events.send[i], events.recv[events.send[i].id]);
 			msg.draw();
-		}, (events.send[i].time - _start) * 200))
+		}, (events.send[i].time - _start) * 1000))
 
 	}
 
