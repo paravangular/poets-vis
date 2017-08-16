@@ -1,6 +1,6 @@
 from flask_script import Command, Manager, Option
 from app import app
-from scripts.db_builder import DBBuilder
+from scripts.db_builder import Handler
 
 import time, sys
 
@@ -15,9 +15,9 @@ class DBSetup(Command):
 
 	def run(self, name, base = "data/", events = 1000000):
 		if base and events:
-			db = DBBuilder(name, base, events)
+			db = Handler(name, base, events)
 		else:
-			db = DBBuilder(name)
+			db = Handler(name)
 
 manager.add_command('initdb', DBSetup())
 

@@ -14,8 +14,8 @@ class JSONBuilder():
 		self.epoch = epoch
 		self.init = init
 		level = len(self.part_id.split("_")) - 1
-		nlevels = helper.execute_query("SELECT max FROM graph_properties WHERE name = 'level'")
-		self.max_time = helper.execute_query("SELECT max FROM graph_properties WHERE name = 'time'")
+		nlevels = helper.execute_query("SELECT max FROM meta_properties WHERE name = 'level'")
+		self.max_time = helper.execute_query("SELECT max FROM meta_properties WHERE name = 'time'")
 		edge_prop = ["source", "target", "count"]
 
 

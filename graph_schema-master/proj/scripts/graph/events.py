@@ -212,31 +212,52 @@ def extractEvent(n,writer):
 #     for e in eventsNode.findall("p:*",ns):
 #         extractEvent(e,writer)
 
-        
 
-def parseEvents(src, writer, max_events = 1000000):
+def detag(elem):
+    return elem.tag.split("}")[-1]
+
+def parse_events(src, max_events = 10000000, batch = 100000):
     print("Parsing events...")
     context = etree.iterparse(src, events=('start', 'end',))
     root = True
     i = 0
     interval = max_events // 200
     for action, elem in context:
-        if root:
-            if deNS(elem.tag)!="p:GraphLog":
-                raise XMLSyntaxError("Expected GraphLog tag.", elem)
+        if action == 'end' and (detag(elem) == "InitEvent" or detag(elem) == "RecvEvent" or detag(elem) == "SendEvent"):
+            evt = defaultdict(lambda:None)
+            evt["id"] = elem.get('eventId')
+            evt["time"] = float( elem.get('time'))
+            evt["elapsed"] = float( elem.get('elapsed'))
+            evt["dev"]= elem.get('dev')
+            evt["rts"] = int( elem.get('rts'),0)
+            evt["seq"] = int( elem.get('seq'))
+            evt["type"] = detag(elem).lower()[:4]
 
-            root = False
-        else:
-            if action == 'end' and (deNS(elem.tag) == "p:InitEvent" or deNS(elem.tag) == "p:RecvEvent" or deNS(elem.tag) == "p:SendEvent"):
-                extractEvent(elem, writer)
-                i += 1
-                elem.clear()
-                if i % interval == 0:
-                    print("   loaded event " + str(i))
-          
-                while elem.getprevious() is not None:
-                    del elem.getparent()[0]
+            if evt["type"] != "init":
+                evt["port"] = elem.get("port")
 
-                if i >= max_events:
-                    break
+            if evt["type"] == "send":
+                evt["cancel"] = bool(elem.get("cancel"))
+                evt["fanout"] = int(elem.get("fanout"))
+
+            for child in elem:
+                evt[detag(child).lower()] = json.loads("{" + child.text + "}")
+                
+            values.append(evt)
+
+            i += 1
+            if batch % i == 0:
+                self.insert_rows("events", fields, values)
+                del values
+                values = []
+
+            elem.clear()
+        
+            while elem.getprevious() is not None:
+                del elem.getparent()[0]
+
+            if i >= max_events:
+                break
+
+    del context
     print("Finished parsing events.")

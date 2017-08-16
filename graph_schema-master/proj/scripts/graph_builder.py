@@ -14,7 +14,7 @@ from scripts.graph.load_xml import *
 
 
 class MetisHandler():
-	def __init__(self, graph, basedir, nodes_per_part):
+	def __init__(self, name, graph, basedir = "data/metis/", nodes_per_part = 50):
 		'''
 		Metis input format:
 
@@ -34,7 +34,7 @@ class MetisHandler():
 
 		self.nodes_per_part = nodes_per_part
 		self.graph = graph
-		self.filename_base = basedir + self.graph.raw.id + "_metis_input_"
+		self.filename_base = basedir + name + "_metis_input_"
 		self.flag = "001"
 		self.num_node_weights = 0
 		self.rows = defaultdict(list)
@@ -96,8 +96,8 @@ class MetisHandler():
 				nsrc = self.graph.nodes[src]["nid"][part_id]
 				ndst = self.graph.nodes[dst]["nid"][part_id]
 				# workaround for half edge
-				self.rows[part_id][nsrc] += "{} {} ".format(ndst, edge["messages"])
-				self.rows[part_id][ndst] += "{} {} ".format(nsrc, edge["messages"])
+				self.rows[part_id][nsrc] += "{} {} ".format(ndst, edge["weight"])
+				self.rows[part_id][ndst] += "{} {} ".format(nsrc, edge["weight"])
 				
 	def write_metis_input_file(self, part_id = "base"):
 		self.rows[part_id][0] = "{} {} {}".format(self.partition_counts[part_id]["nodes"], self.partition_counts[part_id]["edges"], self.flag)
@@ -147,28 +147,14 @@ class MetisHandler():
 
 
 class GraphBuilder():
-	def __init__(self, graph_src, event_src):
-		self.raw = load_graph(graph_src, graph_src)
-		
+	def __init__(self, complex_graph):
 		self.levels = 1
 
-		self.type_map = {}
-		self.set_type_map()
-
 		self.nodes = {}
-		self.set_device_instances()
+		self.set_device_instances(complex_graph)
 
 		self.edges = {}
-		self.set_edge_instances()
-
-		event_writer = LogWriter()
-		parseEvents(event_src, event_writer)
-		self.events = event_writer.log
-		self.max_time = event_writer.max_time
-		self.event_pairs = event_writer.event_pairs
-		
-		self.set_node_attributes()
-		self.set_edge_attributes()
+		self.set_edge_instances(complex_graph)
 
 	def number_of_nodes(self):
 		return len(self.nodes)
@@ -176,51 +162,20 @@ class GraphBuilder():
 	def number_of_edges(self):
 		return len(self.edges)
 
-	def set_device_instances(self):
+	def set_device_instances(self, graph):
 		i = 0
-		for id, dev in self.raw.device_instances.iteritems():
-			self.nodes[id] = {"type": self.type_map[dev.device_type.id], "messages_sent": 0, "messages_received": 0}
+		for id, dev in graph["device_instances"].iteritems():
+			self.nodes[id] = {}
 			i += 1
 
-	def set_node_attributes(self):
-		print("Loading node attributes from {} events...".format(len(self.events["msg"])))
-		i = 0
-		for id, evt in self.events["msg"].iteritems():
-			if evt.type == "send":
-				self.nodes[evt.dev]["messages_sent"] += 1
-			elif evt.type == "recv":
-				self.nodes[evt.dev]["messages_received"] += 1
-			i += 1
-		print("Finished loading node attributes.")
-
-
-	def set_edge_instances(self):
-		for edge_id, edge in self.raw.edge_instances.iteritems():
-			edge_id = min(edge.src_device.id, edge.dst_device.id) + ":" + max(edge.src_device.id, edge.dst_device.id)
+	def set_edge_instances(self, graph):
+		for edge in graph["edge_instances"]:
+			edge_id = min(edge["source"], edge["target"]) + ":" + max(edge["source"], edge["target"])
 
 			if edge_id in self.edges:
 				self.edges[edge_id]["weight"] += 1
 			else:
-				self.edges[edge_id] = {"weight": 1, "messages": 1} # TODO: because edge weights must be > 0
-
-	def set_edge_attributes(self):
-		print("Loading edge attributes from {} event pairs...".format(len(self.event_pairs)))
-		i = 0
-		for evt_pair in self.event_pairs:
-			send_id, recv_id = evt_pair.split(":")
-			edge_id =  min(self.events["msg"][send_id].dev, self.events["msg"][recv_id].dev) + ":" + max(self.events["msg"][send_id].dev, self.events["msg"][recv_id].dev)
-			self.edges[edge_id]["messages"] += 1
-			i += 1
-		print("Finished loading edge attributes.")
-
-	def set_type_map(self):
-		types = self.raw.graph_type.device_types
-		
-		i = 0
-		for dev_type in types:
-			self.type_map[dev_type] = i
-			i += 1
-
+				self.edges[edge_id] = {"weight": 1}
 
 '''
 
