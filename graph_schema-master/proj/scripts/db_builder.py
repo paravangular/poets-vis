@@ -750,6 +750,9 @@ class DBBuilder():
         self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_id ON device_states (id)")
         self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_init ON device_states (init)")
         self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_epoch ON device_states (epoch)")
+        self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_id_init_epoch ON device_states (id, init, epoch)")
+        self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_id_init ON device_states (id, init)")
+        self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_id_epoch ON device_states (id, epoch)")
 
     def load_ranges(self):
         
