@@ -213,11 +213,11 @@ class DBBuilder():
 
                 insert_query = ("INSERT INTO interpartition_edges_{}_{}(higher_level, lower_level, count, parent) VALUES(?, ?, ?, ?)".format(curr, prev))
 
-                print(query)
                 cursor = self.db.cursor()
                 cursor.arraysize = 10000
                 cursor.execute(query)
-                
+
+                entries = []
                 for row in cursor.fetchall():
                     v = list(row)
                     parent = "_".join(row[0].split("_")[:-1])
