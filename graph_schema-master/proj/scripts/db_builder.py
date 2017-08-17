@@ -698,7 +698,7 @@ class DBBuilder():
         devState = None
         devId = None
 
-        interval = self.granularity * 10
+        interval = 10 ** self.granularity
         get_snapshot = False
 
         for action, elem in context:
@@ -707,7 +707,7 @@ class DBBuilder():
                 if name == "GraphSnapshot":
                     orchTime = elem.get('orchestratorTime')
 
-                    if interval == 0 or int(orchTime) % interval == 0:
+                    if int(orchTime) % interval == 0:
                         get_snapshot = True
                         seqNum = elem.get('sequenceNumber')
                         graphTypeId = elem.get('graphTypeId')
