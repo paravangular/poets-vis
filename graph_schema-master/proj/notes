@@ -61,3 +61,8 @@ overall design
 frontend
 backend
 evaluation (fps)
+
+
+TODO:
+user selected partition size
+epoch snapshot browser

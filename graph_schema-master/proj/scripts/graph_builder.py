@@ -107,7 +107,7 @@ class MetisHandler():
 
 	def execute_metis(self, part_id = "base"):
 		self.write_metis_input_file(part_id)
-		os.system("gpmetis " + self.filename(part_id) + " " +  str(self.nparts[self.part_level(part_id)]))
+		os.system("gpmetis " + self.filename(part_id) + " " +  str(self.nparts[self.part_level(part_id)]) + " -dbglvl=0")
 		self.read_metis_partition(part_id)
 
 	def read_metis_partition(self, part_id = "base"):

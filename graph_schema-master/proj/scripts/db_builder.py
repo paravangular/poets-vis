@@ -15,13 +15,17 @@ import xml.etree.cElementTree as ET
 from lxml import etree
 
 class Handler():
-    def __init__(self, db_name, base_dir = "data/", max_epoch = 100, granularity = 0):
+    def __init__(self, db_name, base_dir = "data/", max_epoch = 100, granularity = 0, nodes_per_part = 50):
 
         db_filename = base_dir + "db/" + db_name + ".db"
 
         if os.path.isfile(db_filename):
-            print("Database already exists.")
-            return
+            print("Database already exists. Overwrite existing? This action cannot be undone. (y/n): ")
+            overwrite = raw_input("")
+            if overwrite.strip().lower() == "n":
+                return
+            else:
+                os.remove(db_filename)
 
         src = base_dir + db_name + '.xml'
         event_src = base_dir + db_name + '_event.xml'
@@ -54,7 +58,7 @@ class Handler():
         simple_graph = GraphBuilder(curr_graph)
 
         print("Partitioning...")
-        metis = MetisHandler(db_name, simple_graph)
+        metis = MetisHandler(db_name, simple_graph, base_dir + "metis/", nodes_per_part = nodes_per_part)
         metis.execute_metis()
 
         self.dbb.device_partitions(simple_graph, metis.nlevels)
