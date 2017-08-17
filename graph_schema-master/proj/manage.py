@@ -10,14 +10,27 @@ class DBSetup(Command):
 	option_list = (
 		Option('--name', '-n', dest='name'),
 		Option('--location', '-l', dest='base'),
-		Option('--event-num', '-e', dest='events')
+		Option('--granularity', '-g', dest='granularity'),
+		Option('--max-epoch', '-e', dest='max_epoch')
 		)
 
-	def run(self, name, base = "data/", events = 1000000):
-		if base and events:
-			db = Handler(name, base, events)
+	def run(self, name, base, granularity, max_epoch):
+		if max_epoch:
+			e = max_epoch
 		else:
-			db = Handler(name)
+			e = 100
+
+		if granularity:
+			g = granularity
+		else:
+			g = 0
+
+		if base:
+			b = base
+		else:
+			b = "data/"
+
+		db = Handler(name, b, max_epoch = e, granularity = g)
 
 manager.add_command('initdb', DBSetup())
 

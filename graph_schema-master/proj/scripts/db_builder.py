@@ -15,14 +15,13 @@ import xml.etree.cElementTree as ET
 from lxml import etree
 
 class Handler():
-    def __init__(self, db_name, base_dir = "data/"):
+    def __init__(self, db_name, base_dir = "data/", max_epoch = 100, granularity = 0):
         src = base_dir + db_name + '.xml'
         event_src = base_dir + db_name + '_event.xml'
 
-        self.dbb = DBBuilder(db_name, base_dir)
+        self.dbb = DBBuilder(db_name, base_dir, max_epoch, granularity)
         graph_type, curr_graph, graph_props = load_graph_type_and_instances(src, self.dbb)
 
-        print(graph_type["device_types"])
         self.dbb.graph_properties(graph_type)
         self.dbb.device_types(graph_type)
         self.dbb.ports(graph_type)
@@ -52,16 +51,14 @@ class Handler():
 
 
 class DBBuilder():
-    def __init__(self, db_name, dir_name = "data/", max_time = 100, max_events = 1000000, max_epoch_intervals = 10):
+    def __init__(self, db_name, dir_name = "data/", max_epoch = 100, granularity = 0):
 
         graph_src = dir_name + db_name + '.xml'
         self.event_src = dir_name + db_name + '_event.xml'
         self.snap_src = dir_name + db_name + '_snapshot.xml'
-        self.max_events = max_events
-        self.max_epoch_intervals = max_epoch_intervals
         self.snapshots = set()
-        self.max_time = max_time
-
+        self.max_epoch = max_epoch
+        self.granularity = int(granularity)
 
         self.message_counts = {"send": defaultdict(int), "recv": defaultdict(int)}
         
@@ -77,8 +74,8 @@ class DBBuilder():
         #     print("Creating database " + db_name + "...")
         #     self.graph = GraphBuilder(graph_src, event_src)
 
-        #     if int(math.ceil(self.graph.max_time)) > self.max_epoch_intervals:
-        #         self.snapshot_interval = int(math.ceil(self.graph.max_time / self.max_epoch_intervals))
+        #     if int(math.ceil(self.graph.max_epoch)) > self.max_epoch_intervals:
+        #         self.snapshot_interval = int(math.ceil(self.graph.max_epoch / self.max_epoch_intervals))
         #     else:
         #         self.snapshot_interval = 1
 
@@ -296,7 +293,7 @@ class DBBuilder():
         fields = [Field("name", "string", set(["key", "not null", "unique"])), Field("max", "int")]
         self.create_table("meta_properties", fields)
         query = "INSERT INTO meta_properties(name, max) VALUES(?, ?)"
-        values = [{"name": "level", "max": level}, {"name": "time", "max": int(math.ceil(self.max_time))}]
+        values = [{"name": "level", "max": level}, {"name": "time", "max": int(math.ceil(self.max_epoch))}]
         
         self.insert_rows("meta_properties", fields, values)
 
@@ -626,7 +623,7 @@ class DBBuilder():
         self.create_table("events", fields)
         return fields
 
-    def events(self, max_events = 10000000, batch = 100000):
+    def events(self, batch = 100000):
 
         values = []
         fields = self.events_fields()
@@ -635,7 +632,6 @@ class DBBuilder():
         context = etree.iterparse(self.event_src, events=('start', 'end',))
         root = True
         i = 0
-        interval = max_events // 200
         for action, elem in context:
             if action == 'end' and (detag(elem) == "InitEvent" or detag(elem) == "RecvEvent" or detag(elem) == "SendEvent"):
                 evt = defaultdict(lambda:None)
@@ -684,9 +680,6 @@ class DBBuilder():
                 while elem.getprevious() is not None:
                     del elem.getparent()[0]
 
-                if i >= max_events:
-                    break
-
         del context
 
         self.insert_rows("events", fields, values)
@@ -721,17 +714,25 @@ class DBBuilder():
         devState = None
         devId = None
 
+        interval = self.granularity * 10
+        get_snapshot = False
+
         for action, elem in context:
             name = elem.tag.split("}")[-1]
             if action == 'start':
                 if name == "GraphSnapshot":
                     orchTime = elem.get('orchestratorTime')
-                    seqNum = elem.get('sequenceNumber')
-                    graphTypeId = elem.get('graphTypeId')
-                    graphInstId = elem.get('graphInstId')
-                    print("  Loading snapshots at epoch " + orchTime + "...")
-                   
-                    log = {"device_states": {}}
+
+                    if interval == 0 or int(orchTime) % interval == 0:
+                        get_snapshot = True
+                        seqNum = elem.get('sequenceNumber')
+                        graphTypeId = elem.get('graphTypeId')
+                        graphInstId = elem.get('graphInstId')
+                        print("  Loading snapshots at epoch " + orchTime + "...")
+                       
+                        log = {"device_states": {}}
+                    else:
+                        get_snapshot = False
 
                 elif name == "DevS":
                     parent = "DevS"
@@ -746,10 +747,10 @@ class DBBuilder():
                     pass
 
             if action == 'end':
-                if name == "S":
+                if get_snapshot and name == "S":
                     if parent == "DevS":
                         devState = parse_json(elem.text)
-                elif name == "DevS":
+                elif get_snapshot and name == "DevS":
                     log["device_states"][devId] = (devState, devRts)
                     devType=None
                     devId=None
@@ -757,17 +758,18 @@ class DBBuilder():
                     devRts = None
 
                 elif name == "GraphSnapshot":
-                    snapshot_values = []
+                    if get_snapshot:
+                        snapshot_values = []
 
-                    if orchTime == "0" and seqNum == "0":
-                        orchTime = "init"
+                        if orchTime == "0" and seqNum == "0":
+                            orchTime = "init"
 
-                    for id, dev in log["device_states"].iteritems():
-                        snapshot_values.append(self.build_snapshot_values(orchTime, id, dev, cols))
+                        for id, dev in log["device_states"].iteritems():
+                            snapshot_values.append(self.build_snapshot_values(orchTime, id, dev, cols))
 
-                    self.insert_rows("device_states", fields, snapshot_values)
-                    self.snapshots.add(orchTime)
-                    del snapshot_values
+                        self.insert_rows("device_states", fields, snapshot_values)
+                        self.snapshots.add(orchTime)
+                        del snapshot_values
                 
                 elem.clear()
 
@@ -862,7 +864,7 @@ class DBBuilder():
             self.message_counts["send"][evt["dev"]] += 1
 
         evt["s"] = json.dumps(evt["s"])
-        self.max_time = min(evt["time"], self.max_time)
+        self.max_epoch = min(evt["time"], self.max_epoch)
         return evt
 
 
