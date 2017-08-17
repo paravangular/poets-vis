@@ -50,17 +50,15 @@ $(document).ready(function() {
 
 
 function load_property_selector() {
-	$('<div>States and Properties</div>').appendTo('#property-menu');
-
 	count = {};
 
 
-	$('<input type="radio" name="property" value= "messages_sent" checked="checked">messages sent<br>').appendTo("#property-menu");
-	$('<input type="radio" name="property" value= "messages_received">messages received<br>').appendTo("#property-menu");
+	$('<input type="radio" name="property" id="messages_sent_radio" value= "messages_sent" checked="checked"><label for="messages_sent_radio">messages sent</label><br>').appendTo("#property-menu");
+	$('<input type="radio" name="property" id="messages_received_radio" value= "messages_received"><label for="messages_received_radio">messages received</label><br>').appendTo("#property-menu");
 	
 	for (var state in prop_domains) {
 		if (state != "messages_received" && state != "messages_sent") {
-			$('<input type="radio" name="property" value= "' + state + '">' + state + '<br>').appendTo("#property-menu");
+			$('<input type="radio" name="property" id= "' + state + '_radio" value= "' + state + '"><label for="' + state + '_radio">' + state + '</label><br>').appendTo("#property-menu");
 		}
 	}
 
