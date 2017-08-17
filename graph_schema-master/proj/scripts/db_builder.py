@@ -16,8 +16,24 @@ from lxml import etree
 
 class Handler():
     def __init__(self, db_name, base_dir = "data/", max_epoch = 100, granularity = 0):
+
+        db_filename = base_dir + "db/" + db_name + ".db"
+
+        if os.path.isfile(db_filename):
+            print("Database already exists.")
+            return
+
         src = base_dir + db_name + '.xml'
         event_src = base_dir + db_name + '_event.xml'
+
+        start_time = time.time()
+
+        print
+        print("******************************************************************************")
+        print("DATABASE CREATION")
+        print("******************************************************************************")
+        print("Creating database file " + db_name + ".db...")
+
 
         self.dbb = DBBuilder(db_name, base_dir, max_epoch, granularity)
         graph_type, curr_graph, graph_props = load_graph_type_and_instances(src, self.dbb)
@@ -36,6 +52,8 @@ class Handler():
         
 
         simple_graph = GraphBuilder(curr_graph)
+
+        print("Partitioning...")
         metis = MetisHandler(db_name, simple_graph)
         metis.execute_metis()
 
@@ -48,7 +66,13 @@ class Handler():
         self.dbb.aggregates(graph_type, metis.nlevels)
         self.dbb.load_ranges()
         self.dbb.db.close()
-
+        
+        print
+        print("Database created.")
+        
+        print("******************************************************************************")
+        print("FINISH (%3f seconds)" % (time.time() - start_time))
+        print("******************************************************************************")
 
 class DBBuilder():
     def __init__(self, db_name, dir_name = "data/", max_epoch = 100, granularity = 0):
@@ -67,49 +91,6 @@ class DBBuilder():
 
         db_filename = dir_name + "db/" + db_name + ".db"
         self.db = sqlite3.connect(db_filename)
-
-        # if not os.path.isfile(db_filename):
-
-        #     start_time = time.time()
-        #     print("Creating database " + db_name + "...")
-        #     self.graph = GraphBuilder(graph_src, event_src)
-
-        #     if int(math.ceil(self.graph.max_epoch)) > self.max_epoch_intervals:
-        #         self.snapshot_interval = int(math.ceil(self.graph.max_epoch / self.max_epoch_intervals))
-        #     else:
-        #         self.snapshot_interval = 1
-
-        #     print
-        #     print
-        #     print("Partitioning...")
-        #     self.metis = MetisHandler(self.graph, "data/metis/", 50)
-        #     self.metis.execute_metis()
-
-        #     print
-        #     print("******************************************************************************")
-        #     print("DATABASE CREATION")
-        #     print("******************************************************************************")
-        #     print("Creating database file " + db_name + ".db...")
-        #     self.db = sqlite3.connect(db_filename)
-        #     self.cursor = self.db.cursor()
-        #     self.device_types()
-        #     self.device_states()
-        #     self.device_partitions()
-        #     self.device_properties()
-        #     self.edges()
-        #     
-
-
-
-        #     print
-        #     print("Database created.")
-        #     self.db.close()
-        #     print("******************************************************************************")
-        #     print("FINISH (%3f seconds)" % (time.time() - start_time))
-        #     print("******************************************************************************")
-
-        # else:
-        #     print("Database already exists.")
 
     def ports(self, graph_type):
         # TODO: port states/props?
