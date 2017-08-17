@@ -373,7 +373,10 @@ class DBBuilder():
         self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_id ON device_partitions (id)")
         for i in range(part_levels - 1):
             self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_" + str(i) + " ON device_partitions (partition_" + str(i) + ")")
-            self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_id_dev_id ON device_partitions (id, partition_" + str(i) + ")")
+            self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_" + str(i) + "_dev_id ON device_partitions (id, partition_" + str(i) + ")")
+            
+            if i != 0:
+                self.db.execute("CREATE INDEX IF NOT EXISTS index_partition_" + str(i - 1) + "_partition_" + str(i) + " ON device_partitions (partition_" + str(i - 1) + ", partition_" + str(i) + ")")
 
     def aggregate_state_entries(self, level):
 
