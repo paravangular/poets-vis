@@ -251,9 +251,9 @@ function ForceGraph(selector, data, level) {
 		d3.selectAll("circle.message").transition();
 
 
-        $("#pause").prop('disabled', true);
-        $("#stop").prop('disabled', false);
-        $("#start").prop('disabled', false);
+        $("#pause").addClass('disabled'); 
+        $("#stop").removeClass('disabled'); 
+        $("#start").removeClass('disabled'); 
 	}
 
 	this.stop_poets_simulation = function() {
@@ -263,17 +263,17 @@ function ForceGraph(selector, data, level) {
 		d3.selectAll("circle.message").remove();
 
 
-        $("#pause").prop('disabled', true);
-        $("#stop").prop('disabled', true);
-        $("#start").prop('disabled', false);
+        $("#pause").addClass('disabled'); 
+        $("#stop").addClass('disabled'); 
+        $("#start").removeClass('disabled'); 
 	}
 	   	
 	this.start_poets_simulation = function() {
 
 
-        $("#pause").prop('disabled', false);
-        $("#start").prop('disabled', true);
-        $("#stop").prop('disabled', false);
+        $("#pause").removeClass('disabled'); 
+        $("#start").addClass('disabled'); 
+        $("#stop").removeClass('disabled'); 
 		simulating = true;
 
 		var range = $('#slider').slider("option", "values");

@@ -12,7 +12,8 @@ $(document).ready(function() {
 	    }
 	});
 
-	$("#stop").prop('disabled', true);
+	$("#stop").addClass('disabled'); 
+	$("#pause").addClass('disabled'); 
     
     $("#start").click(function(){
         graph.start_poets_simulation();
