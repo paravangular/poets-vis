@@ -43,11 +43,12 @@
         <!-- script src="{{ url_for('static', filename='js/loader.js') }}"></script-->
         <script>
             var data = JSON.parse('{{ data | tojson | safe}}');
+            var ports = JSON.parse('{{ ports | tojson | safe }}');
+            var message_types = JSON.parse('{{ message_types | tojson | safe }}');
             var device_types = JSON.parse('{{ device_types | tojson | safe}}');
             var prop_domains = JSON.parse('{{ state_ranges | tojson | safe }}');
-            var max_time = '{{ max_time[0][0] }}'
-            var parent_id = '{{ parent }}'
-            var levels = parent_id.split("_")
+            var max_time = '{{ max_time[0][0] }}';
+            var parent_id = '{{ parent }}';            var levels = parent_id.split("_")
             var level;
             if (levels[0] == "base") {
                 level = levels.length - 1

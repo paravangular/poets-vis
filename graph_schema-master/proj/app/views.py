@@ -20,15 +20,14 @@ def close_connection(exception):
 
 
 @app.route('/')
+@app.route('/graph')
 def index():
     return redirect("/graph/base", code=302)
 
 @app.route("/graph/<part_id>")
 def graph(part_id):
-	
 	builder = JSONBuilder(part_id)
-	return render_template("graph.html", state_ranges = builder.ranges_json, device_types = builder.dev_json, data = builder.json, parent = part_id, max_time = builder.max_time)
-
+	return render_template("graph.html", state_ranges = builder.ranges_json, device_types = builder.dev_json, data = builder.json, parent = part_id, max_time = builder.max_time, ports = builder.ports, message_types = builder.message_types)
 @app.route('/events', methods=['GET'])
 def events():
     start = request.args.get('start', 0, type=float)

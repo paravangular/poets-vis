@@ -1,4 +1,24 @@
 var SYMBOLS = [d3.symbolCircle, d3.symbolSquare, d3.symbolTriangle, d3.symbolDiamond, d3.symbolCross, d3.symbolStar, d3.symbolWye];
+var port_colors = d3.scaleLinear().domain([0, Object.keys(ports).length])
+      .interpolate(d3.interpolateHcl)
+      .range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
+
+
+var i = 0;
+for (var port in ports) {
+	ports[port] = port_colors(i)
+	i++;
+}
+
+var message_type_colors = d3.scaleLinear().domain([0, Object.keys(message_types).length])
+      .interpolate(d3.interpolateHcl)
+      .range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
+
+var i = 0;
+for (var msg in message_types) {
+	message_types[msg] = port_colors(i)
+	i++;
+}
 
 function ForceGraph(selector, data, level) {
 
@@ -313,9 +333,6 @@ function ForceGraph(selector, data, level) {
    	}
 
 
-
-
 }
-
 
 

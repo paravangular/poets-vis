@@ -23,11 +23,11 @@ function Message(graph, g, send_event, recv_event) {
 
 			var marker = g.append("circle")
 						.attr("class", "message")
-						.attr("r", 7)
+						.attr("r", 5)
 						.attr("fill", "white")
-						.attr("stroke", "black")
+						.attr("stroke", function(d) { return ports[source_port]; })
 						.attr("stroke-width", 2)
-						.attr("opacity", 0.7)
+						.attr("opacity", 1)
 						.attr("transform", "translate(" + src + ")");
 
 			transition(graph, marker, recv_event)
@@ -37,6 +37,7 @@ function Message(graph, g, send_event, recv_event) {
 		function transition(graph, marker, recv_event) {
 			marker.transition()
 			    .duration(event_duration)
+			    .attr("stroke", function(d) { return ports[target_port]; })
 			    .attr("transform", "translate(" + dest + ")")
 			    .on("end", graph.update_nodes(target_device, recv_event, "recv"))
 			    .remove();

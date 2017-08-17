@@ -21,11 +21,13 @@ class Handler():
 
         self.dbb = DBBuilder(db_name, base_dir)
         graph_type, curr_graph, graph_props = load_graph_type_and_instances(src, self.dbb)
+
+        print(graph_type["device_types"])
         self.dbb.graph_properties(graph_type)
         self.dbb.device_types(graph_type)
+        self.dbb.ports(graph_type)
         self.dbb.device_states(graph_type)
         self.dbb.ranges_init(graph_type)
-
 
 
         self.dbb.device_properties(graph_type, curr_graph["device_instances"])
@@ -111,6 +113,33 @@ class DBBuilder():
 
         # else:
         #     print("Database already exists.")
+
+    def ports(self, graph_type):
+        # TODO: port states/props?
+        fields = []
+        fields.append(Field("device", "string"))
+        fields.append(Field("name", "string"))
+        fields.append(Field("type", "string"))
+        fields.append(Field("message_type", "string"))
+        self.create_table("ports", fields)
+
+        values = []
+
+        for id, dev in graph_type["device_types"].iteritems():
+            for p, port in dev["ports"]["input"].iteritems():
+                value = self.build_port_values(id, p, "input", port)
+                values.append(value)
+            for p, port in dev["ports"]["output"].iteritems():
+                value = self.build_port_values(id, p, "output", port)
+                values.append(value)
+
+        self.insert_rows("ports", fields, values)
+
+
+    def build_port_values(self, dev, name, port_type, port):
+        v = {"device": dev, "name": name, "type": port_type, "message_type": port["message_type"]}
+        return v
+
 
     def aggregates(self, graph_type, level):
         for i in range(level - 1):

@@ -87,6 +87,14 @@ class JSONBuilder():
 			edges_json.append(e)
 
 		self.json = {"nodes": nodes_json, "edges": edges_json}
+
+		port_query = ("SELECT DISTINCT name FROM ports")
+		message_type_query = ("SELECT DISTINCT message_type FROM ports")
+
+
+		self.ports = dict([(p[0], None) for p in helper.execute_query(port_query)])
+		self.message_types = dict([(m[0], None) for m in helper.execute_query(message_type_query)])
+
 		
 
 
