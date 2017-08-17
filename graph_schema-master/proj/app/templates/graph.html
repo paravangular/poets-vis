@@ -34,12 +34,9 @@
         </div>
     
         </div>
-        <!--
-        <script src="https://apis.google.com/js/api.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-                  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-                  crossorigin="anonymous"></script> -->
-        
+        <div id="infobar">
+
+        </div>
         <script src="{{ url_for('static', filename='js/lib/jquery.js') }}"></script>
         <script src="{{ url_for('static', filename='js/lib/jquery-ui.js') }}"></script>
         <script src="{{ url_for('static', filename='js/lib/d3.js') }}"></script>
@@ -55,7 +52,9 @@
             var device_types = JSON.parse('{{ device_types | tojson | safe}}');
             var prop_domains = JSON.parse('{{ state_ranges | tojson | safe }}');
             var max_time = '{{ max_time[0][0] }}';
-            var parent_id = '{{ parent }}';            
+            var parent_id = '{{ parent }}';
+
+            var max_level = '{{ max_level[0][0] }}';            
             var levels = parent_id.split("_");
             var level;
             if (levels[0] == "base") {

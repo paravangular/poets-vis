@@ -17,6 +17,10 @@ body {
 
 }
 
+#infobar {
+	display: none;
+}
+
 #sidebar {
 	display: inline-block;
 	float: left;

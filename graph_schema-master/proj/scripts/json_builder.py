@@ -18,7 +18,6 @@ class JSONBuilder():
 		self.max_time = helper.execute_query("SELECT max FROM meta_properties WHERE name = 'time'")
 		edge_prop = ["source", "target", "count"]
 
-
 		prop_query = "SELECT * FROM device_types"
 		device_types = helper.execute_query(prop_query)
 
@@ -94,14 +93,32 @@ class JSONBuilder():
 
 		self.ports = dict([(p[0], None) for p in helper.execute_query(port_query)])
 		self.message_types = dict([(m[0], None) for m in helper.execute_query(message_type_query)])
+		self.max_level = nlevels
 
 		
 
 
 
+class SnapshotJSONBuilder():
+	def __init__(self, start, end, part_id):
+		level = len(part_id.split("_")) - 1
+
+		cols = [row[1] for row in helper.execute_query("PRAGMA table_info(device_states_aggregate_{})".format(level))]
+		states = helper.execute_query("SELECT * FROM device_states_aggregate_{}".format(level) + 
+									" WHERE parent = '{0}' AND epoch >= {1} AND epoch <= {2}".format(part_id, start - 1, end + 1))
+
+		self.json = {"snapshots": []}
+
+		for part in states:
+			p = {}
+			for i in range(len(cols)):
+				p[cols[i]] = safe_list_get(part, i, None)
+
+			self.json["snapshots"].append(p)
+		
+
 class EventJSONBuilder():
 	def __init__(self, start, end, part_id):
-		epsilon = 0.005
 		self.cols = [row[1] for row in helper.execute_query("PRAGMA table_info(events)")]
 		for i in range(len(self.cols)):
 			if self.cols[i] == "type":

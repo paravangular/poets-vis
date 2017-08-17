@@ -71,7 +71,7 @@ function Message(graph, g, send_event, recv_event) {
 	}
 }
 
-function Animator(graph, g, _start, _end, _part_id) {
+function EventAnimator(graph, g, _start, _end, _part_id) {
 	$.ajax({
 	    url: "/events",
 	    type: "GET",
@@ -111,6 +111,49 @@ function Animator(graph, g, _start, _end, _part_id) {
 	this.stop_animation = function() {
 		var pause_time = msg.start_time();
 
+		for (var i = 0; i < anim_queue.length; i++) {
+			clearTimeout(anim_queue[i]);
+		}
+	}
+
+}
+
+function SnapshotAnimator(graph, g, _start, _end, _part_id) {
+	$.ajax({
+	    url: "/snapshot",
+	    type: "GET",
+	    dataType: 'json',
+	    data: { 
+	    	start: _start,
+			end: _end,
+			part_id: _part_id 
+		},
+	    success: function (d) {
+	    	snapshots = d
+	    	animate()
+	    },
+	    error: function () {
+	        alert('Error obtaining aggregate data for partition ' + _part_id + ' in range ' + _start + ' to ' + _end + '.');
+	    }
+	});
+
+
+	var anim_queue = [];
+
+	function animate() {
+		for (i = 0; i < snapshots.snapshots.length; i++) {
+			change_colour(i);
+		}
+	}
+
+	function change_colour(i) {
+		anim_queue.push(setTimeout(function() {
+			part = snapshots.snapshots[i].partition_id
+			graph.update_parts(part, snapshots.snapshots[i]);
+		}, (snapshots.snapshots[i].epoch - _start) * 100))
+	}
+
+	this.stop_animation = function() {
 		for (var i = 0; i < anim_queue.length; i++) {
 			clearTimeout(anim_queue[i]);
 		}

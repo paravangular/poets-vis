@@ -4,8 +4,7 @@ import sqlite3
 
 import json
 
-from scripts.json_builder import JSONBuilder
-from scripts.json_builder import EventJSONBuilder
+from scripts.json_builder import *
 from scripts import helper
 
 @app.teardown_appcontext
@@ -27,7 +26,16 @@ def index():
 @app.route("/graph/<part_id>")
 def graph(part_id):
 	builder = JSONBuilder(part_id)
-	return render_template("graph.html", state_ranges = builder.ranges_json, device_types = builder.dev_json, data = builder.json, parent = part_id, max_time = builder.max_time, ports = builder.ports, message_types = builder.message_types)
+	return render_template("graph.html", max_level = builder.max_level, state_ranges = builder.ranges_json, device_types = builder.dev_json, data = builder.json, parent = part_id, max_time = builder.max_time, ports = builder.ports, message_types = builder.message_types)
+
+@app.route('/snapshot', methods=['GET'])
+def snapshot():
+    start = request.args.get('start', 0, type=float)
+    end = request.args.get('end', 0, type=float)
+    part_id = request.args.get('part_id', "", type=str)
+    builder = SnapshotJSONBuilder(start, end, part_id)
+    return jsonify(builder.json)
+
 
 @app.route('/events', methods=['GET'])
 def events():

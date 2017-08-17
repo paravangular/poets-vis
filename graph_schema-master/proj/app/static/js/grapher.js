@@ -277,7 +277,29 @@ function ForceGraph(selector, data, level) {
 		simulating = true;
 
 		var range = $('#slider').slider("option", "values");
-		animator = new Animator(this, g, parseFloat(range[0]), parseFloat(range[1]), parent_id);
+		if (level == max_level - 1) {
+			animator = new EventAnimator(this, g, parseFloat(range[0]), parseFloat(range[1]), parent_id);
+		} else {
+			animator = new SnapshotAnimator(this, g, parseFloat(range[0]), parseFloat(range[1]), parent_id);
+		}
+
+		
+
+	}
+
+	this.update_parts = function(part, new_state) {
+		for (var prop in new_state) {
+			if (prop in data.nodes[part]) {
+				data.nodes[part][prop] = new_state[prop]
+			}
+		}
+
+		var node = d3.select("." + part);
+
+		selected = $("input[name='property']:checked").val();
+		node.attr("fill", function(d) { 
+			return get_node_colour(selected, data.nodes[part][selected]);
+		});
 
 	}
 
