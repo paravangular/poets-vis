@@ -62,6 +62,13 @@ function ForceGraph(selector, data, level) {
 			}));
 
 	var g = svg.append("g");
+	var text = svg.append("text")
+			.attr("class", "epoch-text")
+			.text("0")
+			.attr("transform", "translate(" + (width - 20) + ", 20)")
+			.attr("font-size", "3em")
+			.attr("text-anchor", "end")
+			.attr("alignment-baseline", "hanging")
 
 	var tooltip = d3.select("body").append("div").attr("class", "tooltip");
 

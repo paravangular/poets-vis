@@ -64,11 +64,12 @@ class Handler():
         self.dbb.device_partitions(simple_graph, metis.nlevels)
         self.dbb.partition_edges(metis.nlevels)
         self.dbb.interpartition_edges(metis.nlevels)
-        self.dbb.meta_properties(metis.nlevels)
 
         self.dbb.events()
         self.dbb.aggregates(graph_type, metis.nlevels)
         self.dbb.load_ranges()
+        
+        self.dbb.meta_properties(metis.nlevels)
         self.dbb.db.close()
         
         print
@@ -769,6 +770,7 @@ class DBBuilder():
         self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_id ON device_states (id)")
         self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_init ON device_states (init)")
         self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_epoch ON device_states (epoch)")
+        self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_id_init_epoch ON device_states (init, epoch)")
         self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_id_init_epoch ON device_states (id, init, epoch)")
         self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_id_init ON device_states (id, init)")
         self.db.execute("CREATE INDEX IF NOT EXISTS index_device_states_id_epoch ON device_states (id, epoch)")

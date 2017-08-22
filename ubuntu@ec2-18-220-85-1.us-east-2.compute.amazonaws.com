@@ -47,8 +47,7 @@ OPTIMISATION STEPS
 	- SQL subquery from LIMIT ORDER BY to MAX GROUP BY
 	- cursor arraysize
 	- potential solution: snapshots
-	- xml snapshots
-	- xml streaming
+	- 
 
 
 process substition
