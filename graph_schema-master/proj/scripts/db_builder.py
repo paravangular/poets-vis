@@ -22,10 +22,15 @@ class Handler():
         if os.path.isfile(db_filename):
             print("Database already exists. Overwrite existing? This action cannot be undone. (y/n): ")
             overwrite = raw_input("")
-            if overwrite.strip().lower() == "n":
-                return
-            else:
+
+            while not overwrite or (overwrite.strip().lower() != "y" and overwrite.strip().lower() != "n"):
+                print("Please enter y or n:")
+                overwrite = raw_input("")
+
+            if overwrite.strip().lower() == "y":
                 os.remove(db_filename)
+            else:
+                remove
 
         src = base_dir + db_name + '.xml'
         event_src = base_dir + db_name + '_event.xml'
@@ -68,7 +73,7 @@ class Handler():
         self.dbb.events()
         self.dbb.aggregates(graph_type, metis.nlevels)
         self.dbb.load_ranges()
-        
+
         self.dbb.meta_properties(metis.nlevels)
         self.dbb.db.close()
         
@@ -82,11 +87,11 @@ class Handler():
 class DBBuilder():
     def __init__(self, db_name, dir_name = "data/", max_epoch = 100, granularity = 0):
 
-        graph_src = dir_name + db_name + '.xml'
         self.event_src = dir_name + db_name + '_event.xml'
         self.snap_src = dir_name + db_name + '_snapshot.xml'
         self.snapshots = set()
-        self.max_epoch = max_epoch
+        self.epoch_limit = max_epoch
+        self.max_epoch = 0
         self.granularity = int(granularity)
 
         self.message_counts = {"send": defaultdict(int), "recv": defaultdict(int)}
@@ -279,7 +284,7 @@ class DBBuilder():
         fields = [Field("name", "string", set(["key", "not null", "unique"])), Field("max", "int")]
         self.create_table("meta_properties", fields)
         query = "INSERT INTO meta_properties(name, max) VALUES(?, ?)"
-        values = [{"name": "level", "max": level}, {"name": "time", "max": int(math.ceil(self.max_epoch))}]
+        values = [{"name": "level", "max": level}, {"name": "time", "max": int(math.ceil(min(self.epoch_limit, self.max_epoch)))}]
         
         self.insert_rows("meta_properties", fields, values)
 
@@ -854,7 +859,7 @@ class DBBuilder():
             self.message_counts["send"][evt["dev"]] += 1
 
         evt["s"] = json.dumps(evt["s"])
-        self.max_epoch = min(evt["time"], self.max_epoch)
+        self.max_epoch = max(evt["time"], self.max_epoch)
         return evt
 
 
