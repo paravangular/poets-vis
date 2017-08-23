@@ -31,6 +31,8 @@ class MetisHandler():
 		vertices have no weights
 
 		'''
+		if not os.path.exists(basedir):
+			os.makedirs(basedir)
 
 		self.nodes_per_part = nodes_per_part
 		self.graph = graph

@@ -15,11 +15,14 @@ import xml.etree.cElementTree as ET
 from lxml import etree
 
 class Handler():
-    def __init__(self, db_name, base_dir = "data/", max_epoch = 100, granularity = 0, nodes_per_part = 50):
+    def __init__(self, db_name, base_dir = "data/", max_epoch = 100, granularity = 0, nodes_per_part = 50, overwrite = None):
 
         db_filename = base_dir + "db/" + db_name + ".db"
 
-        if os.path.isfile(db_filename):
+        if not os.path.exists(base_dir + "db/"):
+            os.makedirs(base_dir + "db/")
+
+        if os.path.isfile(db_filename) and overwrite is None:
             print("Database already exists. Overwrite existing? This action cannot be undone. (y/n): ")
             overwrite = raw_input("")
 
@@ -27,10 +30,10 @@ class Handler():
                 print("Please enter y or n:")
                 overwrite = raw_input("")
 
-            if overwrite.strip().lower() == "y":
-                os.remove(db_filename)
-            else:
-                remove
+        if os.path.isfile(db_filename) and overwrite.strip().lower() == "y":
+            os.remove(db_filename)
+        elif os.path.isfile(db_filename) and overwrite.strip().lower() == "n":
+            return
 
         src = base_dir + db_name + '.xml'
         event_src = base_dir + db_name + '_event.xml'
@@ -97,7 +100,7 @@ class DBBuilder():
         self.message_counts = {"send": defaultdict(int), "recv": defaultdict(int)}
         
         if not os.path.exists(dir_name + "db/"):
-            os.makedirs(directory + "db/")
+            os.makedirs(dir_name + "db/")
 
         db_filename = dir_name + "db/" + db_name + ".db"
         self.db = sqlite3.connect(db_filename)
@@ -631,6 +634,13 @@ class DBBuilder():
                 evt = defaultdict(lambda:None)
                 evt["id"] = elem.get('eventId')
                 evt["time"] = float( elem.get('time'))
+
+                if int( elem.get('time')) > self.epoch_limit:
+                    while elem.getprevious() is not None:
+                        del elem.getparent()[0]
+
+                    break
+
                 evt["elapsed"] = float( elem.get('elapsed'))
                 evt["dev"]= elem.get('dev')
                 evt["rts"] = int( elem.get('rts'),0)
@@ -717,6 +727,9 @@ class DBBuilder():
                 if name == "GraphSnapshot":
                     orchTime = elem.get('orchestratorTime')
 
+                    if int(orchTime) > self.epoch_limit:
+                        break 
+                        
                     if int(orchTime) % interval == 0:
                         get_snapshot = True
                         seqNum = elem.get('sequenceNumber')
