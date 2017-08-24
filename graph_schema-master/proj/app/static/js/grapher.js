@@ -283,7 +283,7 @@ function ForceGraph(selector, data, level) {
         $("#stop").removeClass('disabled'); 
 		simulating = true;
 
-		var range = $('#slider').slider("option", "values");
+		var range = $('#event-slider').slider("option", "values");
 		if (level == max_level - 1) {
 			animator = new EventAnimator(this, g, parseFloat(range[0]), parseFloat(range[1]), parent_id);
 		} else {
@@ -308,6 +308,21 @@ function ForceGraph(selector, data, level) {
 			return get_node_colour(selected, data.nodes[part][selected]);
 		});
 
+	}
+
+	this.update_snapshot = function(device, snapshot) {
+		for (var prop in snapshot) {
+			if (prop in data.nodes[device]) {
+				data.nodes[device][prop] = snapshot[prop]
+			}
+		}
+
+		var node = d3.select("." + device);
+
+		selected = $("input[name='property']:checked").val();
+		node.attr("fill", function(d) { 
+			return get_node_colour(selected, data.nodes[device][selected]);
+		});
 	}
 
 	this.update_nodes = function(device, evt, evt_type) {

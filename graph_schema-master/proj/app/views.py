@@ -47,6 +47,14 @@ def events():
     return jsonify(builder.json)
 
 
+@app.route('/stepper', methods=['GET'])
+def stepper():
+    part_id = request.args.get('part_id', "", type=str)
+    max_level = request.args.get('max_level', 0, type=int)
+    builder = StepperJSONBuilder(part_id, max_level)
+
+    return jsonify(builder.json)
+
 @app.route("/device/<dev_id>")
 def device(dev_id):
 	return render_template("device.html")

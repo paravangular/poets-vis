@@ -13,8 +13,16 @@
         <div id="viewport"></div>
         <div id="sidebar">
             <h1>Select epoch:</h1>
-              <div id="slider"></div>
-              <div id="rangedval">
+            <div id="epoch-slider" class="slider"></div>
+              <div id="epochdval" class="slider-val">
+                <span id="epochval">0</span>
+              </div>
+              
+              <div id="rangeslider"></div>
+
+            <h1>Select event range:</h1>
+              <div id="event-slider" class="slider"></div>
+              <div id="rangedval" class="slider-val">
                 <span id="rangeval">0 - 5</span>
               </div>
               
@@ -63,7 +71,28 @@
                 level = 4
             }
 
-            $('#slider').slider({
+        </script>
+        <script src="{{ url_for('static', filename='js/animator.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/grapher.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/stepper.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/runner.js') }}"></script>
+        <script type="text/javascript">
+            $('#epoch-slider').slider({
+                range: false,
+                min: 0,
+                max: max_time,
+                values: [ 0 ],
+                slide: function( event, ui ) {
+                  $('#epochval').html(ui.values[0]);
+                  d3.select(".epoch-text").text(ui.values[0])
+
+                  for (dev in snapshots[ui.values[0]]) {
+                    graph.update_snapshot(dev, snapshots[ui.values[0]][dev])
+                  }
+                }
+            });
+
+            $('#event-slider').slider({
                 range: true,
                 min: 0,
                 max: max_time,
@@ -71,10 +100,6 @@
                 slide: function( event, ui ) {
                   $('#rangeval').html(ui.values[0]+" - "+ui.values[1]);
                 }
-            });
-        </script>
-        <script src="{{ url_for('static', filename='js/animator.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/grapher.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/runner.js') }}"></script>
+            });</script>
     </body>
 </html>

@@ -17,6 +17,10 @@ class DBSetup(Command):
 		)
 
 	def run(self, name, base, granularity, max_epoch, nnp, overwrite):
+		if not name:
+			print("Graph instance name must be provided using flag: -n [name]")
+			return
+
 		if max_epoch:
 			e = int(max_epoch)
 		else:
@@ -41,10 +45,6 @@ class DBSetup(Command):
 			o = overwrite.lower()
 		else:
 			o = None
-
-		if not name:
-			print("Graph instance name must be provided with flag: -n [name]")
-			return
 
 		db = Handler(name, b, max_epoch = e, granularity = g, nodes_per_part = n, overwrite = o)
 

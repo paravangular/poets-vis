@@ -1,6 +1,7 @@
 from scripts import helper
 import json
 from operator import itemgetter
+from collections import defaultdict
 
 def safe_list_get (l, idx, default):
   try:
@@ -145,6 +146,42 @@ class EventJSONBuilder():
 				self.json["recv"][safe_list_get(evt, send_event_col, "unidentified")] = e
 
 		self.json["send"].sort(key=itemgetter("time")) # potential bottleneck
+
+
+class StepperJSONBuilder():
+	def __init__(self, part_id, max_level):
+		level = len(part_id.split("_")) - 2
+
+		if level == max_level - 2:
+			self.cols = [row[1] for row in helper.execute_query("PRAGMA table_info(device_states)")]
+			query = ("SELECT * FROM device_states" + 
+					" JOIN (SELECT device_partitions.id FROM device_partitions" + 
+					" WHERE partition_" + str(level) + " = '" + part_id + "') AS parts"
+					" ON device_states.id = parts.id")
+
+		else:
+			self.cols = [row[1] for row in helper.execute_query("PRAGMA table_info(device_states_aggregate_{0})".format(level))]
+			query = ("SELECT * FROM device_states_aggregate_{0}".format(level + 1) + 
+					" WHERE parent = '{0}'".format(part_id))
+
+		self.snapshot = helper.execute_query(query)
+
+		self.json = defaultdict(dict)
+		for snapshot in self.snapshot:
+			epoch = None
+			s = {}
+			for i in range(len(self.cols)):
+				if self.cols[i] == "partition_id" or self.cols[i] == "id":
+					id = safe_list_get(snapshot, i, "undefined")
+
+				if self.cols[i] == "epoch":
+					epoch = safe_list_get(snapshot, i, 0)
+
+				s[self.cols[i]] = safe_list_get(snapshot, i, None)
+
+			self.json[epoch][id] = s
+
+
 
 
 		

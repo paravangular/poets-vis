@@ -68,7 +68,7 @@ g.nodes > * {
 	opacity: 0.5;
 }
 
-#slider {
+.slider {
 	margin: 30px;
 	cursor: pointer;
 }
@@ -77,8 +77,9 @@ g.nodes > * {
 	cursor: pointer;
 }
 
-#rangedval {
+.slider-val {
 	text-align: center;
+	font-size: 1.2em;
 }
 
 #animation-btns {

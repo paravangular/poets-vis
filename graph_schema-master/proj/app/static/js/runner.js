@@ -2,6 +2,9 @@ $(document).ready(function() {
 	load_property_selector()
 	reset_graph()
 
+	snap = new Stepper(parent_id, max_level);
+	snapshots = snap.get_snapshots();
+
 	$('input[type="radio"]').click(function(){
 	    if ($(this).is(':checked')) {
 	    	if (graph.simulating) {
