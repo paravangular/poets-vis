@@ -150,18 +150,18 @@ class EventJSONBuilder():
 
 class StepperJSONBuilder():
 	def __init__(self, part_id, max_level):
-		level = len(part_id.split("_")) - 2
+		level = len(part_id.split("_")) - 1
 
-		if level == max_level - 2:
+		if level == max_level - 1:
 			self.cols = [row[1] for row in helper.execute_query("PRAGMA table_info(device_states)")]
 			query = ("SELECT * FROM device_states" + 
 					" JOIN (SELECT device_partitions.id FROM device_partitions" + 
-					" WHERE partition_" + str(level) + " = '" + part_id + "') AS parts"
+					" WHERE partition_" + str(level - 1) + " = '" + part_id + "') AS parts"
 					" ON device_states.id = parts.id")
 
 		else:
 			self.cols = [row[1] for row in helper.execute_query("PRAGMA table_info(device_states_aggregate_{0})".format(level))]
-			query = ("SELECT * FROM device_states_aggregate_{0}".format(level + 1) + 
+			query = ("SELECT * FROM device_states_aggregate_{0}".format(level) + 
 					" WHERE parent = '{0}'".format(part_id))
 
 		self.snapshot = helper.execute_query(query)

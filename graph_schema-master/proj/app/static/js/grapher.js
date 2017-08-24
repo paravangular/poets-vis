@@ -257,6 +257,11 @@ function ForceGraph(selector, data, level) {
 		animator.stop_animation();
 		d3.selectAll("circle.message").transition();
 
+		pause_time = d3.select(".epoch-text").text()
+
+        for (dev in snapshots[pause_time]) {
+            graph.update_snapshot(dev, snapshots[pause_time][dev])
+        }
 
         $("#pause").addClass('disabled'); 
         $("#stop").removeClass('disabled'); 
@@ -268,7 +273,9 @@ function ForceGraph(selector, data, level) {
 
 		animator.stop_animation();
 		d3.selectAll("circle.message").remove();
-
+        for (dev in snapshots[0]) {
+            graph.update_snapshot(dev, snapshots[0][dev])
+        }
 
         $("#pause").addClass('disabled'); 
         $("#stop").addClass('disabled'); 
