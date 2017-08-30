@@ -14,9 +14,6 @@ from scripts.graph_builder import *
 import xml.etree.cElementTree as ET
 from lxml import etree
 
-from Queue import Queue
-from multiprocessing import Process
-
 class Handler():
     def __init__(self, db_name, base_dir = "data/", max_epoch = 100, granularity = 0, nodes_per_part = 50, overwrite = None):
 
@@ -81,10 +78,6 @@ class Handler():
         self.dbb.load_ranges()
 
         self.dbb.meta_properties(metis.nlevels)
-        
-        for proc in self.dbb.procs:
-            proc.join()
-        
         self.dbb.db.close()
         
         print
@@ -103,16 +96,14 @@ class DBBuilder():
         self.epoch_limit = max_epoch
         self.max_epoch = 0
         self.granularity = int(granularity)
-        self.insert_queue = Queue()
-        self.procs = Queue()
 
         self.message_counts = {"send": defaultdict(int), "recv": defaultdict(int)}
         
         if not os.path.exists(dir_name + "db/"):
             os.makedirs(dir_name + "db/")
 
-        self.db_filename = dir_name + "db/" + db_name + ".db"
-        self.db = sqlite3.connect(self.db_filename)
+        db_filename = dir_name + "db/" + db_name + ".db"
+        self.db = sqlite3.connect(db_filename)
 
     def ports(self, graph_type):
         # TODO: port states/props?
@@ -908,26 +899,14 @@ class DBBuilder():
         return value
 
     def insert_rows(self, table_name, fields, values):
+        print("  Inserting {} records to {}...".format(len(values), table_name))
         colnames = map(str, fields)
         columns = ",".join(colnames)
         placeholders = ":" + ",:".join(colnames)
         query = "INSERT INTO " + table_name + "(%s) VALUES (%s)" % (columns, placeholders)
         
-        # self.insert_lock.acquire()
-        self.insert_queue.put({"table_name": table_name, "query": query, "values": values})
-        # self.insert_lock.release()
-
-        item = self.insert_queue.get()
-        p = Process(target=self.parallel_insert, args=(item, ))
-        self.procs.put(p)
-        p.start()
-    
-    def parallel_insert(self, item):
-        conn = sqlite3.connect(self.db_filename)
-        print("  Inserting {} records to {}...".format(len(item["values"]), item["table_name"]))
-        conn.executemany(item["query"], item["values"])
-        conn.commit()
-        conn.close()
+        self.db.executemany(query, values)
+        self.db.commit()
 
     def create_table(self, table_name, fields):
         print
