@@ -59,14 +59,17 @@ $(document).ready(function() {
 function load_property_selector() {
 	count = {};
 
-
-	$('<input type="radio" name="property" id="messages_sent_radio" value= "messages_sent" checked="checked"><label for="messages_sent_radio">messages sent</label><br>').appendTo("#property-menu");
-	$('<input type="radio" name="property" id="messages_received_radio" value= "messages_received"><label for="messages_received_radio">messages received</label><br>').appendTo("#property-menu");
-	
+	if (level == max_level - 1) {
+		$('<input type="radio" name="property" id="messages_sent_radio" value= "messages_sent" checked="checked"><label for="messages_sent_radio">messages sent</label><br>').appendTo("#property-menu");
+		$('<input type="radio" name="property" id="messages_received_radio" value= "messages_received"><label for="messages_received_radio">messages received</label><br>').appendTo("#property-menu");
+	}
 	for (var state in prop_domains) {
 		if (state != "messages_received" && state != "messages_sent") {
 			$('<input type="radio" name="property" id= "' + state + '_radio" value= "' + state + '"><label for="' + state + '_radio">' + state + '</label><br>').appendTo("#property-menu");
 		}
 	}
 
+	if (level != max_level - 1) {
+	    $('input[type=radio][name=property]:first').attr('checked', true);
+	}
 }
