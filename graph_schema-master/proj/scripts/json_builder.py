@@ -178,6 +178,8 @@ class StepperJSONBuilder():
 					epoch = safe_list_get(snapshot, i, 0)
 
 				s[self.cols[i]] = safe_list_get(snapshot, i, None)
+			s["messages_sent"] = 0
+			s["messages_received"] = 0
 
 			self.json[epoch][id] = s
 

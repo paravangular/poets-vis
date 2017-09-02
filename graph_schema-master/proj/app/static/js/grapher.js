@@ -200,15 +200,7 @@ function ForceGraph(selector, data, level) {
 
 				       }
 				});
-			} else {
-				$.get({
-					url: '/device/' + d.id,
-					success: function(response) {
-						window.location.href = '/device/' + d.id;
-					}
-				})
 			}
-
 		}
 
 		function show_node_state(d) {
@@ -350,6 +342,101 @@ function ForceGraph(selector, data, level) {
 		node.attr("fill", function(d) { 
 			return get_node_colour(selected, data.nodes[device][selected]);
 		});
+	}
+
+	this.calculate_messages = function() {
+		$.ajax({
+		    url: "/events",
+		    type: "GET",
+		    dataType: 'json',
+		    data: { 
+		    	start: 0,
+				end: max_time,
+				part_id: parent_id 
+			},
+		    success: function (d) {
+		    	events = d;
+		    	update_messages(events)
+		    },
+		    error: function () {
+		        alert('Error obtaining event data for partition ' + parent_id + ' in range ' + 0 + ' to ' + max_time + '.');
+		    }
+		});
+
+		function sort_send(a, b) {
+		  if (a.time < b.time)
+		    return -1;
+		  if (a.time > b.time)
+		    return 1;
+		  return 0;
+		}
+
+		function update_messages(events) {
+			var sent_so_far = {}
+			events.send.sort(sort_send)
+
+			for (var i = 0; i < events.send.length; i++) {
+				if (events.send[i].dev in sent_so_far) {
+
+					for (var t = sent_so_far[events.send[i].dev][1]; t < events.send[i].time; t++) {
+						if (t in snapshots) {
+							snapshots[t][events.send[i].dev]["messages_sent"] = sent_so_far[events.send[i].dev][0]
+						}
+					}
+					snapshots[events.send[i].time][events.send[i].dev]["messages_sent"] = sent_so_far[events.send[i].dev][0] + 1;
+					sent_so_far[events.send[i].dev][0]++
+					sent_so_far[events.send[i].dev][1] = events.send[i].time
+				} else {
+					snapshots[events.send[i].time][events.send[i].dev]["messages_sent"] = 1
+					sent_so_far[events.send[i].dev] = [1, events.send[i].time]
+				}
+				
+			}
+
+			for (dev in sent_so_far) {
+				var t = sent_so_far[dev][1]
+				var e = sent_so_far[dev][0]
+
+				var s = max_time
+				while (t <= max_time) {
+					snapshots[t][dev] = e;
+					t++;
+				}
+			}
+			
+			var recv_so_far = {}
+			var recv = Object.values(events.recv);
+			recv.sort(sort_send)
+
+			for (var i = 0; i < recv.length; i++) {
+				if (recv[i].dev in recv_so_far) {
+
+					for (var t = recv_so_far[recv[i].dev][1]; t < recv[i].time; t++) {
+						if (t in snapshots) {
+							snapshots[t][recv[i].dev]["messages_received"] = recv_so_far[recv[i].dev][0]
+						}
+					}
+					snapshots[recv[i].time][recv[i].dev]["messages_received"] = recv_so_far[recv[i].dev][0] + 1;
+					recv_so_far[recv[i].dev][0]++
+					recv_so_far[recv[i].dev][1] = recv[i].time
+				} else {
+					snapshots[recv[i].time][recv[i].dev]["messages_received"] = 1
+					recv_so_far[recv[i].dev] = [1, recv[i].time]
+				}
+				
+			}
+
+			for (dev in recv_so_far) {
+				var t = recv_so_far[dev][1]
+				var e = recv_so_far[dev][0]
+
+				var s = max_time
+				while (t <= max_time) {
+					snapshots[t][dev] = e;
+					t++;
+				}
+			}
+		}
 	}
 
 	function get_node_shape(dev_type) {

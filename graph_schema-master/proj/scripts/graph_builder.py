@@ -148,7 +148,7 @@ class MetisHandler():
 
 
 
-class GraphBuilder():
+class MetisGraph():
 	def __init__(self, complex_graph):
 		self.levels = 1
 

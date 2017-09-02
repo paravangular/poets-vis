@@ -1,9 +1,9 @@
 import unittest
-from graph_builder import GraphBuilder
+from graph_builder import MetisGraph
 
 class TestGraph(unittest.TestCase):
 	def setUp():
-		self.db = DBBuilder("test")
+		self.db = DBHandler("test")
 		self.graph_type = 
 
 

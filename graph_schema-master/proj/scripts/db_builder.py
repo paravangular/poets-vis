@@ -47,7 +47,7 @@ class Handler():
         print("Creating database file " + db_name + ".db...")
 
 
-        self.dbb = DBBuilder(db_name, base_dir, max_epoch, granularity)
+        self.dbb = DBHandler(db_name, base_dir, max_epoch, granularity)
         graph_type, curr_graph, graph_props = load_graph_type_and_instances(src, self.dbb)
 
         self.dbb.graph_properties(graph_type)
@@ -63,7 +63,7 @@ class Handler():
         # self.dbb.insert_rows("graph_properties", graph_props)
         
 
-        simple_graph = GraphBuilder(curr_graph)
+        simple_graph = MetisGraph(curr_graph)
 
         print("Partitioning...")
         metis = MetisHandler(db_name, simple_graph, base_dir + "metis/", nodes_per_part = nodes_per_part)
@@ -87,7 +87,7 @@ class Handler():
         print("FINISH (%3f seconds)" % (time.time() - start_time))
         print("******************************************************************************")
 
-class DBBuilder():
+class DBHandler():
     def __init__(self, db_name, dir_name = "data/", max_epoch = 100, granularity = 0):
 
         self.event_src = dir_name + db_name + '_event.xml'

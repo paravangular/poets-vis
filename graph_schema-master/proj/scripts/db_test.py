@@ -6,7 +6,7 @@ from db_builder import *
 
 class TestDB(unittest.TestCase):
 	def setUp(self):
-		self.db = DBBuilder("test")
+		self.db = DBHandler("test")
 		self.graph_type = {"id": "test", 
 							"device_types": {"devtype1": {"properties": set([("devprop1", "int"), ("devprop2", "string")]), 
 														"state": set([("devstate1", "int"), ("devstate2", "string")]), 

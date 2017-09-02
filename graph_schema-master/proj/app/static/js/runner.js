@@ -5,6 +5,9 @@ $(document).ready(function() {
 	snap = new Stepper(parent_id, max_level);
 	snapshots = snap.get_snapshots();
 
+
+	graph.calculate_messages();
+
 	$('input[type="radio"]').click(function(){
 	    if ($(this).is(':checked')) {
 	    	if (graph.simulating) {
