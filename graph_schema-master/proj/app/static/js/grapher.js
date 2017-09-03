@@ -204,10 +204,17 @@ function ForceGraph(selector, data, level) {
 		}
 
 		function show_node_state(d) {
-			var prop_string = 'ID: ' + d.id + '<br>' + 'Type: ' + d.type + '<br>';
-
-			for (var prop in d.p) {
-				prop_string += prop + ': ' + d.p[prop] + '<br>';
+			var prop_string = '<b>ID:</b> ' + d.id + '<br>'
+			if (d.type != null) { prop_string += '<b>type: </b>' + d.type + '<br>'; } else { prop_string += '<b>type:</b> partition<br>';}
+			
+			for (var prop in d) {
+				if (d.type == null && (prop == "messages_sent" || prop == "messages_received")) {
+					continue;
+				}
+				
+				if (prop in prop_domains && d[prop] != null) {
+					prop_string += '<b>' + prop + ':</b> ' + d[prop] + '<br>';
+				}
 			}
 
 			return prop_string;
