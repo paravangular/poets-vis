@@ -6,7 +6,9 @@ $(document).ready(function() {
 	snapshots = snap.get_snapshots();
 
 
-	graph.calculate_messages();
+	if (level == max_level - 1) {
+		graph.calculate_messages();
+	}
 
 	$('input[type="radio"]').click(function(){
 	    if ($(this).is(':checked')) {
