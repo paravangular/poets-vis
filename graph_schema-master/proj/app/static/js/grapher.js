@@ -204,8 +204,8 @@ function ForceGraph(selector, data, level) {
 		}
 
 		function show_node_state(d) {
-			var prop_string = '<b>ID:</b> ' + d.id + '<br>'
-			if (d.type != null) { prop_string += '<b>type: </b>' + d.type + '<br>'; } else { prop_string += '<b>type:</b> partition<br>';}
+			var prop_string = '<table class="fb"><tr><td>ID:</td> <td> ' + d.id + '</td></tr>'
+			if (d.type != null) { prop_string += '<tr><td>type: </td> <td>' + d.type + '</td></tr>'; } else { prop_string += '<td>type:</td> <td>partition</td></tr>';}
 			
 			for (var prop in d) {
 				if (d.type == null && (prop == "messages_sent" || prop == "messages_received")) {
@@ -213,7 +213,7 @@ function ForceGraph(selector, data, level) {
 				}
 				
 				if (prop in prop_domains && d[prop] != null) {
-					prop_string += '<b>' + prop + ':</b> ' + d[prop] + '<br>';
+					prop_string += '<tr><td>' + prop + ':</td> <td>' + d[prop] + '</td></tr>';
 				}
 			}
 
