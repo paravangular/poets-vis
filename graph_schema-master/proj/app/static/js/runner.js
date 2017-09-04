@@ -10,6 +10,32 @@ $(document).ready(function() {
 		graph.calculate_messages();
 	}
 
+	var neighbours = new Set()
+	for (var id in data.nodes) {
+		var ls = id.split("_")
+		if (ls[0] == "base" && ls.length == level + 1) {
+			neighbours.add(id)
+		}
+	}
+
+	for (let p of neighbours) {
+		console.log(p)
+		$.ajax({
+		    url: "/preload_partition",
+		    type: "GET",
+		    data: {
+				part_id: p 
+			},
+		    success: function (d) {
+		    	console.log("Success preloading neighbours to cache.")
+		    },
+		    error: function () {
+		        console.log('Error obtaining neighbour data');
+		    }
+		});
+	}
+
+
 	$('input[type="radio"]').click(function(){
 	    if ($(this).is(':checked')) {
 	    	if (graph.simulating) {
