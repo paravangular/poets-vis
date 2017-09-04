@@ -20,11 +20,13 @@ for (var msg in message_types) {
 	i++;
 }
 
+
+var width = window.innerWidth * 0.6;
+var height = document.documentElement.clientHeight;
+
 function ForceGraph(selector, data, level) {
 
   	// d3 vars
-	var width = window.innerWidth * 0.6;
-   	var height = document.documentElement.clientHeight;
   	var _data = data;
 
   	var simulating = false;
@@ -32,12 +34,7 @@ function ForceGraph(selector, data, level) {
   	var selected = $("input[name='property']:checked").val();
 
   	var animator;
-  	var key;
-  	for (var k in data.nodes) {
-  		key = k;
-  		break;
-  	}
-
+  	
   	var si = 0
   	for (var dev in device_types) {
   		device_types[dev]["shape"] = SYMBOLS[si];
@@ -216,7 +213,7 @@ function ForceGraph(selector, data, level) {
 					prop_string += '<tr><td>' + prop + ':</td> <td>' + d[prop] + '</td></tr>';
 				}
 			}
-
+			prop_string += '</table>'
 			return prop_string;
 		}
 
@@ -446,9 +443,6 @@ function ForceGraph(selector, data, level) {
 		}
 	}
 
-	function get_node_shape(dev_type) {
-		d3.symbolCircle
-	}
 
 	function get_node_size(id) {
 		var ls = id.split("_")
@@ -481,3 +475,27 @@ function ForceGraph(selector, data, level) {
 }
 
 
+var neighbours = new Set()
+for (var id in data.nodes) {
+	var ls = id.split("_")
+	if (ls[0] == "base" && ls.length == level + 1) {
+		neighbours.add(id)
+	}
+}
+
+for (let p of neighbours) {
+	console.log(p)
+	$.ajax({
+	    url: "/preload_partition",
+	    type: "GET",
+	    data: {
+			part_id: p 
+		},
+	    success: function (d) {
+	    	console.log("Success preloading neighbours to cache.")
+	    },
+	    error: function () {
+	        console.log('Error obtaining neighbour data');
+	    }
+	});
+}

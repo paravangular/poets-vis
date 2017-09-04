@@ -11,6 +11,7 @@ from scripts.graph.core import *
 from scripts.graph.events import *
 from scripts.graph.load_xml_stream import *
 from scripts.graph_builder import *
+from scripts.parser import *
 import xml.etree.cElementTree as ET
 from lxml import etree
 
@@ -48,7 +49,7 @@ class Handler():
 
 
         self.dbb = DBHandler(db_name, base_dir, max_epoch, granularity)
-        graph_type, curr_graph, graph_props = load_graph_type_and_instances(src, self.dbb)
+        graph_type, curr_graph, graph_props = load_graph_type_and_instances(src, self.dbb, self.dbb.parser)
 
         self.dbb.graph_properties(graph_type)
         self.dbb.device_types(graph_type)
@@ -96,7 +97,7 @@ class DBHandler():
         self.epoch_limit = max_epoch
         self.max_epoch = 0
         self.granularity = int(granularity)
-
+        self.parser = Parser()
         self.message_counts = {"send": defaultdict(int), "recv": defaultdict(int)}
         
         if not os.path.exists(dir_name + "db/"):
@@ -630,59 +631,30 @@ class DBHandler():
         root = True
         i = 0
         for action, elem in context:
-            if action == 'end' and (detag(elem) == "InitEvent" or detag(elem) == "RecvEvent" or detag(elem) == "SendEvent"):
-                evt = defaultdict(lambda:None)
-                evt["id"] = elem.get('eventId')
-                evt["time"] = float( elem.get('time'))
+            if action == 'end':
+                evt = self.parser.parse_events(elem)
+                
+                if evt:
+                    if int( elem.get('time')) > self.epoch_limit:
+                        while elem.getprevious() is not None:
+                            del elem.getparent()[0]
 
-                if int( elem.get('time')) > self.epoch_limit:
+                        break
+
+                    self.ranges = self.compare_ranges(evt)
+                    values.append(self.build_event_values(evt))
+
+                    i += 1
+                    if i % batch == 0:
+                        print("  Loading event " + str(i) + "...")
+                        self.insert_rows("events", fields, values)
+                        del values
+                        values = []
+
+                    elem.clear()
+                
                     while elem.getprevious() is not None:
                         del elem.getparent()[0]
-
-                    break
-
-                evt["elapsed"] = float( elem.get('elapsed'))
-                evt["dev"]= elem.get('dev')
-                evt["rts"] = int( elem.get('rts'),0)
-                evt["seq"] = int( elem.get('seq'))
-                evt["type"] = detag(elem).lower()[:4]
-
-                if evt["type"] == "init":
-                    evt["port"] = None
-                    evt["send_id"] = None
-                    evt["cancel"] = None
-                    evt["fanout"] = None
-                else:
-                    evt["port"] = elem.get("port")
-
-                    if evt["type"] == "send":
-                        evt["cancel"] = bool(elem.get("cancel"))
-                        evt["fanout"] = int(elem.get("fanout"))
-                        evt["send_id"] = None
-
-                    if evt["type"] == "recv":
-                        evt["send_id"] = elem.get("sendEventId")
-                        evt["cancel"] = None
-                        evt["fanout"] = None
-
-                for child in elem:
-                    evt[detag(child).lower()] = json.loads("{" + child.text + "}")
-                    
-                self.ranges = self.compare_ranges(evt)
-                values.append(self.build_event_values(evt))
-
-
-                i += 1
-                if i % batch == 0:
-                    print("  Loading event " + str(i) + "...")
-                    self.insert_rows("events", fields, values)
-                    del values
-                    values = []
-
-                elem.clear()
-            
-                while elem.getprevious() is not None:
-                    del elem.getparent()[0]
 
         del context
 

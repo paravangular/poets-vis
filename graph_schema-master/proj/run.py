@@ -1,4 +1,3 @@
-from flaskrun import flaskrun
 from app import app
 import optparse
 

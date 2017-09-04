@@ -9,15 +9,16 @@ def safe_list_get (l, idx, default):
   except IndexError:
     return default
 
-class JSONBuilder():
-	def __init__(self, part_id, init = 1, epoch = 0):
-		self.part_id = part_id
-		self.epoch = epoch
-		self.init = init
-		level = len(self.part_id.split("_")) - 1
-		nlevels = helper.execute_query("SELECT max FROM meta_properties WHERE name = 'level'")
+class MetaBuilder():
+	def __init__(self):
+		self.max_level = helper.execute_query("SELECT max FROM meta_properties WHERE name = 'level'")
 		self.max_time = helper.execute_query("SELECT max FROM meta_properties WHERE name = 'time'")
-		edge_prop = ["source", "target", "count"]
+
+		ranges_query = "SELECT * FROM state_ranges"
+		state_ranges = helper.execute_query(ranges_query)
+		self.ranges_json = {}
+		for state in state_ranges:
+			self.ranges_json[state[0]] = {"min": state[1], "max": state[2]}
 
 		prop_query = "SELECT * FROM device_types"
 		device_types = helper.execute_query(prop_query)
@@ -26,11 +27,20 @@ class JSONBuilder():
 		for dev in device_types:
 			self.dev_json[dev[0]] = {"states": dev[1], "properties": dev[2]}
 
-		ranges_query = "SELECT * FROM state_ranges"
-		state_ranges = helper.execute_query(ranges_query)
-		self.ranges_json = {}
-		for state in state_ranges:
-			self.ranges_json[state[0]] = {"min": state[1], "max": state[2]}
+		port_query = ("SELECT DISTINCT name FROM ports")
+		message_type_query = ("SELECT DISTINCT message_type FROM ports")
+
+		self.ports = dict([(p[0], None) for p in helper.execute_query(port_query)])
+		self.message_types = dict([(m[0], None) for m in helper.execute_query(message_type_query)])
+
+class JSONBuilder():
+	def __init__(self, part_id, init = 1, epoch = 0):
+		self.part_id = part_id
+		self.epoch = epoch
+		self.init = init
+		level = len(self.part_id.split("_")) - 1
+		nlevels = helper.execute_query("SELECT max FROM meta_properties WHERE name = 'level'")
+		edge_prop = ["source", "target", "count"]
 
 		if level < nlevels[0][0] - 1:
 			node_prop = [row[1] for row in helper.execute_query("PRAGMA table_info(device_states_aggregate_{0})".format(level))] + [row[1] for row in helper.execute_query("PRAGMA table_info(device_properties_aggregate_{0})".format(level))] + ["parent"] 
@@ -88,12 +98,6 @@ class JSONBuilder():
 
 		self.json = {"nodes": nodes_json, "edges": edges_json}
 
-		port_query = ("SELECT DISTINCT name FROM ports")
-		message_type_query = ("SELECT DISTINCT message_type FROM ports")
-
-
-		self.ports = dict([(p[0], None) for p in helper.execute_query(port_query)])
-		self.message_types = dict([(m[0], None) for m in helper.execute_query(message_type_query)])
 		self.max_level = nlevels
 
 		
